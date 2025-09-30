@@ -9,8 +9,8 @@ function Header() {
     <div className="w-full bg-green-800 h-15 text-white">
       <div className="flex justify-between items-center p-3">
         <div className='flex items-center'>
-          <img src="" alt="" width={'50px'}/>
-          <h2 className='headingFont text-2xl font-semibold'><Link to={'/'}>HomeServe</Link></h2>
+          {/* <img src="/logo.png" alt="" width={'50px'}/> */}
+          <h2 className='headingFont text-2xl font-semibold ms-5'><Link to={'/'}>HomeServe</Link></h2>
         </div>
         <div>
           <ul className='flex items-center justify-center'>
