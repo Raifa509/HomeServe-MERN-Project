@@ -34,7 +34,6 @@ function App() {
         <Route path='/register' element={<Auth register/>}/>
         <Route path='/careers' element={<Careers/>}/>
         <Route path='/*' element={<Pnf/>}/>
-
       </Routes>
     </>
   )
