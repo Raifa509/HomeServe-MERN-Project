@@ -8,9 +8,9 @@ import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 function Footer() {
     return (
         <>
-            <div className='bg-green-800 w-full md:h-70 h-179 mt-4'>
-                <div className="md:grid grid-cols-4 p-5">
-                    <div className='flex flex-col items-center justify-center md:items-start md:justify-start md:ms-10'>
+            <div className='bg-green-800 w-full mt-4 py-2'>
+                <div className="md:grid grid-cols-5 p-5">
+                    <div className='flex flex-col items-center justify-center md:items-start md:justify-start md:ms-10 col-span-2'>
                         <div className='flex items-center ms-3  mt-4 '>
                             <img src="/logo.png" alt="" width={'50px'} />
                             <h2 className='headingFont text-xl font-semibold text-yellow-400' style={{ marginLeft: '-6px', letterSpacing: '-1.5px' }}><Link to={'/'}>HomeServe</Link></h2>
@@ -49,7 +49,7 @@ function Footer() {
 
                     </div>
                 </div>
-                <div className='text-center text-gray-200 md:text-sm text-xs md:mt-0 mt-10'>
+                <div className='text-center text-gray-200 md:text-sm text-xs mt-19 pb-2'>
                     <p>© 2025 HomeServe. By Fathimathul Raifa NP .All rights reserved</p>
                 </div>
             </div>
