@@ -36,33 +36,33 @@ function AdminHeader({ insideHeader }) {
               </div>
 
               <div className="py-2 border-b border-green-600">
-                <Link to="/admin-dashboard" className="text-white flex items-center">
+                <Link to="/admin-bookings" className="text-white flex items-center">
                   <FontAwesomeIcon icon={faClipboardList} className="me-2" />
                   Bookings
                 </Link>
               </div>
 
               <div className="py-2 border-b border-green-600">
-                <Link to="/admin-dashboard" className="text-white flex items-center">
+                <Link to="/admin-customer" className="text-white flex items-center">
                   <FontAwesomeIcon icon={faUsers} className="me-2" />
                   Customers
                 </Link>
               </div>
               <div className="py-2 border-b border-green-600">
-                <Link to="/admin-dashboard" className="text-white flex items-center">
+                <Link to="/admin-service" className="text-white flex items-center">
                   <FontAwesomeIcon icon={faUserTie} className="me-2" />
                   Service Providers
                 </Link>
               </div>
                  <div className="py-2 border-b border-green-600">
-                <Link to="/admin-dashboard" className="text-white flex items-center">
+                <Link to="/admin-careers" className="text-white flex items-center">
                   <FontAwesomeIcon icon={faBriefcase} className="me-2" />
                   Careers
                 </Link>
               </div>
 
               <div className="py-2 border-b border-green-600">
-                <Link to="/admin-dashboard" className="text-white flex items-center">
+                <Link to="/admin-settings" className="text-white flex items-center">
                   <FontAwesomeIcon icon={faGear} className="me-2" />
                   Settings
                 </Link>

@@ -17,33 +17,33 @@ function AdminSideBar() {
 
           <div className='text-semibold text-lg'>
             <FontAwesomeIcon icon={faHouse} className='me-1' />
-            <Link to={'/'}>Dashboard</Link>
+            <Link to={'/admin-dashboard'}>Dashboard</Link>
           </div>
 
           <div className='text-semibold text-lg mt-4'>
             <FontAwesomeIcon icon={faClipboardList} className='me-1' />
-            <Link to={'/'}>Bookings</Link>
+            <Link to={'/admin-bookings'}>Bookings</Link>
           </div>
 
           <div className='text-semibold text-lg mt-4'>
             <FontAwesomeIcon icon={faUsers} className='me-1' />
-            <Link to={'/'}>Customers</Link>
+            <Link to={'/admin-customer'}>Customers</Link>
           </div>
 
 
           <div className='text-semibold text-lg mt-4'>
             <FontAwesomeIcon icon={faUserTie} className='me-1' />
-            <Link to={'/'}>Service Providers</Link>
+            <Link to={'/admin-service'}>Service Providers</Link>
           </div>
           <div className='text-semibold text-lg mt-4'>
             <FontAwesomeIcon icon={faBriefcase} className='me-1' />
-            <Link to={'/'}>Careers</Link>
+            <Link to={'/admin-careers'}>Careers</Link>
           </div>
 
 
           <div className='text-semibold text-lg mt-4'>
             <FontAwesomeIcon icon={faGear} className='me-1' />
-            <Link to={'/'}>Settings</Link>
+            <Link to={'/admin-settings'}>Settings</Link>
           </div>
 
           
