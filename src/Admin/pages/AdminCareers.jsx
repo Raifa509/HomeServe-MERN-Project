@@ -12,7 +12,7 @@ function AdminCareers() {
       <AdminSideBar/>
     </div>
     <div className='col-span-6'>
-      <AdminHeader/>
+      <AdminHeader insideHeader/>
     </div>
 
    </div>

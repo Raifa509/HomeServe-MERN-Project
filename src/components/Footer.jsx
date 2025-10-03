@@ -8,7 +8,7 @@ import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 function Footer() {
     return (
         <>
-            <div className='bg-green-800 w-full mt-4 py-2'>
+            <div className='bg-green-800 w-full py-2'>
                 <div className="md:grid grid-cols-5 p-5">
                     <div className='flex flex-col items-center justify-center md:items-start md:justify-start md:ms-10 col-span-2'>
                         <div className='flex items-center ms-3  mt-4 '>

@@ -7,11 +7,11 @@ function AdminDashboard() {
   return (
     <>
    <div className="md:grid grid-cols-7 min-h-screen">
-    <div className='col-span-1'>
+    <div className='md:col-span-1 md:block hidden'>
       <AdminSideBar/>
     </div>
     <div className='col-span-6'>
-      <AdminHeader insideHeader={true}/>
+      <AdminHeader/>
     </div>
    </div>
     <Footer/>
