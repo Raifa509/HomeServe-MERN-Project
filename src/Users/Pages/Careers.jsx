@@ -32,20 +32,28 @@ function Careers() {
             <div className="shadow-md rounded py-5 md:px-7 px-4 w-full md:mb-10 mb-5">
               <div className='flex justify-between '>
                 <div>
-                  <h2 className='font-semibold text-green-900 md:text-xl text-sm'>Home Service Technician</h2>
-                  <div className="flex items-center text-sm mt-3 text-gray-600">
-                    <p><FontAwesomeIcon icon={faClock} className='me-1' />Full Time</p>
-                    <span className="mx-3 text-xl">•</span>
-                    <p><FontAwesomeIcon icon={faLocationDot} className='me-1' />Kochi, Kerala</p>
-                  </div>
+                  <h2 className="font-semibold text-green-900 md:text-xl text-sm">
+                    Home Service Technician
+                  </h2>
+                  <div className="flex items-center text-sm mt-2 text-gray-600 space-x-3">
+                    <p>
+                      <FontAwesomeIcon icon={faClock} className="me-1" />
+                      Full Time
+                    </p>
+                    <p>
+                      <FontAwesomeIcon icon={faLocationDot} className="me-1" />
+                      Kochi, Kerala
+                    </p>
 
+                  </div>
+                  <p className="text-gray-500 text-xs mt-2">Posted on : 02 Oct 2025</p>
                 </div>
 
                 {/* buttons */}
                 <div>
                   <FontAwesomeIcon icon={isOpen ? faCircleChevronUp : faCircleChevronDown} size='xl' className='text-orange-400 me-3 cursor-pointer' onClick={() => setIsOpen(!isOpen)} />
 
-                  <button className='bg-orange-400 text-white px-3 py-1.5 rounded-md cursor-pointer hover:bg-transparent border border-transparent hover:border-orange-400 hover:text-orange-400 md:inline hidden'>Submit Application<FontAwesomeIcon icon={faPaperPlane} className='ms-1' /></button>
+                  <button className='bg-orange-400 text-white px-3 py-1.5 rounded-md cursor-pointer hover:bg-transparent border border-transparent hover:border-orange-400 hover:text-orange-400 md:inline hidden'>Apply<FontAwesomeIcon icon={faPaperPlane} className='ms-1' /></button>
                   <button className='bg-orange-400 text-white px-1 rounded-md cursor-pointer md:hidden inline'><FontAwesomeIcon icon={faPaperPlane} /></button>
 
                 </div>
@@ -65,8 +73,8 @@ function Careers() {
 
 
             </div>
-            
-            
+
+
 
 
 
