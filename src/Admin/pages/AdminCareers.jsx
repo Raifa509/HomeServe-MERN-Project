@@ -90,17 +90,21 @@ function AdminCareers() {
                     <div div className='flex md:flex-row flex-col items-center justify-center md:space-x-3 space-y-3 md:space-y-0'>
                       <FontAwesomeIcon icon={isOpen ? faCircleChevronUp : faCircleChevronDown} className='text-orange-400 me-3 cursor-pointer' onClick={() => setIsOpen(!isOpen)} />
 
-                      <FontAwesomeIcon
-                        icon={faTrash}
-                        className="text-orange-400 me-3 cursor-pointer hover:text-orange-500"
-                      />
+                     <Tooltip title='Delete'>
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          className="text-orange-400 me-3 cursor-pointer hover:text-orange-500"
+                        />
+                     </Tooltip>
 
                       <div className='relative'>
-                        <FontAwesomeIcon
-                          icon={faEllipsisV}
-                          className="text-orange-400 cursor-pointer hover:text-orange-500 me-3 md:me-0"
-                          onClick={() => setMenuOpen(!menuOpen)}
-                        />
+                       <Tooltip title='More'>
+                          <FontAwesomeIcon
+                            icon={faEllipsisV}
+                            className="text-orange-400 cursor-pointer hover:text-orange-500 me-3 md:me-0"
+                            onClick={() => setMenuOpen(!menuOpen)}
+                          />
+                       </Tooltip>
                         {
                           menuOpen &&
                           <div className='absolute  bg-orange-400 w-36 right-0 top-10 text-white text-left text-xs rounded '>
