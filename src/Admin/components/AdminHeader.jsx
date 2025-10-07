@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-function AdminHeader({ insideHeader }) {
+function AdminHeader({ insideHeader ,placeholder}) {
   const [listStatus, setListStatus] = useState(false)
 
   return (
@@ -82,11 +82,11 @@ function AdminHeader({ insideHeader }) {
           {/* Search */}
           {insideHeader && (
             <div className="relative">
-              <FontAwesomeIcon icon={faSearch} className="absolute md:left-9 left-4 top-2 text-gray-500 ms-2" />
+              <FontAwesomeIcon icon={faSearch} className="absolute md:left-9 left-4 top-2 text-gray-500 ms-2 text-sm" />
               <input
                 type="text"
-                className="bg-white md:ms-8 ms-3 rounded px-9 py-1 md:w-xs w-40 placeholder-gray-500 shadow"
-                placeholder="Search"
+                className="bg-white md:ms-8 ms-3 rounded px-9 py-1 md:w-xs w-40 placeholder-gray-500 shadow placeholder:text-sm"
+                placeholder={placeholder}
               />
             </div>
           )}

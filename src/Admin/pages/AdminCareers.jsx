@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAdd, faCheck, faCircleCheck, faCircleChevronDown, faCircleChevronUp, faCircleXmark, faClock, faClose, faEdit, faEllipsisV, faLocationDot, faPaperPlane, faPencil, faSearch, faTrash, faUsers } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from '@mui/material/Tooltip';
 
+
 function AdminCareers() {
   const [jobPost, setJobPost] = useState(true)
   const [viewApplicant, setViewApplicant] = useState(false)
@@ -18,9 +19,16 @@ function AdminCareers() {
         <div className='md:col-span-1 md:block hidden'>
           <AdminSideBar />
         </div>
-        <div className='col-span-6'>
-          <AdminHeader />
 
+        {/* header */}
+        <div className='col-span-6'>
+          {
+            jobPost ?
+              <AdminHeader insideHeader={true} placeholder={'Search job title'} />
+              :
+              <AdminHeader />
+
+          }
 
           {/* career page content */}
           <div className='flex items-center justify-center mt-10 flex-col'>
@@ -45,15 +53,8 @@ function AdminCareers() {
             jobPost &&
             <div className='md:px-25 md:mt-15 mt-8'>
 
-              {/* search+add */}
-              <div className='flex justify-between items-center md:flex-row flex-col'>
-
-                {/* search */}
-                <div className='flex justify-center items-center'>
-                  <input type="text" className='rounded shadow px-3 py-1 bg-white text-black md:w-80 placeholder-gray-400 border border-gray-50 focus:border-green-600 outline-none placeholder:text-sm' placeholder='Search Job Title' />
-                  <button className='bg-green-500 text-white px-2 py-1.5 rounded shadow ms-2 cursor-pointer hover:bg-green-600 text-[16px]'><FontAwesomeIcon icon={faSearch} className='me-1' />Search</button>
-                </div>
-
+              {/* add */}
+              <div className='flex justify-end'>
                 {/* Add button */}
                 <button className='bg-blue-500 text-white px-3 py-2 rounded shadow ms-2 cursor-pointer hover:bg-blue-600 md:mt-0 mt-7 '><FontAwesomeIcon icon={faAdd} className='me-1' />Add</button>
               </div>
@@ -90,21 +91,21 @@ function AdminCareers() {
                     <div div className='flex md:flex-row flex-col items-center justify-center md:space-x-3 space-y-3 md:space-y-0'>
                       <FontAwesomeIcon icon={isOpen ? faCircleChevronUp : faCircleChevronDown} className='text-orange-400 me-3 cursor-pointer' onClick={() => setIsOpen(!isOpen)} />
 
-                     <Tooltip title='Delete'>
+                      <Tooltip title='Delete'>
                         <FontAwesomeIcon
                           icon={faTrash}
                           className="text-orange-400 me-3 cursor-pointer hover:text-orange-500"
                         />
-                     </Tooltip>
+                      </Tooltip>
 
                       <div className='relative'>
-                       <Tooltip title='More'>
+                        <Tooltip title='More'>
                           <FontAwesomeIcon
                             icon={faEllipsisV}
                             className="text-orange-400 cursor-pointer hover:text-orange-500 me-3 md:me-0"
                             onClick={() => setMenuOpen(!menuOpen)}
                           />
-                       </Tooltip>
+                        </Tooltip>
                         {
                           menuOpen &&
                           <div className='absolute  bg-orange-400 w-36 right-0 top-10 text-white text-left text-xs rounded '>
@@ -138,57 +139,57 @@ function AdminCareers() {
           {/* view Applicant tab content */}
           {
             viewApplicant &&
-         <div className='w-full overflow-x-auto'>
+            <div className='w-full overflow-x-auto'>
               <div className="md:px-25 md:mt-25 mt-20 ">
-              <table className='w-full shadow my-5'>
-                <thead className='bg-orange-400 text-white text-center'>
-                  <tr>
-                    <td className='p-1 border border-gray-300'>Sl No</td>
-                    <td className='p-1 border border-gray-300'>Applicant Name</td>
-                    <td className='p-1 border border-gray-300'>Job Role</td>
-                    <td className='p-1 border border-gray-300'>Experience</td>
-                    <td className='p-1 border border-gray-300'>Location</td>
-                    <td className='p-1 border border-gray-300'>Status</td>
-                    <td className='p-1 border border-gray-300'>Actions</td>
-                  </tr>
-                </thead>
-  
-                <tbody className='text-center'>
-                  {/* duplicate table content */}
-                  <tr>
-                    <td className='p-2 border border-gray-300'>1</td>
-                    <td className='p-2 border border-gray-300'>Raifa</td>
-                    <td className='p-2 border border-gray-300'>Plumber</td>
-                    <td className='p-2 border border-gray-300'>3 yrs</td>
-                    <td className='p-2 border border-gray-300'>Kochi</td>
-                    <td className='p-2 border border-gray-300'>Pending</td>
-                    <td className='p-2 border border-gray-300'>
-                      <div className='flex space-x-4 items-center justify-center'>
-                        <p className='underline text-blue-500 cursor-pointer hover:text-blue-600'>View</p>
-                       <Tooltip title='Approve'> <p className='text-green-500 text-xl hover:text-green-600 cursor-pointer'><FontAwesomeIcon icon={faCircleCheck}/></p></Tooltip>
-                        <Tooltip title='Reject'><p className='text-red-500 text-xl hover:text-red-600 cursor-pointer'><FontAwesomeIcon icon={faCircleXmark}/></p></Tooltip>
-                      </div>
-                    </td>
-                  </tr>
-                   <tr>
-                    <td className='p-2 border border-gray-300'>1</td>
-                    <td className='p-2 border border-gray-300'>Raifa</td>
-                    <td className='p-2 border border-gray-300'>Plumber</td>
-                    <td className='p-2 border border-gray-300'>3 yrs</td>
-                    <td className='p-2 border border-gray-300'>Kochi</td>
-                    <td className='p-2 border border-gray-300'>Approved</td>
-                    <td className='p-2 border border-gray-300'>
-                      <div className='flex space-x-4 items-center justify-center'>
-                        <p className='underline text-blue-500 cursor-pointer hover:text-blue-600'>View</p>
-                        <p className='text-red-500 text-xl hover:text-red-600 cursor-pointer'><FontAwesomeIcon icon={faCircleXmark}/></p>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-  
-              </table>
+                <table className='w-full shadow my-5'>
+                  <thead className='bg-slate-600 text-white text-center'>
+                    <tr>
+                      <td className='p-1 border border-gray-300'>Sl No</td>
+                      <td className='p-1 border border-gray-300'>Applicant Name</td>
+                      <td className='p-1 border border-gray-300'>Job Role</td>
+                      <td className='p-1 border border-gray-300'>Experience</td>
+                      <td className='p-1 border border-gray-300'>Location</td>
+                      <td className='p-1 border border-gray-300'>Status</td>
+                      <td className='p-1 border border-gray-300'>Actions</td>
+                    </tr>
+                  </thead>
+
+                  <tbody className='text-center'>
+                    {/* duplicate table content */}
+                    <tr>
+                      <td className='p-2 border border-gray-300'>1</td>
+                      <td className='p-2 border border-gray-300'>Raifa</td>
+                      <td className='p-2 border border-gray-300'>Plumber</td>
+                      <td className='p-2 border border-gray-300'>3 yrs</td>
+                      <td className='p-2 border border-gray-300'>Kochi</td>
+                      <td className='p-2 border border-gray-300'>Pending</td>
+                      <td className='p-2 border border-gray-300'>
+                        <div className='flex space-x-4 items-center justify-center'>
+                          <p className='underline text-blue-500 cursor-pointer hover:text-blue-600'>View</p>
+                          <Tooltip title='Approve'> <p className='text-green-500 text-xl hover:text-green-600 cursor-pointer'><FontAwesomeIcon icon={faCircleCheck} /></p></Tooltip>
+                          <Tooltip title='Reject'><p className='text-red-500 text-xl hover:text-red-600 cursor-pointer'><FontAwesomeIcon icon={faCircleXmark} /></p></Tooltip>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className='p-2 border border-gray-300'>1</td>
+                      <td className='p-2 border border-gray-300'>Raifa</td>
+                      <td className='p-2 border border-gray-300'>Plumber</td>
+                      <td className='p-2 border border-gray-300'>3 yrs</td>
+                      <td className='p-2 border border-gray-300'>Kochi</td>
+                      <td className='p-2 border border-gray-300'>Approved</td>
+                      <td className='p-2 border border-gray-300'>
+                        <div className='flex space-x-4 items-center justify-center'>
+                          <p className='underline text-blue-500 cursor-pointer hover:text-blue-600'>View</p>
+                          <p className='text-red-500 text-xl hover:text-red-600 cursor-pointer'><FontAwesomeIcon icon={faCircleXmark} /></p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </div>
             </div>
-         </div>
           }
         </div>
       </div>
