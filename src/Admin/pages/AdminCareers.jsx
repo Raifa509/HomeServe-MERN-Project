@@ -50,8 +50,8 @@ function AdminCareers() {
 
                 {/* search */}
                 <div className='flex justify-center items-center'>
-                  <input type="text" className='rounded shadow px-3 py-2 bg-white text-black md:w-80 placeholder-gray-400 border border-gray-50 focus:border-green-600 outline-none' placeholder='Search Job Title' />
-                  <button className='bg-green-500 text-white px-3 py-2 rounded shadow ms-2 cursor-pointer hover:bg-green-600'><FontAwesomeIcon icon={faSearch} className='me-1' />Search</button>
+                  <input type="text" className='rounded shadow px-3 py-1 bg-white text-black md:w-80 placeholder-gray-400 border border-gray-50 focus:border-green-600 outline-none placeholder:text-sm' placeholder='Search Job Title' />
+                  <button className='bg-green-500 text-white px-2 py-1.5 rounded shadow ms-2 cursor-pointer hover:bg-green-600 text-[16px]'><FontAwesomeIcon icon={faSearch} className='me-1' />Search</button>
                 </div>
 
                 {/* Add button */}
