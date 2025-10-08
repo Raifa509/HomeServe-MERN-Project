@@ -18,7 +18,7 @@ function AdminDashboard() {
           {/* cards */}
           <div className="md:grid grid-cols-4 gap-5 p-5">
 
-            <div className='bg-yellow-400 rounded text-white font-semibold p-4 text-xl'>
+            <div className='shadow-lg rounded-xl bg-yellow-400 hover:shadow-2xl transition-shadow duration-300 text-white font-semibold p-4 text-xl md:mb-0 mb-5'>
               <div className='flex justify-center items-center flex-col'>
                 <div className='flex'>
                   <FontAwesomeIcon icon={faClipboardList} className='text-2xl' />
@@ -28,7 +28,7 @@ function AdminDashboard() {
               </div>
             </div>
 
-            <div className='bg-blue-400 rounded text-white font-semibold p-4 text-xl'>
+            <div className='shadow-lg rounded-xl hover:shadow-2xl transition-shadow duration-300 text-white font-semibold p-4 text-xl  bg-blue-400 md:mb-0 mb-5'>
               <div className='flex justify-center items-center flex-col'>
                 <div className='flex'>
                   <FontAwesomeIcon icon={faHourglassHalf} className='text-2xl' />
@@ -38,7 +38,7 @@ function AdminDashboard() {
               </div>
             </div>
 
-            <div className='bg-lime-400 rounded text-white font-semibold p-4 text-xl'>
+            <div className='shadow-lg rounded-xl hover:shadow-2xl transition-shadow duration-300  bg-lime-400 text-white font-semibold p-4 text-xl md:mb-0 mb-5'>
               <div className='flex justify-center items-center flex-col'>
                 <div className='flex'>
                   <FontAwesomeIcon icon={faCheckCircle} className='text-2xl me-1' />
@@ -48,7 +48,7 @@ function AdminDashboard() {
               </div>
             </div>
 
-            <div className='bg-emerald-400 rounded text-white font-semibold p-4 text-xl'>
+            <div className='shadow-lg rounded-xl hover:shadow-2xl transition-shadow duration-300  bg-emerald-400  text-white font-semibold p-4 text-xl md:mb-0 mb-5'>
               <div className='flex justify-center items-center flex-col'>
                 <div className='flex'>
                   <FontAwesomeIcon icon={faUsers} className='text-2xl me-2' />

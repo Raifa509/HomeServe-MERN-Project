@@ -142,7 +142,7 @@ function AdminCareers() {
             <div className='w-full overflow-x-auto'>
               <div className="md:px-25 md:mt-25 mt-20 ">
                 <table className='w-full shadow my-5'>
-                  <thead className='bg-slate-600 text-white text-center'>
+                  <thead className='bg-green-50 text-green-950 font-semibold text-center'>
                     <tr>
                       <td className='p-1 border border-gray-300'>Sl No</td>
                       <td className='p-1 border border-gray-300'>Applicant Name</td>
