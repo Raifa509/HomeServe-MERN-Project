@@ -8,6 +8,7 @@ import Auth from "./pages/Auth";
 import Pnf from "./pages/Pnf";
 import Preloader from "./components/Preloader";
 import Careers from "./Users/Pages/Careers";
+import ServiceDetails from "./Users/Pages/ServiceDetails";
 
 import AdminDashboard from "./Admin/pages/AdminDashboard";
 import AdminCareers from "./Admin/pages/AdminCareers";
@@ -37,6 +38,7 @@ function App() {
         <Route path='/login' element={<Auth />} />
         <Route path='/register' element={<Auth register />} />
         <Route path='/careers' element={<Careers />} />
+        <Route path='/service/:id/details' element={<ServiceDetails />} />
 
         <Route path='/admin-dashboard' element={<AdminDashboard />} />
         <Route path='/admin-careers' element={<AdminCareers />} />
