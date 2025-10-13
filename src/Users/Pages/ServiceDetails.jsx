@@ -3,6 +3,7 @@ import Header from "../../Users/components/Header";
 import Footer from "../../components/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock, faStar } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 function ServiceDetails() {
   return (
@@ -13,7 +14,7 @@ function ServiceDetails() {
       <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-100 flex flex-col">
 
 
-        <section className="container mx-auto grid md:grid-cols-2 gap-10 px-30 py-16 items-center">
+        <section className="container mx-auto md:grid grid-cols-2 gap-10 md:px-30 px-10 py-16 items-center">
 
           {/* Text Section */}
           <div className="flex flex-col space-y-6">
@@ -38,13 +39,15 @@ function ServiceDetails() {
                 <span className="ml-2 text-base font-medium">4.8/5</span>
               </div>
             </div>
-            <button className="self-start px-6 py-3 bg-green-600 text-white rounded-2xl hover:bg-green-700 transition shadow-md cursor-pointer mt-4">
-              Book Now
-            </button>
+        <Link to={'/booking'}>
+              <button className="self-start px-6 py-3 bg-green-600 text-white rounded-2xl hover:bg-green-700 transition shadow-md cursor-pointer mt-4">
+                Book Now
+              </button>
+        </Link>
           </div>
 
           {/* image section */}
-          <div className="flex justify-center">
+          <div className="md:flex justify-center hidden">
             <img
               src="/clean.png"
               alt="House Cleaning Service"
@@ -55,7 +58,7 @@ function ServiceDetails() {
 
         {/* Service Details Section */}
         <section className="bg-white py-12 shadow-inner">
-          <div className="container mx-auto px-6 max-w-4xl space-y-12">
+          <div className="container mx-auto md:px-6 px-10 max-w-4xl space-y-12">
 
             {/* About Service */}
             <div>

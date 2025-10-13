@@ -13,7 +13,7 @@ function Careers() {
 
   return (
     <>
-      <Header />
+      <Header/>
       <div className='min-h-screen'>
 
         {/* heading */}

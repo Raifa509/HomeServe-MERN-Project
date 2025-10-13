@@ -9,6 +9,8 @@ import Pnf from "./pages/Pnf";
 import Preloader from "./components/Preloader";
 import Careers from "./Users/Pages/Careers";
 import ServiceDetails from "./Users/Pages/ServiceDetails";
+import BookingPage from "./Users/Pages/BookingPage";
+import EmergencyServices from "./Users/Pages/EmergencyServices";
 
 import AdminDashboard from "./Admin/pages/AdminDashboard";
 import AdminCareers from "./Admin/pages/AdminCareers";
@@ -39,6 +41,8 @@ function App() {
         <Route path='/register' element={<Auth register />} />
         <Route path='/careers' element={<Careers />} />
         <Route path='/service/:id/details' element={<ServiceDetails />} />
+        <Route path='/booking' element={<BookingPage/>}/>
+        <Route path='/emergency' element={<EmergencyServices/>}/>
 
         <Route path='/admin-dashboard' element={<AdminDashboard />} />
         <Route path='/admin-careers' element={<AdminCareers />} />

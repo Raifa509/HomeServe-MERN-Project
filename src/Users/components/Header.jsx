@@ -2,7 +2,7 @@ import { faUser } from '@fortawesome/free-regular-svg-icons'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link} from 'react-router-dom'
 
 function Header({ insideHeader }) {
   const [listStatus, setListStatus] = useState(false)
@@ -46,12 +46,12 @@ function Header({ insideHeader }) {
             {
               !insideHeader &&
               <>
-                <button className='bg-orange-400 text-white shadow cursor-pointer rounded px-3 py-2 text-sm font-semibold me-3 hover:bg-amber-400'>Book Now</button>
+               <Link to={'/booking'}> <button className='bg-orange-400 text-white shadow cursor-pointer rounded px-3 py-2 text-sm font-semibold me-3 hover:bg-amber-400'>Book Now</button></Link>
                 <button className='bg-white text-green-600 shadow cursor-pointer rounded px-3 py-2 text-sm font-semibold hover:bg-green-800 hover:text-white border border-transparent hover:border-white'><FontAwesomeIcon icon={faUser} size='lg' />Login</button>
               </>
 
             }
-            <button className='bg-white text-green-600 shadow cursor-pointer w-10 h-10 px-3 py-2 text-sm font-semibold rounded-full flex items-center hover:bg-black hover:text-white'><FontAwesomeIcon icon={faUser} size='lg' /></button>
+            {/* <button className='bg-white text-green-600 shadow cursor-pointer w-10 h-10 px-3 py-2 text-sm font-semibold rounded-full flex items-center hover:bg-black hover:text-white'><FontAwesomeIcon icon={faUser} size='lg' /></button> */}
 
           </div>
         </div>
