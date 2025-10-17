@@ -1,0 +1,32 @@
+import commonAPI from "./commonAPI";
+import SERVERURL from "./server";
+//guest users
+
+
+    //-login api
+
+    //-register api
+    export const registerAPI=async(reqBody)=>{
+        return await commonAPI("POST",`${SERVERURL}/register`,reqBody)
+    }
+    
+    //-google api
+    //service-api
+    //emergency-service-api
+    //career-api
+
+//authorised users- user
+
+    //-booking-api
+    //view-details-api
+    //profile update
+    //view all bookings
+
+
+//authorised users- admin
+    //add career -api
+    //update profile
+    //view users
+    //view services
+    //approve bookings
+     

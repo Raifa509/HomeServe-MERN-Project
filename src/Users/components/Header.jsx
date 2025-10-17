@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
 import { Link} from 'react-router-dom'
 
-function Header({ insideHeader }) {
+function Header() {
   const [listStatus, setListStatus] = useState(false)
 
   return (
@@ -43,15 +43,16 @@ function Header({ insideHeader }) {
 
           {/* desktop buttons */}
           <div className='md:flex items-center me-2 hidden'>
-            {
-              !insideHeader &&
-              <>
-               <Link to={'/booking'}> <button className='bg-orange-400 text-white shadow cursor-pointer rounded px-3 py-2 text-sm font-semibold me-3 hover:bg-amber-400'>Book Now</button></Link>
-                <button className='bg-white text-green-600 shadow cursor-pointer rounded px-3 py-2 text-sm font-semibold hover:bg-green-800 hover:text-white border border-transparent hover:border-white'><FontAwesomeIcon icon={faUser} size='lg' />Login</button>
-              </>
+            
 
-            }
-            {/* <button className='bg-white text-green-600 shadow cursor-pointer w-10 h-10 px-3 py-2 text-sm font-semibold rounded-full flex items-center hover:bg-black hover:text-white'><FontAwesomeIcon icon={faUser} size='lg' /></button> */}
+        
+               <Link to={'/booking'}> <button className='bg-orange-400 text-white shadow cursor-pointer rounded px-3 py-2 text-sm font-semibold me-3 hover:bg-amber-400'>Book Now</button></Link>
+
+              <Link to={'/login'}>  <button className='bg-white text-green-600 shadow cursor-pointer rounded px-3 py-2 text-sm font-semibold hover:bg-green-800 hover:text-white border border-transparent hover:border-white'><FontAwesomeIcon icon={faUser} size='lg' />Login</button></Link>
+             
+
+            
+           
 
           </div>
         </div>

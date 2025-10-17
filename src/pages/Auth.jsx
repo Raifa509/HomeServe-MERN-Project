@@ -1,18 +1,56 @@
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-
+import { Link, useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import { registerAPI } from '../Services/allAPI';
 
 function Auth({ register }) {
   const [userDetails, setUserDetails] = useState({
     username: "",
     email: "",
     password: ""
-
   })
-
+  // console.log(userDetails);
   const [showPassword, setShowpassword] = useState(false)
+
+  const navigate = useNavigate()
+  //register button handle
+  const handleRegister = async () => {
+    // console.log('Inside handle Register');
+    const { username, email, password } = userDetails
+    if (!username || !email || !password) {
+      toast.warning('Please fill the form completely')
+    } else {
+      // toast.success('Proceed to API call')
+      try {
+        const result = await registerAPI(userDetails)
+        console.log(result);
+        if (result.status == 201) {
+          toast.success("Register Success!! Please Login...")
+          setUserDetails({
+            username: "",
+            email: "",
+            password: ""
+          })
+          navigate('/login')
+
+        } else if (result.status == 409) {
+          toast.warning(result.response.data)
+          setUserDetails({ username: "", email: "", password: "" })
+          navigate('/login')
+        }
+        else {
+          console.log(result);
+          toast.error("Something went wrong!!!")
+          setUserDetails({ username: "", email: "", password: "" })
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }
+
   return (
     <>
       <div className='h-screen relative' id='auth'>
@@ -69,7 +107,7 @@ function Auth({ register }) {
 
                 {
                   register ?
-                    <button className='headingFont w-full bg-green-700 text-white p-0.5 text-lg mt-5 rounded hover:bg-green-800 cursor-pointer'>REGISTER</button>
+                    <button className='headingFont w-full bg-green-700 text-white p-0.5 text-lg mt-5 rounded hover:bg-green-800 cursor-pointer' onClick={handleRegister}>REGISTER</button>
                     :
                     <button className='headingFont w-full bg-green-700 text-white p-0.5 text-lg mt-5 rounded hover:bg-green-800 cursor-pointer'>LOGIN</button>
 
@@ -97,6 +135,20 @@ function Auth({ register }) {
         <div className=' h-1/2 w-full' style={{ backgroundColor: 'rgb(220, 226, 220)' }}></div>
 
       </div>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={3500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+
+      />
     </>
   )
 }
