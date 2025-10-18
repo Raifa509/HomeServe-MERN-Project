@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
-import { registerAPI } from '../Services/allAPI';
+import { loginAPI, registerAPI } from '../Services/allAPI';
 
 function Auth({ register }) {
   const [userDetails, setUserDetails] = useState({
@@ -15,6 +15,7 @@ function Auth({ register }) {
   const [showPassword, setShowpassword] = useState(false)
 
   const navigate = useNavigate()
+
   //register button handle
   const handleRegister = async () => {
     // console.log('Inside handle Register');
@@ -50,6 +51,54 @@ function Auth({ register }) {
       }
     }
   }
+
+  //login button handle
+  const handleLogin = async () => {
+    // console.log("Inside login handle");
+    const { email, password } = userDetails
+    if (!email || !password) {
+      toast.info("Fill the form completely!!")
+    }
+    else {
+      try {
+        const result = await loginAPI(userDetails)
+        console.log(result);
+        if (result.status == 200) {
+          toast.success("Login Successful")
+          sessionStorage.setItem("user", JSON.stringify(result.data.user))
+          sessionStorage.setItem("token", result.data.token)
+          setTimeout(() => {
+            if (result.data.user.role == "admin") {
+              navigate('/admin-dashboard')
+            } else {
+              navigate('/')
+            }
+          }, 2500);
+        } 
+        else if (result.status == 401) {
+          toast.warning(result.response.data)
+          setUserDetails({ username: "", email: "", password: "" })
+        }
+        else if (result.status == 404) {
+          toast.warning(result.response.data)
+          setUserDetails({ username: "", email: "", password: "" })
+
+
+        } else {
+          // console.log(result);
+          toast.error("Something went wrong!!!")
+          setUserDetails({ username: "", email: "", password: "" })
+        }
+
+      } catch (err) {
+        console.log(err);
+
+      }
+
+    }
+  }
+
+  
 
   return (
     <>
@@ -109,7 +158,7 @@ function Auth({ register }) {
                   register ?
                     <button className='headingFont w-full bg-green-700 text-white p-0.5 text-lg mt-5 rounded hover:bg-green-800 cursor-pointer' onClick={handleRegister}>REGISTER</button>
                     :
-                    <button className='headingFont w-full bg-green-700 text-white p-0.5 text-lg mt-5 rounded hover:bg-green-800 cursor-pointer'>LOGIN</button>
+                    <button className='headingFont w-full bg-green-700 text-white p-0.5 text-lg mt-5 rounded hover:bg-green-800 cursor-pointer' onClick={handleLogin}>LOGIN</button>
 
                 }
 
