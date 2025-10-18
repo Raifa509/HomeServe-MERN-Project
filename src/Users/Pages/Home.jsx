@@ -2,31 +2,56 @@ import React from 'react'
 import Header from "../components/Header";
 import Footer from '../../components/Footer';
 
-
 function Home() {
   return (
     <>
       <Header />
-  <div className='bg-cover' style={{backgroundImage:`url("https://media.istockphoto.com/id/590277812/photo/its-better-to-work-in-group.jpg?s=612x612&w=0&k=20&c=Q9xmEdXJlGAkUcH9FbM4bJI0AByOvnLLjzb6uxd7jhA=")`}}>
-        <div className='min-h-screen '>
-          <marquee behavior="" direction="" className="bg-green-100 text-sm p-2">  ⚡ Emergency Home Service available 24/7 – Get Help Within 1 Hr → Book Now ⚡ &nbsp;
+      {/* hero section */}
+      <div className='min-h-screen relative bg-cover bg-center'>
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/video.mp4" type="video/mp4" />
+        </video>
+
+        {/* overlay */}
+        <div className="absolute inset-0 bg-black/60"></div>
+
+        <div className='min-h-screen relative z-10 flex flex-col'>
+          {/* <marquee behavior="" direction="" className="bg-lime-50 text-sm p-2">
+            ⚡ Emergency Home Service available 24/7 – Get Help Within 1 Hr → Book Now ⚡ &nbsp;
             Plumbing, Electrical, AC, House Cleaning, Painting, Locksmith & More! Call Us Anytime! &nbsp;
-            &nbsp;
             Quick Response, Reliable Professionals, Affordable Pricing – Book Your Service Today! &nbsp;
-          </marquee>
-          <div className='md:grid grid-cols-2 p-20 '>
-            <div className='p-9'>
-              <h2 className='text-green-800 font-semibold text-5xl leading-relaxed'>Trusted <span className='text-green-500'> Professionals </span> for Every Job in Your Home
+          </marquee> */}
+
+          {/* centered text */}
+          <div className='flex flex-1 items-center justify-center mb-17 text-center px-5 md:px-96 flex-col'>
+            <div>
+              <h2 className='text-white font-semibold text-3xl md:text-5xl  leading-relaxed'>
+                Trusted <span className='text-yellow-300'> Professionals </span> for Every Job in Your Home
               </h2>
-              <h2 className='text-gray-800 text-xl'>Expert help for every home need, with trusted professionals at your fingertips.</h2>
+              <h2 className='text-white text-md'>
+                Expert help for every home need, with trusted professionals at your fingertips.
+              </h2>
             </div>
-            <div className='flex items-center '>
-              <img src="/home.png" alt="" width={600}/>
+            <div className="flex gap-4 mt-15">
+              <button className="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-6 py-3 rounded-full shadow-lg transition">
+                Book Now
+              </button>
+              <button className="bg-transparent border border-white text-white hover:bg-white hover:text-black font-semibold px-6 py-3 rounded-full transition">
+                Learn More
+              </button>
             </div>
+
           </div>
         </div>
-  </div>
- 
+      </div>
+
+
       <Footer />
     </>
   )

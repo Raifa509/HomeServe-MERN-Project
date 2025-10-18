@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import { loginAPI, registerAPI } from '../Services/allAPI';
+import { GoogleLogin } from '@react-oauth/google';
 
 function Auth({ register }) {
   const [userDetails, setUserDetails] = useState({
@@ -74,7 +75,7 @@ function Auth({ register }) {
               navigate('/')
             }
           }, 2500);
-        } 
+        }
         else if (result.status == 401) {
           toast.warning(result.response.data)
           setUserDetails({ username: "", email: "", password: "" })
@@ -98,7 +99,7 @@ function Auth({ register }) {
     }
   }
 
-  
+
 
   return (
     <>
@@ -107,7 +108,7 @@ function Auth({ register }) {
 
 
         <div className='absolute inset-0 flex items-center justify-center'>
-          <div className='bg-white w-210 md:h-105 rounded-2xl shadow-lg mx-4 md:mx-0'>
+          <div className='bg-white w-210 md:h-118 rounded-2xl shadow-lg mx-4 md:mx-0'>
             <h2 className='text-center mt-5 text-3xl headingFont font-semibold text-green-800'>{register ? 'Register' : 'Login'}</h2>
 
             <div className="md:grid grid-cols-2">
@@ -166,7 +167,26 @@ function Auth({ register }) {
 
                 {/* google authentication */}
 
+                {
+                  !register &&
+                  <div className='flex  justify-center items-center flex-col mt-5 w-full'>
+                  <p className='headingFont text-gray-800 '>Or</p>
+                  <div className='mt-5 flex items-center justify-center '>
 
+                    <GoogleLogin
+                      onSuccess={credentialResponse => {
+                        console.log(credentialResponse);
+                        handleGoogleLogin(credentialResponse)
+                      }}
+                      onError={() => {
+                        console.log('Login Failed');
+                      }}
+                    />
+
+                  </div>
+
+                </div>
+                }
 
                 {/* link for register/login */}
                 {
