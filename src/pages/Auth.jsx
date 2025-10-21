@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
-import { loginAPI, registerAPI } from '../Services/allAPI';
+import { googleLoginAPI, loginAPI, registerAPI } from '../Services/allAPI';
 import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
 
 function Auth({ register }) {
   const [userDetails, setUserDetails] = useState({
@@ -99,7 +100,39 @@ function Auth({ register }) {
     }
   }
 
+  const handleGoogleLogin = async (credentialResponse) => {
+    console.log("Inside handleGoogleLogin");
+    const credential = credentialResponse.credential
+    const details = jwtDecode(credential)
+    // console.log(details);
+    try {
+      const result = await googleLoginAPI({
+        username: details.
+          name, email: details.email, password: "googlepswd", profile: details.picture
+      })
+      console.log(result);
+      if (result.status == 200) {
+        toast.success("Login Success!!")
+        sessionStorage.setItem("user", JSON.stringify(result.data.user))
+        sessionStorage.setItem("token", result.data.token)
+        setTimeout(() => {
+          if (result.data.user.role == 'admin') {
+            navigate('/admin-dashboard')
+          } else {
+            navigate("/")
+          }
+        }, 2500);
+      }else{
+        toast.error("Something went wrong")
+      }
 
+    } catch (err) {
+      console.log(err);
+
+    }
+
+
+  }
 
   return (
     <>
@@ -170,22 +203,22 @@ function Auth({ register }) {
                 {
                   !register &&
                   <div className='flex  justify-center items-center flex-col mt-5 w-full'>
-                  <p className='headingFont text-gray-800 '>Or</p>
-                  <div className='mt-5 flex items-center justify-center '>
+                    <p className='headingFont text-gray-800 '>Or</p>
+                    <div className='mt-5 flex items-center justify-center '>
 
-                    <GoogleLogin
-                      onSuccess={credentialResponse => {
-                        console.log(credentialResponse);
-                        handleGoogleLogin(credentialResponse)
-                      }}
-                      onError={() => {
-                        console.log('Login Failed');
-                      }}
-                    />
+                      <GoogleLogin
+                        onSuccess={credentialResponse => {
+                          console.log(credentialResponse);
+                          handleGoogleLogin(credentialResponse)
+                        }}
+                        onError={() => {
+                          console.log('Login Failed');
+                        }}
+                      />
+
+                    </div>
 
                   </div>
-
-                </div>
                 }
 
                 {/* link for register/login */}

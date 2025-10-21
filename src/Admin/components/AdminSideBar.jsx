@@ -33,13 +33,16 @@ function AdminSideBar() {
 
           <div className='text-semibold text-lg mt-4'>
             <FontAwesomeIcon icon={faUserTie} className='me-1' />
-            <Link to={'/admin-service'}>Service Providers</Link>
+            <Link to={'/admin-serviceProvider'}>Service Providers</Link>
           </div>
           <div className='text-semibold text-lg mt-4'>
             <FontAwesomeIcon icon={faBriefcase} className='me-1' />
             <Link to={'/admin-careers'}>Careers</Link>
           </div>
-
+              <div className='text-semibold text-lg mt-4'>
+            <FontAwesomeIcon icon={faUserTie} className='me-1' />
+            <Link to={'/admin-service'}>Services</Link>
+          </div>
 
           <div className='text-semibold text-lg mt-4'>
             <FontAwesomeIcon icon={faGear} className='me-1' />
@@ -49,11 +52,6 @@ function AdminSideBar() {
           
         </div>
    
-
-
-
-
-
       </div>
 
 

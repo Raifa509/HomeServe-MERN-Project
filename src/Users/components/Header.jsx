@@ -1,11 +1,20 @@
 import { faUser } from '@fortawesome/free-regular-svg-icons'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 function Header() {
   const [listStatus, setListStatus] = useState(false)
+  const [token, setToken] = useState("")
+  const [userDp, setUserDp] = useState("")
+  useEffect(() => {
+    if (sessionStorage.getItem("token")) {
+      const token = sessionStorage.getItem("token")
+      setToken(token)
+    }
+  }, [])
+
 
   return (
     <>
@@ -39,7 +48,7 @@ function Header() {
                 </li>
 
                 <li className="relative group md:mx-2 mx-4 my-0.5">
-                  <Link to={'/'} className="hover:text-orange-300">
+                  <Link to={'/services'} className="hover:text-orange-300">
                     Services
                   </Link>
                   <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-orange-300 transition-all duration-300 group-hover:w-1/2"></span>
@@ -51,7 +60,7 @@ function Header() {
                   <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-orange-300 transition-all duration-300 group-hover:w-1/2"></span>
                 </li>
                 <li className="relative group md:mx-2 mx-4 my-0.5">
-                  <Link to={'/'} className="hover:text-orange-300">
+                  <Link to={'/careers'} className="hover:text-orange-300">
                     Careers
                   </Link>
                   <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-orange-300 transition-all duration-300 group-hover:w-1/2"></span>
@@ -61,8 +70,8 @@ function Header() {
                     Contact
                   </Link>
                   <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-orange-300 transition-all duration-300 group-hover:w-1/2"></span>
-                </li>              
-                </ul>
+                </li>
+              </ul>
 
             </div>
           </nav>
@@ -73,8 +82,16 @@ function Header() {
 
 
             <Link to={'/booking'}> <button className='bg-yellow-400 text-white shadow cursor-pointer rounded px-3 py-2 text-sm font-semibold me-3 hover:bg-yellow-500'>Book Now</button></Link>
+            {
+              !token &&
+              <Link to={'/login'}>  <button className='bg-white text-green-600 shadow cursor-pointer rounded px-3 py-2 text-sm font-semibold hover:bg-green-800 hover:text-white border border-transparent hover:border-white'><FontAwesomeIcon icon={faUser} size='lg' />Login</button></Link>
+              
+              }
 
-            <Link to={'/login'}>  <button className='bg-white text-green-600 shadow cursor-pointer rounded px-3 py-2 text-sm font-semibold hover:bg-green-800 hover:text-white border border-transparent hover:border-white'><FontAwesomeIcon icon={faUser} size='lg' />Login</button></Link>
+              {/* {
+                token &&
+              
+              } */}
 
 
 

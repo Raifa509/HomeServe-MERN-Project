@@ -16,6 +16,7 @@ import AdminDashboard from "./Admin/pages/AdminDashboard";
 import AdminCareers from "./Admin/pages/AdminCareers";
 import AdminBookings from "./Admin/pages/AdminBookings";
 import AdminCustomer from "./Admin/pages/AdminCustomer";
+import AdminServiceProvider from "./Admin/pages/AdminServiceProvider";
 import AdminService from "./Admin/pages/AdminService";
 import AdminSettings from "./Admin/pages/AdminSettings";
 
@@ -41,13 +42,14 @@ function App() {
         <Route path='/register' element={<Auth register />} />
         <Route path='/careers' element={<Careers />} />
         <Route path='/service/:id/details' element={<ServiceDetails />} />
-        <Route path='/booking' element={<BookingPage/>}/>
-        <Route path='/emergency' element={<EmergencyServices/>}/>
+        <Route path='/booking' element={<BookingPage />} />
+        <Route path='/emergency' element={<EmergencyServices />} />
 
         <Route path='/admin-dashboard' element={<AdminDashboard />} />
         <Route path='/admin-careers' element={<AdminCareers />} />
         <Route path='/admin-bookings' element={<AdminBookings />} />
         <Route path='/admin-customer' element={<AdminCustomer />} />
+        <Route path='/admin-serviceProvider' element={<AdminServiceProvider />} />
         <Route path='/admin-service' element={<AdminService />} />
         <Route path='/admin-settings' element={<AdminSettings />} />
 

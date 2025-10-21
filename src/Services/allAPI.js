@@ -11,8 +11,11 @@ import SERVERURL from "./server";
     export const registerAPI=async(reqBody)=>{
         return await commonAPI("POST",`${SERVERURL}/register`,reqBody)
     }
-    
     //-google api
+    export const googleLoginAPI=async(reqBody)=>{
+        return await commonAPI("POST",`${SERVERURL}/google-login`,reqBody)
+    }
+
     //service-api
     //emergency-service-api
     //career-api
