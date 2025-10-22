@@ -34,16 +34,18 @@ function Header() {
 
         {/* Desktop logo */}
         <div className='md:flex items-center ms-3 hidden'>
-          <img src="/logo.png" alt="" width={'70px'} />
-          <h2 className='headingFont text-2xl font-semibold text-yellow-400' style={{ marginLeft: '-7px', letterSpacing: '-1.5px' }}>
+          <img src="/logo.png" alt="" width={70} />
+          <h2 className='headingFont text-2xl font-semibold text-yellow-400'
+              style={{ marginLeft: '-7px', letterSpacing: '-1.5px' }}>
             <Link to={'/'}>HomeServe</Link>
           </h2>
         </div>
 
         {/* Mobile logo */}
         <div className='flex items-center justify-center md:hidden'>
-          <img src="/logo.png" alt="" width={'50px'} />
-          <h2 className='headingFont text-xl font-semibold text-yellow-400' style={{ marginLeft: '-7px', letterSpacing: '-1.5px' }}>
+          <img src="/logo.png" alt="" width={50} />
+          <h2 className='headingFont text-xl font-semibold text-yellow-400'
+              style={{ marginLeft: '-7px', letterSpacing: '-1.5px' }}>
             <Link to={'/'}>HomeServe</Link>
           </h2>
         </div>
@@ -59,7 +61,7 @@ function Header() {
             {!token ? (
               <Link to="/login">
                 <button className='bg-white text-green-600 shadow cursor-pointer rounded px-3 py-2 text-sm font-semibold hover:bg-green-800 hover:text-white border border-transparent hover:border-white'>
-                  <FontAwesomeIcon icon={faUser} size='lg' />Login
+                  <FontAwesomeIcon icon={faUser} size='lg' /> Login
                 </button>
               </Link>
             ) : (
@@ -102,23 +104,20 @@ function Header() {
             )}
           </div>
 
-          {/* Menu List */}
+          {/* Menu List with Hover Underline */}
           <ul className={listStatus ? 'flex flex-col' : 'md:flex justify-center items-center hidden'}>
-            <li className="relative group md:mx-2 mx-4 my-0.5">
-              <Link to={'/'} className="hover:text-orange-300">Home</Link>
-            </li>
-            <li className="relative group md:mx-2 mx-4 my-0.5">
-              <Link to={'/services'} className="hover:text-orange-300">Services</Link>
-            </li>
-            <li className="relative group md:mx-2 mx-4 my-0.5">
-              <Link to={'/'} className="hover:text-orange-300">About us</Link>
-            </li>
-            <li className="relative group md:mx-2 mx-4 my-0.5">
-              <Link to={'/careers'} className="hover:text-orange-300">Careers</Link>
-            </li>
-            <li className="relative group md:mx-2 mx-4 my-0.5">
-              <Link to={'/'} className="hover:text-orange-300">Contact</Link>
-            </li>
+            {[
+              { name: "Home", link: "/" },
+              { name: "Services", link: "/services" },
+              { name: "About us", link: "/" },
+              { name: "Careers", link: "/careers" },
+              { name: "Contact", link: "/" },
+            ].map((item) => (
+              <li key={item.name} className="relative group md:mx-2 mx-4 my-0.5">
+                <Link to={item.link} className="hover:text-orange-300">{item.name}</Link>
+                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-orange-300 transition-all duration-300 group-hover:w-8"></span>
+              </li>
+            ))}
           </ul>
         </nav>
 
@@ -136,7 +135,7 @@ function Header() {
             </Link>
           ) : (
             <div className="relative inline-block text-left">
-              <button onClick={() => setDropDownStatus(!dropDownStatus)} className="me-3 mt-1 cursor-pointer ">
+              <button onClick={() => setDropDownStatus(!dropDownStatus)} className="me-3 mt-1 cursor-pointer">
                 <img
                   width={45}
                   height={45}
@@ -149,12 +148,12 @@ function Header() {
               {dropDownStatus && (
                 <div className="absolute right-0 z-50 mt-2 w-40 origin-top-right rounded-md bg-green-50 shadow-lg">
                   <div className="py-1">
-                    <Link to="/" className="block px-4 py-2 text-sm text-gray-700">
+                    <Link to="/" className="block px-4 py-2 font-medium text-md text-green-950 cursor-pointer">
                       <FontAwesomeIcon icon={faAddressCard} className="me-2" /> Profile
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="block px-4 py-2 text-sm text-gray-700 cursor-pointer"
+                      className="block px-4 py-2 font-medium text-md text-green-950 cursor-pointer"
                     >
                       <FontAwesomeIcon icon={faPowerOff} className="me-2" /> Logout
                     </button>

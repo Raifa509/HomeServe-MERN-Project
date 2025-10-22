@@ -7,37 +7,47 @@ import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from '@mui/material/Tooltip';
 
 function AdminService() {
-  const [services, setServices] = useState(true);
-  const [addService, setAddService] = useState(false);
-
-
+  const [servicesTab, setServicesTab] = useState(true);
+  const [addServiceTab, setAddServiceTab] = useState(false);
   const [whatsIncluded, setWhatsIncluded] = useState([""]);
   const [pricingTiers, setPricingTiers] = useState([{ name: "", price: "" }]);
 
-  // Whats Included handlers
-  const addIncludedField = () => {
-    const temp = whatsIncluded.slice();
-    temp.push("");
-    setWhatsIncluded(temp);
-  };
+  const [serviceDetails, setServiceDetails] = useState({
+    name: "", description: "", about: "", category: "", price: 0, duration: "", thumbnail: null, detailImage: null, rating: 0, whatsIncluded: [], pricingTiers: []
+  })
+  console.log(serviceDetails);
 
-  const updateIncludedField = (index, value) => {
-    const temp = whatsIncluded.slice();
-    temp[index] = value;
+  // Whats Included handlers
+// Whats Included handlers
+const updateIncludedField = (index, value) => {
+  const temp = [...whatsIncluded];
+  temp[index] = value;
+  setWhatsIncluded(temp);
+  setServiceDetails(prev => ({ ...prev, whatsIncluded: temp })); // sync with serviceDetails
+};
+
+const addIncludedField = () => {
+  if (whatsIncluded[whatsIncluded.length - 1]?.trim() !== "") {
+    const temp = [...whatsIncluded, ""];
     setWhatsIncluded(temp);
-  };
+    setServiceDetails(prev => ({ ...prev, whatsIncluded: temp })); // sync with serviceDetails
+  }
+};
+
+
 
   // Pricing Tiers handlers
-  const addPricingTier = () => {
-    const temp = pricingTiers.slice();
-    temp.push({ name: "", price: "" });
-    setPricingTiers(temp);
-  };
-
   const updatePricingTier = (index, field, value) => {
-    const temp = pricingTiers.slice();
+    const temp = [...pricingTiers];
     temp[index][field] = value;
     setPricingTiers(temp);
+    setServiceDetails(prev => ({ ...prev, pricingTiers: temp }));
+  };
+
+  const addPricingTier = () => {
+    const temp = [...pricingTiers, { name: "", price: "" }];
+    setPricingTiers(temp);
+    setServiceDetails(prev => ({ ...prev, pricingTiers: temp }));
   };
 
   return (
@@ -55,18 +65,18 @@ function AdminService() {
           </div>
 
           <div className='flex justify-center items-center mt-10'>
-            <p onClick={() => { setServices(true); setAddService(false) }}
-              className={services ? 'text-orange-500 px-4 py-2 border-gray-200 cursor-pointer border-l border-r border-t font-medium' : 'border-b border-gray-200 cursor-pointer px-4 py-3'}>
+            <p onClick={() => { setServicesTab(true); setAddServiceTab(false) }}
+              className={servicesTab ? 'text-orange-500 px-4 py-2 border-gray-200 cursor-pointer border-l border-r border-t font-medium' : 'border-b border-gray-200 cursor-pointer px-4 py-3'}>
               All Services
             </p>
-            <p onClick={() => { setAddService(true); setServices(false) }}
-              className={addService ? 'text-orange-500 px-4 py-2 border-gray-200 cursor-pointer border-l border-r border-t font-medium' : 'border-b border-gray-200 cursor-pointer px-4 py-3'}>
+            <p onClick={() => { setAddServiceTab(true); setServicesTab(false) }}
+              className={addServiceTab ? 'text-orange-500 px-4 py-2 border-gray-200 cursor-pointer border-l border-r border-t font-medium' : 'border-b border-gray-200 cursor-pointer px-4 py-3'}>
               Add Service
             </p>
           </div>
 
           {/* All Services Section */}
-          {services && (
+          {servicesTab && (
             <div className="md:grid grid-cols-5 mt-15 gap-10 px-10 py-5 ">
               <div className="shadow-lg bg-white flex items-center justify-center p-4 flex-col rounded-xl transition-transform duration-400 hover:scale-105 relative">
                 <h2 className="text-green-700 font-semibold">House Cleaning</h2>
@@ -84,7 +94,7 @@ function AdminService() {
           )}
 
           {/* Add Service Section */}
-          {addService && (
+          {addServiceTab && (
             <div className="mt-10 px-10">
               <form className="bg-white p-10 rounded-2xl shadow-xl w-full max-w-4xl mx-auto space-y-6">
                 <h2 className="text-2xl font-semibold text-green-800 mb-4 border-b pb-2">Add New Service</h2>
@@ -92,26 +102,26 @@ function AdminService() {
                 {/* Service Name */}
                 <div>
                   <label className="block text-gray-700 font-medium mb-1">Service Name</label>
-                  <input type="text" placeholder="Enter service name" className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
+                  <input value={serviceDetails.name} onChange={e => setServiceDetails({ ...serviceDetails, name: e.target.value })} type="text" placeholder="Enter service name" className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
                 </div>
 
                 {/* Description */}
                 <div>
                   <label className="block text-gray-700 font-medium mb-1">Description</label>
-                  <textarea placeholder="Enter service description" className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
+                  <textarea value={serviceDetails.description} onChange={e => setServiceDetails({ ...serviceDetails, description: e.target.value })} placeholder="Enter service description" className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
                 </div>
 
                 {/* About this service */}
                 <div>
                   <label className="block text-gray-700 font-medium mb-1">About</label>
-                  <textarea placeholder="Enter About this service" className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
+                  <textarea value={serviceDetails.about} onChange={e => setServiceDetails({ ...serviceDetails, about: e.target.value })} placeholder="Enter About this service" className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
                 </div>
 
 
                 {/* Category */}
                 <div>
                   <label className="block text-gray-700 font-medium mb-1">Category</label>
-                  <select className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400">
+                  <select value={serviceDetails.category} onChange={e => setServiceDetails({ ...serviceDetails, category: e.target.value })} className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400">
                     <option value="">Select Category</option>
                     <option value="Cleaning">Cleaning</option>
                     <option value="Repairs">Repairs</option>
@@ -127,29 +137,31 @@ function AdminService() {
                 <div className="md:flex md:space-x-4">
                   <div className="flex-1">
                     <label className="block text-gray-700 font-medium mb-1">Price</label>
-                    <input type="number" min={0} placeholder="Enter price" className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
+                    <input value={serviceDetails.price} onChange={e => setServiceDetails({ ...serviceDetails, price: e.target.value })} type="number" min={0} placeholder="Enter price" className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
                   </div>
                   <div className="flex-1 mt-4 md:mt-0">
                     <label className="block text-gray-700 font-medium mb-1">Duration</label>
-                    <input type="text" placeholder="e.g., 2–4 hours" className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
+                    <input value={serviceDetails.duration} onChange={e => setServiceDetails({ ...serviceDetails, duration: e.target.value })} type="text" placeholder="e.g., 2–4 hours" className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
                   </div>
                 </div>
 
                 {/* Image & Rating */}
                 <div className="md:flex md:space-x-4">
-                  <div className="flex-1">
-                    <label className="block text-gray-700 font-medium mb-1">Thumbnail Image</label>
-                    <input type="file" name='thumbnail'  className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
+                  <div className="flex-1 mt-4 md:mt-0">
+                    <label className="block text-gray-700 font-medium mb-1 ">Thumbnail Image</label>
+                    <input type="file" name='thumbnail'
+                      onChange={e => setServiceDetails({ ...serviceDetails, thumbnail: e.target.files[0] })} className="w-full  p-3 border  border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
                   </div>
-                  <div className="flex-1">
+                  <div className="flex-1 mt-4 md:mt-0">
                     <label className="block text-gray-700 font-medium mb-1">Detail image</label>
-                    <input type="file" name='detail' className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
+                    <input type="file" name='detailImage'
+                      onChange={e => setServiceDetails({ ...serviceDetails, detailImage: e.target.files[0] })} className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
                   </div>
                 </div>
 
-                <div className="flex-1 mt-4 md:mt-0">
+                <div className="flex-1 mt-5 md:mt-0">
                   <label className="block text-gray-700 font-medium mb-1">Rating</label>
-                  <input type="number" placeholder="0–5" min="0" max="5" className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
+                  <input value={serviceDetails.rating} onChange={e => setServiceDetails({ ...serviceDetails, rating: e.target.value })} type="number" placeholder="0–5" min="0" max="5" className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
                 </div>
                 {/* Dynamic Whats Included */}
                 <div className="bg-green-50 p-4 rounded-xl">

@@ -1,7 +1,8 @@
 import commonAPI from "./commonAPI";
 import SERVERURL from "./server";
-//guest users
 
+
+//------------------------------guest users----------------------------------
 
     //-login api
     export const loginAPI=async(reqBody)=>{
@@ -28,7 +29,14 @@ import SERVERURL from "./server";
     //view all bookings
 
 
-//authorised users- admin
+//------------------------------------authorised users- admin-------------------------
+
+
+    //add service-api - called by admin-service component
+    export const addServiceAPI=async(reqBody,reqHeader)=>{
+        return await commonAPI("POST",`${SERVERURL}/add-service`,reqBody,reqHeader)
+    }
+
     //add career -api
     //update profile
     //view users
