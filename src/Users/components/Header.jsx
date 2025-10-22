@@ -12,6 +12,8 @@ function Header() {
     if (sessionStorage.getItem("token")) {
       const token = sessionStorage.getItem("token")
       setToken(token)
+      const user = sessionStorage.getItem("user")
+      setUserDp(user.profile)
     }
   }, [])
 
@@ -83,15 +85,14 @@ function Header() {
 
             <Link to={'/booking'}> <button className='bg-yellow-400 text-white shadow cursor-pointer rounded px-3 py-2 text-sm font-semibold me-3 hover:bg-yellow-500'>Book Now</button></Link>
             {
-              !token &&
-              <Link to={'/login'}>  <button className='bg-white text-green-600 shadow cursor-pointer rounded px-3 py-2 text-sm font-semibold hover:bg-green-800 hover:text-white border border-transparent hover:border-white'><FontAwesomeIcon icon={faUser} size='lg' />Login</button></Link>
-              
-              }
+              !token ?
+                <Link to={'/login'}>  <button className='bg-white text-green-600 shadow cursor-pointer rounded px-3 py-2 text-sm font-semibold hover:bg-green-800 hover:text-white border border-transparent hover:border-white'><FontAwesomeIcon icon={faUser} size='lg' />Login</button></Link>
 
-              {/* {
-                token &&
-              
-              } */}
+                :
+                <img src="/user.png" alt="" width={45} />
+
+            }
+
 
 
 

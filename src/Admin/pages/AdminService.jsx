@@ -101,6 +101,13 @@ function AdminService() {
                   <textarea placeholder="Enter service description" className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
                 </div>
 
+                {/* About this service */}
+                <div>
+                  <label className="block text-gray-700 font-medium mb-1">About</label>
+                  <textarea placeholder="Enter About this service" className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
+                </div>
+
+
                 {/* Category */}
                 <div>
                   <label className="block text-gray-700 font-medium mb-1">Category</label>
@@ -131,22 +138,26 @@ function AdminService() {
                 {/* Image & Rating */}
                 <div className="md:flex md:space-x-4">
                   <div className="flex-1">
-                    <label className="block text-gray-700 font-medium mb-1">Image URL</label>
-                    <input type="text" placeholder="Enter image URL" className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
+                    <label className="block text-gray-700 font-medium mb-1">Thumbnail Image</label>
+                    <input type="file" name='thumbnail'  className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
                   </div>
-                  <div className="flex-1 mt-4 md:mt-0">
-                    <label className="block text-gray-700 font-medium mb-1">Rating</label>
-                    <input type="number" placeholder="0–5" min="0" max="5"  className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
+                  <div className="flex-1">
+                    <label className="block text-gray-700 font-medium mb-1">Detail image</label>
+                    <input type="file" name='detail' className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
                   </div>
                 </div>
 
+                <div className="flex-1 mt-4 md:mt-0">
+                  <label className="block text-gray-700 font-medium mb-1">Rating</label>
+                  <input type="number" placeholder="0–5" min="0" max="5" className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
+                </div>
                 {/* Dynamic Whats Included */}
                 <div className="bg-green-50 p-4 rounded-xl">
                   <h3 className="font-semibold text-green-700 mb-2">What's Included</h3>
                   {whatsIncluded.map((item, index) => (
                     <div key={index} className="flex space-x-2 mb-2">
                       <input type="text" placeholder={`Item ${index + 1}`} value={item} onChange={(e) => updateIncludedField(index, e.target.value)} className="flex-1 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
-                      
+
                     </div>
                   ))}
                   <button type="button" onClick={addIncludedField} className="mt-2 px-4 py-2 bg-green-700 text-white rounded-xl hover:bg-green-800 transition">Add More</button>
@@ -159,7 +170,7 @@ function AdminService() {
                     <div key={index} className="flex space-x-2 mb-2">
                       <input type="text" placeholder="Tier Name (e.g., 1 BHK)" value={tier.name} onChange={(e) => updatePricingTier(index, "name", e.target.value)} className="flex-1 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
                       <input type="text" placeholder="Price" value={tier.price} onChange={(e) => updatePricingTier(index, "price", e.target.value)} className="flex-1 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
-                     
+
                     </div>
                   ))}
                   <button type="button" onClick={addPricingTier} className="mt-2 px-4 py-2 bg-green-700 text-white rounded-xl hover:bg-green-800 transition">Add More</button>
