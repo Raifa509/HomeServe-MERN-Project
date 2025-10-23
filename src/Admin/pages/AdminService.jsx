@@ -6,33 +6,68 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from '@mui/material/Tooltip';
 import { toast, ToastContainer } from 'react-toastify'
-import { addServiceAPI } from '../../Services/allAPI';
+import { addServiceAPI, getAllAdminServicesAPI } from '../../Services/allAPI';
 
 function AdminService() {
   const [servicesTab, setServicesTab] = useState(true);
   const [addServiceTab, setAddServiceTab] = useState(false);
-  const [whatsIncluded, setWhatsIncluded] = useState([""]);
-  const [pricingTiers, setPricingTiers] = useState([{ name: "", price: "" }]);
+  const [resetKey, setResetKey] = useState(Date.now());
   const [serviceDetails, setServiceDetails] = useState({
-    name: "", description: "", about: "", category: "", price: 0, duration: "", thumbnail: "", detailImage: "", rating: 0, whatsIncluded: [], pricingTiers: []
-  })
-
+    name: "", description: "", about: "", category: "", price: 0, duration: "",
+    thumbnail: "", detailImage: "", rating: 0,
+    whatsIncluded: [""],
+    pricingTiers: [{ name: "", price: "" }]
+  });
   const [token, setToken] = useState("")
-
+  const [searchKey, setSearchKey] = useState("")
+  const [allServices, setAllServices] = useState([])
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
     if (sessionStorage.getItem("token")) {
-      setToken(sessionStorage.getItem("token"))
+      const adminToken = sessionStorage.getItem("token")
+      setToken(adminToken)
+      fetchServices("",adminToken)
     }
   }, [])
 
+  console.log(allServices);
+
   // console.log(serviceDetails);
+
+
+  //fetch services
+  const fetchServices = async (value,adminToken) => {
+    setLoading(true)
+    const reqHeader = {
+      'Authorization': `Bearer ${adminToken}`
+    }
+    try {
+      const result = await getAllAdminServicesAPI(searchKey, reqHeader)
+      if (result.status == 200) {
+        setAllServices(result.data)
+      } else {
+        console.log(result);
+        toast.warning(result.response.data)
+      }
+    } catch (err) {
+      console.log(err);
+
+    }
+  }
+
 
   //handle reset
   const handleReset = () => {
     setServiceDetails({
-      name: "", description: "", about: "", category: "", price: 0, duration: "", thumbnail: "", detailImage: "", rating: 0, whatsIncluded: [], pricingTiers: []
-    })
-  }
+      name: "", description: "", about: "", category: "", price: 0, duration: "",
+      thumbnail: "", detailImage: "", rating: 0,
+      whatsIncluded: [""],
+      pricingTiers: [{ name: "", price: "" }]
+    });
+    setResetKey(Date.now());
+  };
+
+  //image handle
   const handleUploadImage = (e) => {
     // console.log(e.target.files[0]);
     const file = e.target.files[0]
@@ -50,6 +85,7 @@ function AdminService() {
 
     if (!name || !description || !about || !category || !price || !duration || !thumbnail || !detailImage || rating === "" || whatsIncluded.length == 0) {
       toast.info("Please fill the form completely")
+
     } else {
       //api call
       const reqHeader = {
@@ -76,13 +112,13 @@ function AdminService() {
         console.log(result);
         if (result.status == 401) {
           toast.warning(result.response.data)
-          // handleReset()
+          handleReset()
         } else if (result.status == 200) {
           toast.success("Service added Successfully")
           handleReset()
         } else {
           toast.error("Something went wrong!!!")
-          // handleReset()
+          handleReset()
         }
 
 
@@ -95,35 +131,37 @@ function AdminService() {
 
 
   // Whats Included handlers
-
   const updateIncludedField = (index, value) => {
-    const temp = [...whatsIncluded];
+    const temp = [...serviceDetails.whatsIncluded];
     temp[index] = value;
-    setWhatsIncluded(temp);
     setServiceDetails(prev => ({ ...prev, whatsIncluded: temp }));
   };
 
   const addIncludedField = () => {
-    if (whatsIncluded[whatsIncluded.length - 1]?.trim() !== "") {
-      const temp = [...whatsIncluded, ""];
-      setWhatsIncluded(temp);
-      setServiceDetails(prev => ({ ...prev, whatsIncluded: temp }));
+    if (serviceDetails.whatsIncluded[serviceDetails.whatsIncluded.length - 1]?.trim() !== "") {
+      setServiceDetails(prev => ({ ...prev, whatsIncluded: [...prev.whatsIncluded, ""] }));
     }
   };
 
   // Pricing Tiers handlers
   const updatePricingTier = (index, field, value) => {
-    const temp = [...pricingTiers];
+    const temp = [...serviceDetails.pricingTiers];
     temp[index][field] = value;
-    setPricingTiers(temp);
     setServiceDetails(prev => ({ ...prev, pricingTiers: temp }));
   };
 
   const addPricingTier = () => {
-    const temp = [...pricingTiers, { name: "", price: "" }];
-    setPricingTiers(temp);
-    setServiceDetails(prev => ({ ...prev, pricingTiers: temp }));
+    setServiceDetails(prev => ({
+      ...prev,
+      pricingTiers: [...prev.pricingTiers, { name: "", price: "" }]
+    }));
   };
+
+  //handle search
+  const handleSearch=(value)=>{
+    setSearchKey(value)
+    fetchServices(value,token)
+  }
 
   return (
     <>
@@ -133,7 +171,7 @@ function AdminService() {
         </div>
 
         <div className='col-span-6'>
-          <AdminHeader insideHeader={true} placeholder={'Search by service'} />
+          <AdminHeader insideHeader={true} placeholder={'Search by service'} onSearch={handleSearch}/>
 
           <div className='flex flex-col items-center justify-center mt-10'>
             <h2 className='headingFont text-2xl font-medium text-green-900'>Services</h2>
@@ -153,25 +191,30 @@ function AdminService() {
           {/* All Services Section */}
           {servicesTab && (
             <div className="md:grid grid-cols-5 mt-15 gap-10 px-10 py-5 ">
-              <div className="shadow-lg bg-white flex items-center justify-center p-4 flex-col rounded-xl transition-transform duration-400 hover:scale-105 relative">
-                <h2 className="text-green-700 font-semibold">House Cleaning</h2>
-                <img src="./houseCleaning.png" alt="" className="mt-5 rounded-md" />
-                <div className='mt-2'>
-                  <Tooltip title='Edit'>
-                    <FontAwesomeIcon icon={faPen} className='me-2 hover:text-green-600' />
-                  </Tooltip>
-                  <Tooltip title='Delete'>
-                    <FontAwesomeIcon icon={faTrash} className='ms-2 hover:text-red-600' />
-                  </Tooltip>
-                </div>
-              </div>
+              {
+                allServices?.length > 0 &&
+                allServices.map((item, index) => (
+                  <div key={index} className="shadow-lg bg-white flex items-center justify-center p-4 flex-col rounded-xl transition-transform duration-400 hover:scale-105 relative">
+                    <h2 className="text-green-700 font-semibold">{item?.name}</h2>
+                    <img src={`http://localhost:3000/uploads/${item?.thumbnail}`} alt="" className="mt-5 rounded-md w-48 h-48 object-cover" />
+                    <div className='mt-2'>
+                      <Tooltip title='Edit'>
+                        <FontAwesomeIcon icon={faPen} className='me-2 hover:text-green-600' />
+                      </Tooltip>
+                      <Tooltip title='Delete'>
+                        <FontAwesomeIcon icon={faTrash} className='ms-2 hover:text-red-600' />
+                      </Tooltip>
+                    </div>
+                  </div>
+                ))
+              }
             </div>
           )}
 
           {/* Add Service Section */}
           {addServiceTab && (
             <div className="mt-10 px-10">
-              <form className="bg-white p-10 rounded-2xl shadow-xl w-full max-w-4xl mx-auto space-y-6">
+              <form key={resetKey} className="bg-white p-10 rounded-2xl shadow-xl w-full max-w-4xl mx-auto space-y-6">
                 <h2 className="text-2xl font-semibold text-green-800 mb-4 border-b pb-2">Add New Service</h2>
 
                 {/* Service Name */}
@@ -241,7 +284,7 @@ function AdminService() {
                 {/* Dynamic Whats Included */}
                 <div className="bg-green-50 p-4 rounded-xl">
                   <h3 className="font-semibold text-green-700 mb-2">What's Included</h3>
-                  {whatsIncluded.map((item, index) => (
+                  {serviceDetails.whatsIncluded.map((item, index) => (
                     <div key={index} className="flex space-x-2 mb-2">
                       <input type="text" placeholder={`Item ${index + 1}`} value={item} onChange={(e) => updateIncludedField(index, e.target.value)} className="flex-1 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
 
@@ -253,7 +296,7 @@ function AdminService() {
                 {/* Dynamic Pricing Tiers */}
                 <div className="bg-green-50 p-4 rounded-xl">
                   <h3 className="font-semibold text-green-700 mb-2">Pricing Tiers (Optional)</h3>
-                  {pricingTiers.map((tier, index) => (
+                  {serviceDetails.pricingTiers.map((tier, index) => (
                     <div key={index} className="flex space-x-2 mb-2">
                       <input type="text" placeholder="Tier Name (e.g., 1 BHK)" value={tier.name} onChange={(e) => updatePricingTier(index, "name", e.target.value)} className="flex-1 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
                       <input type="text" placeholder="Price" value={tier.price} onChange={(e) => updatePricingTier(index, "price", e.target.value)} className="flex-1 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
@@ -270,7 +313,7 @@ function AdminService() {
           )}
 
         </div>
-      </div>
+      </div >
       <Footer />
       {/* toast for alert */}
       <ToastContainer

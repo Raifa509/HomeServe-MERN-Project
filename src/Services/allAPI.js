@@ -36,10 +36,14 @@ import SERVERURL from "./server";
     export const addServiceAPI=async(reqBody,reqHeader)=>{
         return await commonAPI("POST",`${SERVERURL}/add-service`,reqBody,reqHeader)
     }
+    //view services
+    export const getAllAdminServicesAPI=async(search,reqHeader)=>{
+        return await commonAPI("GET",`${SERVERURL}/admin/services?search=${search}`,{},reqHeader)
+    }
 
     //add career -api
     //update profile
     //view users
-    //view services
+ 
     //approve bookings
      
