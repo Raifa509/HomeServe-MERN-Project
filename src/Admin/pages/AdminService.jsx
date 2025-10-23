@@ -1,40 +1,115 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AdminSideBar from "../components/AdminSideBar";
 import AdminHeader from "../components/AdminHeader";
 import Footer from "./../../components/Footer";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from '@mui/material/Tooltip';
+import { toast, ToastContainer } from 'react-toastify'
+import { addServiceAPI } from '../../Services/allAPI';
 
 function AdminService() {
   const [servicesTab, setServicesTab] = useState(true);
   const [addServiceTab, setAddServiceTab] = useState(false);
   const [whatsIncluded, setWhatsIncluded] = useState([""]);
   const [pricingTiers, setPricingTiers] = useState([{ name: "", price: "" }]);
-
   const [serviceDetails, setServiceDetails] = useState({
-    name: "", description: "", about: "", category: "", price: 0, duration: "", thumbnail: null, detailImage: null, rating: 0, whatsIncluded: [], pricingTiers: []
+    name: "", description: "", about: "", category: "", price: 0, duration: "", thumbnail: "", detailImage: "", rating: 0, whatsIncluded: [], pricingTiers: []
   })
-  console.log(serviceDetails);
+
+  const [token, setToken] = useState("")
+
+  useEffect(() => {
+    if (sessionStorage.getItem("token")) {
+      setToken(sessionStorage.getItem("token"))
+    }
+  }, [])
+
+  // console.log(serviceDetails);
+
+  //handle reset
+  const handleReset = () => {
+    setServiceDetails({
+      name: "", description: "", about: "", category: "", price: 0, duration: "", thumbnail: "", detailImage: "", rating: 0, whatsIncluded: [], pricingTiers: []
+    })
+  }
+  const handleUploadImage = (e) => {
+    // console.log(e.target.files[0]);
+    const file = e.target.files[0]
+    const url = URL.createObjectURL(file)
+    // console.log(url);
+    setServiceDetails(prev => ({
+      ...prev,
+      [e.target.name]: file
+    }));
+  }
+
+  //handle submit 
+  const handleSubmit = async () => {
+    const { name, description, about, category, price, duration, thumbnail, detailImage, rating, whatsIncluded, pricingTiers } = serviceDetails
+
+    if (!name || !description || !about || !category || !price || !duration || !thumbnail || !detailImage || rating === "" || whatsIncluded.length == 0) {
+      toast.info("Please fill the form completely")
+    } else {
+      //api call
+      const reqHeader = {
+        "Authorization": `Bearer ${token}`
+      }
+      const reqBody = new FormData()
+      for (let key in serviceDetails) {
+        if (key !== "whatsIncluded" && key !== "pricingTiers") {
+          reqBody.append(key, serviceDetails[key])
+        } else if (key == "whatsIncluded") {
+          reqBody.append("whatsIncluded", JSON.stringify(serviceDetails.whatsIncluded));
+        } else if (key === "pricingTiers") {
+          reqBody.append("pricingTiers", JSON.stringify(serviceDetails.pricingTiers));
+        }
+
+      }
+
+      // for(var pair of reqBody.entries()){
+      //   console.log(pair[0]+':'+pair[1]);
+
+      // }
+      try {
+        const result = await addServiceAPI(reqBody, reqHeader)
+        console.log(result);
+        if (result.status == 401) {
+          toast.warning(result.response.data)
+          // handleReset()
+        } else if (result.status == 200) {
+          toast.success("Service added Successfully")
+          handleReset()
+        } else {
+          toast.error("Something went wrong!!!")
+          // handleReset()
+        }
+
+
+      } catch (err) {
+        console.log(err);
+
+      }
+    }
+  }
+
 
   // Whats Included handlers
-// Whats Included handlers
-const updateIncludedField = (index, value) => {
-  const temp = [...whatsIncluded];
-  temp[index] = value;
-  setWhatsIncluded(temp);
-  setServiceDetails(prev => ({ ...prev, whatsIncluded: temp })); // sync with serviceDetails
-};
 
-const addIncludedField = () => {
-  if (whatsIncluded[whatsIncluded.length - 1]?.trim() !== "") {
-    const temp = [...whatsIncluded, ""];
+  const updateIncludedField = (index, value) => {
+    const temp = [...whatsIncluded];
+    temp[index] = value;
     setWhatsIncluded(temp);
-    setServiceDetails(prev => ({ ...prev, whatsIncluded: temp })); // sync with serviceDetails
-  }
-};
+    setServiceDetails(prev => ({ ...prev, whatsIncluded: temp }));
+  };
 
-
+  const addIncludedField = () => {
+    if (whatsIncluded[whatsIncluded.length - 1]?.trim() !== "") {
+      const temp = [...whatsIncluded, ""];
+      setWhatsIncluded(temp);
+      setServiceDetails(prev => ({ ...prev, whatsIncluded: temp }));
+    }
+  };
 
   // Pricing Tiers handlers
   const updatePricingTier = (index, field, value) => {
@@ -150,12 +225,12 @@ const addIncludedField = () => {
                   <div className="flex-1 mt-4 md:mt-0">
                     <label className="block text-gray-700 font-medium mb-1 ">Thumbnail Image</label>
                     <input type="file" name='thumbnail'
-                      onChange={e => setServiceDetails({ ...serviceDetails, thumbnail: e.target.files[0] })} className="w-full  p-3 border  border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
+                      onChange={e => handleUploadImage(e)} className="w-full  p-3 border  border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
                   </div>
                   <div className="flex-1 mt-4 md:mt-0">
                     <label className="block text-gray-700 font-medium mb-1">Detail image</label>
                     <input type="file" name='detailImage'
-                      onChange={e => setServiceDetails({ ...serviceDetails, detailImage: e.target.files[0] })} className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
+                      onChange={e => handleUploadImage(e)} className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400" />
                   </div>
                 </div>
 
@@ -189,7 +264,7 @@ const addIncludedField = () => {
                 </div>
 
                 {/* Submit Button */}
-                <button type="button" className="w-full bg-green-700 text-white p-4 rounded-2xl hover:bg-green-800 transition font-semibold text-lg">Add Service</button>
+                <button onClick={handleSubmit} type="button" className="w-full bg-green-700 text-white p-4 rounded-2xl hover:bg-green-800 transition font-semibold text-lg">Add Service</button>
               </form>
             </div>
           )}
@@ -197,6 +272,19 @@ const addIncludedField = () => {
         </div>
       </div>
       <Footer />
+      {/* toast for alert */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </>
   );
 }
