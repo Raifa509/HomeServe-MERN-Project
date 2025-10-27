@@ -40,7 +40,11 @@ import SERVERURL from "./server";
     export const getAllAdminServicesAPI=async(search,reqHeader)=>{
         return await commonAPI("GET",`${SERVERURL}/admin/services?search=${search}`,{},reqHeader)
     }
-
+    
+    //delete service
+    export const deleteAdminServiceAPI=async(serviceId,reqHeader)=>{
+        return await commonAPI("DELETE",`${SERVERURL}/admin/service/${serviceId}/delete`,{},reqHeader)
+    }
     //add career -api
     //update profile
     //view users
