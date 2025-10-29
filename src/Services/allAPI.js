@@ -47,6 +47,11 @@ import SERVERURL from "./server";
     }
     //add career -api
     //update profile
+    export const updateAdminProfileAPI=async(reqBody,reqHeader)=>{
+        return await commonAPI("PUT",`${SERVERURL}/admin-profile/edit`,reqBody,reqHeader)
+    }
+
+
     //view users
  
     //approve bookings

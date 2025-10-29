@@ -8,6 +8,8 @@ import Tooltip from '@mui/material/Tooltip';
 import { toast, ToastContainer } from 'react-toastify'
 import { addServiceAPI, deleteAdminServiceAPI, getAllAdminServicesAPI } from '../../Services/allAPI';
 import SERVERURL from '../../Services/server';
+import EditService from "../components/EditService";
+
 
 function AdminService() {
   const [servicesTab, setServicesTab] = useState(true);
@@ -19,11 +21,14 @@ function AdminService() {
     whatsIncluded: [""],
     pricingTiers: [{ name: "", price: "" }], isEmergency: false,
     subCategory: ""
-  });
+  }); 
   const [token, setToken] = useState("")
   const [searchKey, setSearchKey] = useState("")
   const [allServices, setAllServices] = useState([])
   const [deleteServiceStatus, setDeleteServiceStatus] = useState(false)
+  const [selectedEditService, setSelectedEditService] = useState({})
+  const [EditModal, setEditModal] = useState(false)
+
 
   useEffect(() => {
     if (sessionStorage.getItem("token")) {
@@ -33,12 +38,11 @@ function AdminService() {
     }
   }, [])
   useEffect(() => {
-    if(servicesTab)
-    {
+    if (servicesTab) {
       const adminToken = sessionStorage.getItem("token")
-      fetchServices(searchKey,adminToken)
+      fetchServices(searchKey, adminToken)
     }
-  }, [servicesTab,])
+  }, [servicesTab])
 
   // console.log(allServices);
   // console.log(serviceDetails);
@@ -240,7 +244,7 @@ function AdminService() {
                       <div className='mt-1.5 mb-3'>
 
                         <Tooltip title='Edit'>
-                          <FontAwesomeIcon icon={faPen} className='me-2 text-gray-600 hover:text-green-600' />
+                          <FontAwesomeIcon icon={faPen} onClick={() => { setSelectedEditService(item); setEditModal(true) }} className='me-2 text-gray-600 hover:text-green-600' />
                         </Tooltip>
                         <Tooltip title='Delete'>
                           <FontAwesomeIcon icon={faTrash} onClick={() => removeService(item?._id)} className='text-gray-600 ms-2 hover:text-red-600' />
@@ -255,6 +259,13 @@ function AdminService() {
               }
             </div>
           )}
+
+          {
+            EditModal &&
+            (<EditService service={selectedEditService} onClose={() => setEditModal(false)} />)
+          }
+
+
 
           {/* Add Service Section */}
           {addServiceTab && (
