@@ -17,9 +17,15 @@ export const googleLoginAPI = async (reqBody) => {
     return await commonAPI("POST", `${SERVERURL}/google-login`, reqBody)
 }
 
+//get-career-api
+export const getAllJobsUserAPI=async()=>{
+    return await commonAPI("GET",`${SERVERURL}/all-jobs/openings`)
+}
+
+
 //service-api
 //emergency-service-api
-//get-career-api
+
 
 //authorised users- user
 

@@ -236,7 +236,6 @@ function AdminCareers() {
                                 <p className='text-gray-500'>No requirements listed.</p>
                               )}
                             </div>
-
                           </div>
                         }
                       </div>
