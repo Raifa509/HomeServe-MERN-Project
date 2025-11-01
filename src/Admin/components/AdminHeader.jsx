@@ -1,7 +1,7 @@
 import { faBars, faBriefcase, faClipboardList, faGear, faHouse, faSearch, faSignOutAlt, faUserCircle, faUsers, faUserTie } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useContext, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { adminUpdateContext } from '../../contextAPI/ContextShares'
 import SERVERURL from '../../Services/server';
 
@@ -10,6 +10,7 @@ function AdminHeader({ insideHeader ,placeholder,onSearch}) {
     const {adminEditResponse}=useContext(adminUpdateContext)
       const [token,setToken]=useState("")
   const [userDp,setUserDp]=useState("")
+  const navigate=useNavigate()
 
   useEffect(() => {
     if (sessionStorage.getItem("token")) {
@@ -20,6 +21,15 @@ function AdminHeader({ insideHeader ,placeholder,onSearch}) {
     }
 
   }, [token,adminEditResponse])
+
+    const handleLogout = () => {
+    sessionStorage.clear()
+    setToken("")
+    setUserDp("")
+    navigate("/")
+  }
+
+
   return (
     <>
       <div className='flex items-center justify-center md:hidden py-1 bg-lime-50 '>
@@ -114,7 +124,7 @@ function AdminHeader({ insideHeader ,placeholder,onSearch}) {
           <Link to={'/admin-settings'}>        
           <img src={userDp == "" ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSLU5_eUUGBfxfxRd4IquPiEwLbt4E_6RYMw&s" : userDp.startsWith("https://lh3.googleusercontent.com") ? userDp : `${SERVERURL}/uploads/${userDp}`} alt="admin profile" style={{width:'50px', height:'50px',borderRadius:'50%'}} className='object-fit' /></Link>
 
-            <button className="bg-white text-green-600 shadow cursor-pointer rounded md:px-3 px-1 py-1 text-sm font-semibold hover:bg-green-800 hover:text-white border border-transparent hover:border-white md:ms-3 ms-1">
+            <button onClick={handleLogout} className="bg-white text-green-600 shadow cursor-pointer rounded md:px-3 px-1 py-1 text-sm font-semibold hover:bg-green-800 hover:text-white border border-transparent hover:border-white md:ms-3 ms-1">
               <FontAwesomeIcon icon={faSignOutAlt} size="lg" className="me-1" />
               Logout
             </button>

@@ -1,17 +1,107 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import AdminSideBar from "../components/AdminSideBar";
 import AdminHeader from "../components/AdminHeader";
 import Footer from "./../../components/Footer";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAdd, faCheck, faCircleCheck, faCircleChevronDown, faCircleChevronUp, faCircleXmark, faClock, faClose, faEdit, faEllipsisV, faLocationDot, faPaperPlane, faPencil, faSearch, faTrash, faUsers } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from '@mui/material/Tooltip';
-
+import { closeJobAPI, deleteJobAPI, getAllJobsAPI } from '../../Services/allAPI';
+import { useEffect } from 'react';
+import dayjs from "dayjs";
+import AddJob from '../components/AddJob';
+import { adminAddJobContext } from '../../contextAPI/ContextShares';
 
 function AdminCareers() {
   const [jobPost, setJobPost] = useState(true)
   const [viewApplicant, setViewApplicant] = useState(false)
-  const [isOpen, setIsOpen] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [openJobId, setOpenJobId] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(null)
+  const [allJobs, setAllJobs] = useState([])
+  const [searchKey, setSearchKey] = useState("")
+  const [deleteStatus, setDeleteStatus] = useState(false)
+  const [closeJobStatus, setCloseJobStatus] = useState(false)
+  const { addJobResponse } = useContext(adminAddJobContext)
+
+  console.log(allJobs);
+
+  useEffect(() => {
+    if (jobPost) {
+      getAllJobs()
+    }
+  }, [searchKey, deleteStatus, closeJobStatus,addJobResponse])
+
+  const getAllJobs = async () => {
+    if (sessionStorage.getItem("token")) {
+      const userToken = sessionStorage.getItem("token")
+      const reqHeader = {
+        'Authorization': `Bearer ${userToken}`
+      }
+      try {
+        const result = await getAllJobsAPI(searchKey, reqHeader)
+        if (result.status == 200) {
+          setAllJobs(result.data)
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+  }
+
+  //handle search
+  const handleSearch = (value) => {
+    setSearchKey(value)
+    getAllJobs()
+  }
+
+  //delete job
+  const removeJob = async (id) => {
+    if (sessionStorage.getItem("token")) {
+      const userToken = sessionStorage.getItem("token")
+      const reqHeader = {
+        'Authorization': `Bearer ${userToken}`
+      }
+      try {
+        const result = await deleteJobAPI(id, reqHeader)
+        if (result.status == 200) {
+          setDeleteStatus(result.data)
+        }
+      } catch (err) {
+        console.log(err);
+
+      }
+    }
+
+  }
+
+  //close job
+  const closeJob = async (id) => {
+     console.log("Close job triggered for ID:", id);
+    if (sessionStorage.getItem("token")) {
+      const userToken = sessionStorage.getItem("token")
+      const reqHeader = {
+        'Authorization': `Bearer ${userToken}`
+      }
+      try {
+        const result = await closeJobAPI(id, reqHeader)
+        if (result.status == 200) {
+          setCloseJobStatus(result.data)
+        }
+      } catch (err) {
+        console.log(err);
+
+      }
+    }
+  }
+
+
+  const toggleJobOpen = (id) => {
+    setOpenJobId(openJobId === id ? null : id);
+  };
+  const toggleMenuOpen = (id) => {
+    setMenuOpen(menuOpen === id ? null : id);
+  };
+
 
   return (
     <>
@@ -24,7 +114,7 @@ function AdminCareers() {
         <div className='col-span-6'>
           {
             jobPost ?
-              <AdminHeader insideHeader={true} placeholder={'Search job title'} />
+              <AdminHeader insideHeader={true} placeholder={'Search job title'} onSearch={handleSearch} />
               :
               <AdminHeader />
 
@@ -55,82 +145,107 @@ function AdminCareers() {
 
               {/* add */}
               <div className='flex justify-end'>
-                {/* Add button */}
-                <button className='bg-blue-500 text-white px-3 py-2 rounded shadow ms-2 cursor-pointer hover:bg-blue-600 md:mt-0 mt-7 '><FontAwesomeIcon icon={faAdd} className='me-1' />Add</button>
+             <AddJob/>
               </div>
 
-              <div className='mt-10'>
+              <div className='mt-8'>
 
                 {/* duplicate job postings */}
 
-                <div className="shadow-md rounded py-5 md:px-7 px-4 w-full md:mb-10 mb-5">
-                  <div className='flex justify-between '>
-                    <div>
-                      <h2 className="font-semibold text-green-900 md:text-xl text-sm">
-                        Home Service Technician
-                      </h2>
-                      <div className="flex items-center text-sm mt-2 text-gray-600 space-x-3">
-                        <p>
-                          <FontAwesomeIcon icon={faClock} className="me-1" />
-                          Full Time
-                        </p>
-                        <p>
-                          <FontAwesomeIcon icon={faLocationDot} className="me-1" />
-                          Kochi, Kerala
-                        </p>
+                {
+                  allJobs?.length > 0 ?
+                    allJobs.map(item => (
+                      <div key={item?._id} className="shadow-md rounded py-5 md:px-7 px-4 w-full md:mb-10 mb-5">
+                        <div className='flex justify-between '>
+                          <div>
+                            <h2 className="font-semibold text-green-900 md:text-xl text-sm">
+                              {item?.jobTitle}
+                            </h2>
+                            <div className="flex items-center text-sm mt-2 text-gray-600 space-x-3">
+                              <p>
+                                <FontAwesomeIcon icon={faClock} className="me-1" />
+                                {item?.jobType}
+                              </p>
+                              <p>
+                                <FontAwesomeIcon icon={faLocationDot} className="me-1" />
+                                {item?.location}
+                              </p>
 
-                        {/* active and inactive shift */}
-                        <p className="bg-green-100 text-green-800 px-2 rounded-full text-xs font-semibold">
-                          Active
-                        </p>
-                      </div>
-                      <p className="text-gray-500 text-xs mt-2">Posted on : 02 Oct 2025</p>
-                    </div>
+                              {/* active and inactive shift */}
+                              <p
+                                className={`px-2 rounded-full text-xs font-semibold ${item?.status === "Closed"
+                                    ? "bg-red-100 text-red-500"
+                                    : "bg-green-100 text-green-800"
+                                  }`}
+                              >
+                                {item?.status}
+                              </p>
+                            </div>
+                            <p className="text-gray-500 text-xs mt-2">Posted on : {dayjs(item?.postedDate).format("DD MMM YYYY")}</p>
+                          </div>
 
-                    {/* buttons */}
-                    <div div className='flex md:flex-row flex-col items-center justify-center md:space-x-3 space-y-3 md:space-y-0'>
-                      <FontAwesomeIcon icon={isOpen ? faCircleChevronUp : faCircleChevronDown} className='text-orange-400 me-3 cursor-pointer' onClick={() => setIsOpen(!isOpen)} />
+                          {/* buttons */}
+                          <div div className='flex md:flex-row flex-col items-center justify-center md:space-x-3 space-y-3 md:space-y-0'>
+                            <FontAwesomeIcon
+                              icon={openJobId === item._id ? faCircleChevronUp : faCircleChevronDown}
+                              className='text-orange-400 me-3 cursor-pointer'
+                              onClick={() => toggleJobOpen(item._id)}
+                            />
 
-                      <Tooltip title='Delete'>
-                        <FontAwesomeIcon
-                          icon={faTrash}
-                          className="text-orange-400 me-3 cursor-pointer hover:text-orange-500"
-                        />
-                      </Tooltip>
 
-                      <div className='relative'>
-                        <Tooltip title='More'>
-                          <FontAwesomeIcon
-                            icon={faEllipsisV}
-                            className="text-orange-400 cursor-pointer hover:text-orange-500 me-3 md:me-0"
-                            onClick={() => setMenuOpen(!menuOpen)}
-                          />
-                        </Tooltip>
+                            <Tooltip title='Delete'>
+                              <FontAwesomeIcon
+                                icon={faTrash}
+                                className="text-orange-400 me-3 cursor-pointer hover:text-orange-500" onClick={() => removeJob(item?._id)}
+                              />
+                            </Tooltip>
+
+                            <div className='relative'>
+                              <Tooltip title='More'>
+                                <FontAwesomeIcon
+                                  icon={faEllipsisV}
+                                  className="text-orange-400 cursor-pointer hover:text-orange-500 me-3 md:me-0"
+                                  onClick={() => toggleMenuOpen(item._id)}
+                                />
+                              </Tooltip>
+                              {
+                                menuOpen === item._id &&
+                                <div className='absolute  bg-orange-400 w-38 right-0 top-10 text-white text-left text-xs rounded '>
+
+                                  <div className='border-b border-b-white p-2 cursor-pointer flex hover:bg-amber-500' onClick={() => closeJob(item?._id)}><FontAwesomeIcon icon={faClose} className='me-1 ms-2' /><p>Close Application</p></div>
+                                  <div className='border-b border-b-white p-2 hover:bg-amber-500 cursor-pointer '><p><FontAwesomeIcon icon={faUsers} className='me-1 ms-2' />Applicants(6)</p></div>
+
+                                </div>
+                              }
+                            </div>
+                          </div>
+                        </div>
+
                         {
-                          menuOpen &&
-                          <div className='absolute  bg-orange-400 w-36 right-0 top-10 text-white text-left text-xs rounded '>
-                            <div className='border-b border-b-white p-1 cursor-pointer'><p ><FontAwesomeIcon icon={faPencil} className='me-1 ms-2' />Edit</p></div>
-                            <div className='border-b border-b-white p-1 cursor-pointer flex'><FontAwesomeIcon icon={faClose} className='me-1 ms-2' /><p>Close Application</p></div>
-                            <div className='border-b border-b-white p-1 '><p><FontAwesomeIcon icon={faUsers} className='me-1 ms-2' />Applicants(6)</p></div>
+                          openJobId === item._id &&
+                          <div className='mt-6'>
+                            <h4 className='font-semibold'>Job Description</h4>
+                            <p className='text-justify mt-3'>{item?.description}</p>
+                            <h4 className='font-semibold mt-5'>Requirements</h4>
+                            <div className='mt-3'>
+                              {item?.requirements?.length > 0 ? (
+                                item.requirements.map((i, index) => (
+                                  <p key={index}>• {i}</p>
+                                ))
+                              ) : (
+                                <p className='text-gray-500'>No requirements listed.</p>
+                              )}
+                            </div>
 
                           </div>
                         }
                       </div>
-                    </div>
-                  </div>
+                    ))
 
-                  {
-                    isOpen &&
-                    <div className='mt-6'>
-                      <h4 className='font-semibold'>Job Description</h4>
-                      <p className='text-justify mt-3'>We are looking for a Home Service Technician to join our team. You will be responsible for providing high-quality home maintenance and repair services to our customers. This role requires technical skills, excellent customer service, and a proactive attitude.</p>
-                      <h4 className='font-semibold mt-5'>Skills</h4>
-                      <p className='mt-3'>• Previous experience in home service or technical repair is preferred.</p>
-                      <p>• Excellent communication and customer service skills.</p>
-                      <p>• Ability to work independently and as part of a team.</p>
-                    </div>
-                  }
-                </div>
+                    :
+                    <div>No Job Openings!!!</div>
+                }
+
               </div>
             </div>
           }

@@ -125,8 +125,8 @@ function AdminSettings() {
 
 
                     <input value={adminDetails?.username} onChange={e => setAdminDetails({ ...adminDetails, username: e.target.value })} type="text" placeholder='Username' className='w-full rounded bg-white px-3 py-2 mt-10 shadow' />
-                    <input value={adminDetails?.password} onChange={e => setAdminDetails({ ...adminDetails, password: e.target.value })} type="text" placeholder='Password' className='w-full rounded bg-white px-3 py-2 mt-5 shadow' />
-                    <input value={adminDetails?.cpassword} onChange={e => setAdminDetails({ ...adminDetails, cpassword: e.target.value })} type="text" placeholder='Confirm Password' className='w-full rounded bg-white px-3 py-2 mt-5 shadow' />
+                    <input value={adminDetails?.password} onChange={e => setAdminDetails({ ...adminDetails, password: e.target.value })} type="password" placeholder='Password' className='w-full rounded bg-white px-3 py-2 mt-5 shadow' />
+                    <input value={adminDetails?.cpassword} onChange={e => setAdminDetails({ ...adminDetails, cpassword: e.target.value })} type="password" placeholder='Confirm Password' className='w-full rounded bg-white px-3 py-2 mt-5 shadow' />
                     <div className="flex mt-7 w-full">
                       <button onClick={handleReset} className='px-4 w-full py-1 bg-orange-400 text-white rounded m-2 cursor-pointer'>Reset</button>
                       <button onClick={handleUpdate} className='px-3 w-full py-1 bg-green-600 text-white rounded m-2 cursor-pointer'>Update</button>
