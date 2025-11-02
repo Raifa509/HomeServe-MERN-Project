@@ -4,9 +4,11 @@ import Footer from "./../../components/Footer";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 import { faCircleChevronDown, faCircleChevronUp, faClose, faLocationDot } from '@fortawesome/free-solid-svg-icons';
-import { getAllJobsUserAPI } from '../../Services/allAPI';
+import { addApplicationAPI, getAllJobsUserAPI } from '../../Services/allAPI';
 import { useEffect } from 'react';
 import dayjs from "dayjs";
+import { toast, ToastContainer } from 'react-toastify'
+import { useNavigate } from 'react-router-dom';
 
 function Careers() {
 
@@ -14,13 +16,16 @@ function Careers() {
   const [allJobs, setAllJobs] = useState([])
   const [openJobId, setOpenJobId] = useState(null);
   const [modalStatus, setModalStatus] = useState(false)
-  const [jobTitle,setJobTitle]=useState("")
-  const [jobId,setJobId]=useState("")
-  
-  const [applicationDetails,setApplicationDetails]=useState({
-    fullname:"",email:"",phone:"",qualification:"",experience:"",resume:""
+  const [jobTitle, setJobTitle] = useState("")
+  const [jobId, setJobId] = useState("")
+  const [fileKey, setFileKey] = useState(Date.now())
+
+  const [applicationDetails, setApplicationDetails] = useState({
+    fullname: "", email: "", phone: "", qualification: "", experience: "", resume: ""
   })
 
+  const navigate = useNavigate()
+  // console.log(applicationDetails);
 
   useEffect(() => {
     getAllJobs()
@@ -49,6 +54,63 @@ function Careers() {
     setJobTitle(job?.jobTitle)
     setModalStatus(true)
   }
+
+  const handleReset = () => {
+    setApplicationDetails({
+      fullname: "", email: "", phone: "", qualification: "", experience: "", resume: ""
+    })
+    setFileKey(Date.now())
+  }
+
+  const handleSubmitButton = async() => {
+    const { fullname, email, phone, qualification, experience, resume } = applicationDetails
+    const token = sessionStorage.getItem("token")
+    if (!token) {
+      toast.info("Please login to apply job!!!")
+      setTimeout(() => {
+        navigate('/login')
+      }, 2000);
+    }else if(!fullname || !email || !phone || !qualification || !experience || !resume){
+      toast.info("Please fill the form completely..")
+    }else{
+         const reqHeader = {
+        'Authorization': `Bearer ${token}`
+      }
+      const reqBody=new FormData()
+      for(let key in applicationDetails)
+      {
+        reqBody.append(key,applicationDetails[key])
+      }
+      reqBody.append("jobTitle",jobTitle)
+      reqBody.append("jobId",jobId)
+      try{
+        const result=await addApplicationAPI(reqBody,reqHeader)
+        console.log(result);
+        if(result.status==200)
+        {
+          toast.success("Application submitted successfully!!!")
+          handleReset()
+          setModalStatus(false)
+        }else if(result.status==409)
+        {
+          toast.warning(result.response.data)
+          // handleReset()
+        }else{
+          toast.error("Something went wrong!!")
+          // handleReset()
+          // setModalStatus(false)
+        }
+        
+
+      }catch(err)
+      {
+        console.log(err);
+        
+      }
+    }
+  }
+
+
   return (
     <>
       <Header />
@@ -95,7 +157,7 @@ function Careers() {
                         <FontAwesomeIcon icon={openJobId == item._id ? faCircleChevronUp : faCircleChevronDown} size='xl' className='text-orange-400 me-3 cursor-pointer' onClick={() => toggleJobOpen(item._id)} />
 
                         <button className='bg-orange-400 text-white px-3 py-1.5 rounded-md cursor-pointer hover:bg-transparent border border-transparent hover:border-orange-400 hover:text-orange-400 md:inline hidden' onClick={() => handleApplyJob(item)}>Apply<FontAwesomeIcon icon={faPaperPlane} className='ms-1' /></button>
-                        <button className='bg-orange-400 text-white px-1 rounded-md cursor-pointer md:hidden inline'><FontAwesomeIcon icon={faPaperPlane} /></button>
+                        <button className='bg-orange-400 text-white px-1 rounded-md cursor-pointer md:hidden inline' onClick={() => handleApplyJob(item)}><FontAwesomeIcon icon={faPaperPlane} /></button>
 
                       </div>
                     </div>
@@ -143,7 +205,7 @@ function Careers() {
       </div>
 
 
-{/* modal content */}
+      {/* modal content */}
 
       {
         modalStatus &&
@@ -154,36 +216,50 @@ function Careers() {
             {/* content div goes here */}
             <div className="flex justify-center items-center min-h-screen md:m-0 m-4">
               <div className='bg-white rounded  w-150 ' >
-                <div className='flex justify-between items-center bg-black text-white p-3'>
-                  <h3>Application Form</h3>
+                <div className='flex justify-between items-center bg-gray-600 text-white p-3'>
+                  <h3 className='font-semibold'>Application Form</h3>
                   <FontAwesomeIcon onClick={() => setModalStatus(false)} icon={faClose} className='cursor-pointer' />
                 </div>
                 {/* modal body */}
                 <div className='relative p-5'>
                   <div className="md:grid grid-cols-2 gap-x-5">
                     <div className="mb-3">
-                      <input value={applicationDetails?.fullname} onChange={e => setApplicationDetails({ ...applicationDetails, fullname: e.target.value })} type="text" placeholder='Full Name' className='w-full p-2 border rounded text-black placeholder-gray-400' />
+                      <input value={applicationDetails?.fullname} onChange={e => setApplicationDetails({ ...applicationDetails, fullname: e.target.value })} type="text" placeholder='Full Name' className='w-full p-2 border rounded text-black placeholder-gray-500' />
                     </div>
 
                     <div className="mb-3">
-                      <input value={applicationDetails?.qualification} onChange={e => setApplicationDetails({ ...applicationDetails, qualification: e.target.value })} type="text" placeholder='Qualification' className='w-full p-2 border rounded text-black placeholder-gray-400' />
+                      <input value={applicationDetails?.qualification} onChange={e => setApplicationDetails({ ...applicationDetails, qualification: e.target.value })} type="text" placeholder='Qualification' className='w-full p-2 border rounded text-black placeholder-gray-500' />
                     </div>
                     <div className="mb-3">
-                      <input value={applicationDetails?.email} onChange={e => setApplicationDetails({ ...applicationDetails, email: e.target.value })} type="text" placeholder='Email ID' className='w-full p-2 border rounded text-black placeholder-gray-400' />
+                      <input value={applicationDetails?.email} onChange={e => setApplicationDetails({ ...applicationDetails, email: e.target.value })} type="text" placeholder='Email ID' className='w-full p-2 border rounded text-black placeholder-gray-500' />
                     </div>
 
                     <div className="mb-3">
-                      <input value={applicationDetails?.phone} onChange={e => setApplicationDetails({ ...applicationDetails, phone: e.target.value })} type="text" placeholder='Phone ' className='w-full p-2 border rounded text-black placeholder-gray-400' />
+                      <input value={applicationDetails?.phone} onChange={e => setApplicationDetails({ ...applicationDetails, phone: e.target.value })} type="text" placeholder='Phone ' className='w-full p-2 border rounded text-black placeholder-gray-500' />
                     </div>
 
                     <div className="mb-3 col-span-2">
-                      <textarea value={applicationDetails?.coverLetter} onChange={e => setApplicationDetails({ ...applicationDetails, coverLetter: e.target.value })} placeholder='Cover Letter' className='w-full p-2 border rounded text-black placeholder-gray-400' />
+                      <select value={applicationDetails?.experience} onChange={e => setApplicationDetails({ ...applicationDetails, experience: e.target.value })}
+                        className="w-full p-2 border rounded text-black placeholder-gray-500"
+                        name="experience"
+                        defaultValue=""
+                      >
+                        <option value="" disabled hidden className="text-gray-500">
+                          Experience
+                        </option>
+                        <option value="Fresher">Fresher</option>
+                        <option value="1 Year">1 Year</option>
+                        <option value="2 Years">2 Years</option>
+                        <option value="3+ Years">3+ Years</option>
+                        <option value="5+ Years">5+ Years</option>
+                      </select>
+
                     </div>
 
 
-                    <div className="mb-3 col-span-2 text-gray-400">
+                    <div className="mb-3 col-span-2 text-gray-500">
                       <label htmlFor="">Resume</label>
-                      <input  onChange={e => setApplicationDetails({ ...applicationDetails, resume: e.target.files[0] })} type="file" name="" id="" className='w-full border rounded file:bg-gray-400 file:p-2 file:text-white ' />
+                      <input key={fileKey} onChange={e => setApplicationDetails({ ...applicationDetails, resume: e.target.files[0] })} type="file" name="" id="" className='w-full border rounded file:bg-gray-500 file:p-2 file:text-white ' />
 
                     </div>
 
@@ -194,9 +270,9 @@ function Careers() {
 
                 {/* modal footer */}
                 <div className="bg-gray-200 p-3 flex justify-end">
-                  <button className="p-2 rounded bg-orange-400 text-white border hover:bg-transparent hover:text-orange-400
+                  <button onClick={handleReset} className="p-2 rounded bg-orange-400 text-white border hover:bg-transparent hover:text-orange-400
                   hover:border-orange-400 cursor-pointer">Reset</button>
-                  <button className="p-2 rounded bg-blue-600 text-white ms-3 border hover:bg-transparent hover:text-blue-600 hover:border-blue-600 cursor-pointer" >Submit</button>
+                  <button className="p-2 rounded bg-green-600 text-white ms-3 border hover:bg-transparent hover:text-green-600 hover:border-green-600 cursor-pointer" onClick={handleSubmitButton}>Submit</button>
                 </div>
               </div>
             </div>
@@ -206,6 +282,19 @@ function Careers() {
 
 
       <Footer />
+      {/* toast for alert */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </>
   )
 }

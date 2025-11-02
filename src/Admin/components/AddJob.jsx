@@ -14,7 +14,7 @@ function AddJob() {
   })
   const {setAddJobResponse}=useContext(adminAddJobContext)
 
-  console.log(jobDetails);
+  // console.log(jobDetails);
 
   const handleReset = () => {
     setJobDetails({

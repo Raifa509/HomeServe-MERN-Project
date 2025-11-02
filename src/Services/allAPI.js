@@ -22,6 +22,13 @@ export const getAllJobsUserAPI=async()=>{
     return await commonAPI("GET",`${SERVERURL}/all-jobs/openings`)
 }
 
+//--------------------------------authorised user-------------------------
+
+
+//apply job
+export const addApplicationAPI = async (reqBody, reqHeader) => {
+    return await commonAPI("POST", `${SERVERURL}/apply-job`, reqBody, reqHeader)
+}
 
 //service-api
 //emergency-service-api
@@ -69,6 +76,16 @@ export const deleteJobAPI = async (jobId, reqHeader) => {
 //close-job -api
 export const closeJobAPI = async (jobId, reqHeader) => {
     return await commonAPI("PUT", `${SERVERURL}/close-job/${jobId}`, {}, reqHeader)
+}
+
+//get job applications api
+export const getAllApplicationsAPI = async (reqHeader) => {
+    return await commonAPI("GET", `${SERVERURL}/job-application/view`,{},reqHeader)
+}
+
+//update application status api
+export const updateApplicationStatusAPI = async (jobId,reqBody, reqHeader) => {
+    return await commonAPI("PUT", `${SERVERURL}/application/status/${jobId}`, reqBody, reqHeader)
 }
 
 //update profile

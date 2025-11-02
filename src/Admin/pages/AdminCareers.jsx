@@ -5,7 +5,7 @@ import Footer from "./../../components/Footer";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAdd, faCheck, faCircleCheck, faCircleChevronDown, faCircleChevronUp, faCircleXmark, faClock, faClose, faEdit, faEllipsisV, faLocationDot, faPaperPlane, faPencil, faSearch, faTrash, faUsers } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from '@mui/material/Tooltip';
-import { closeJobAPI, deleteJobAPI, getAllJobsAPI } from '../../Services/allAPI';
+import { closeJobAPI, deleteJobAPI, getAllApplicationsAPI, getAllJobsAPI, updateApplicationStatusAPI } from '../../Services/allAPI';
 import { useEffect } from 'react';
 import dayjs from "dayjs";
 import AddJob from '../components/AddJob';
@@ -21,14 +21,19 @@ function AdminCareers() {
   const [deleteStatus, setDeleteStatus] = useState(false)
   const [closeJobStatus, setCloseJobStatus] = useState(false)
   const { addJobResponse } = useContext(adminAddJobContext)
+  const [jobApplications, setJobApplications] = useState([])
 
-  console.log(allJobs);
+
+  // console.log(allJobs);
+  console.log(jobApplications);
 
   useEffect(() => {
     if (jobPost) {
       getAllJobs()
+    } else if (viewApplicant) {
+      getAllApplications()
     }
-  }, [searchKey, deleteStatus, closeJobStatus,addJobResponse])
+  }, [searchKey, deleteStatus, closeJobStatus, addJobResponse, viewApplicant])
 
   const getAllJobs = async () => {
     if (sessionStorage.getItem("token")) {
@@ -47,6 +52,25 @@ function AdminCareers() {
     }
 
   }
+
+  //get all applications
+  const getAllApplications = async () => {
+    if (sessionStorage.getItem("token")) {
+      const userToken = sessionStorage.getItem("token")
+      const reqHeader = {
+        'Authorization': `Bearer ${userToken}`
+      }
+      try {
+        const result = await getAllApplicationsAPI(reqHeader)
+        if (result.status == 200) {
+          setJobApplications(result.data)
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }
+
 
   //handle search
   const handleSearch = (value) => {
@@ -74,9 +98,28 @@ function AdminCareers() {
 
   }
 
+  //handle status update
+  // const updateApplicationStatus=async(id,status)=>{
+  //   if(sessionStorage.getItem("token"))
+  //   {
+  //     const adminToken = sessionStorage.getItem("token")
+  //     const reqHeader = {
+  //       'Authorization': `Bearer ${adminToken}`
+  //     }
+  //     try{
+  //       const result=await updateApplicationStatusAPI(id,status,reqHeader)
+        
+  //     }catch(err)
+  //     {
+  //       console.log(err);
+        
+  //     }
+  //   }
+  // }
+
   //close job
   const closeJob = async (id) => {
-     console.log("Close job triggered for ID:", id);
+    console.log("Close job triggered for ID:", id);
     if (sessionStorage.getItem("token")) {
       const userToken = sessionStorage.getItem("token")
       const reqHeader = {
@@ -145,7 +188,7 @@ function AdminCareers() {
 
               {/* add */}
               <div className='flex justify-end'>
-             <AddJob/>
+                <AddJob />
               </div>
 
               <div className='mt-8'>
@@ -174,8 +217,8 @@ function AdminCareers() {
                               {/* active and inactive shift */}
                               <p
                                 className={`px-2 rounded-full text-xs font-semibold ${item?.status === "Closed"
-                                    ? "bg-red-100 text-red-500"
-                                    : "bg-green-100 text-green-800"
+                                  ? "bg-red-100 text-red-500"
+                                  : "bg-green-100 text-green-800"
                                   }`}
                               >
                                 {item?.status}
@@ -254,54 +297,88 @@ function AdminCareers() {
           {
             viewApplicant &&
             <div className='w-full overflow-x-auto'>
-              <div className="md:px-25 md:mt-25 mt-20 ">
-                <table className='w-full shadow my-5'>
-                  <thead className='bg-green-50 text-green-950 font-semibold text-center'>
+              <div className="md:px-25 mt-20 ">
+                <table className="min-w-full bg-white shadow-md rounded-xl overflow-hidden my-6">
+                  <thead className="bg-green-600 text-white text-sm uppercase tracking-wide">
                     <tr>
-                      <td className='p-1 border border-gray-300'>Sl No</td>
-                      <td className='p-1 border border-gray-300'>Applicant Name</td>
-                      <td className='p-1 border border-gray-300'>Job Role</td>
-                      <td className='p-1 border border-gray-300'>Experience</td>
-                      <td className='p-1 border border-gray-300'>Location</td>
-                      <td className='p-1 border border-gray-300'>Status</td>
-                      <td className='p-1 border border-gray-300'>Actions</td>
+                      <th className="px-4 py-3 text-left">#</th>
+                      <th className="px-4 py-3 text-left">Applicant</th>
+                      <th className="px-4 py-3 text-left">Job Role</th>
+                      <th className="px-4 py-3 text-left">Experience</th>
+                      <th className="px-4 py-3 text-left">Qualification</th>
+                      <th className="px-4 py-3 text-left">Status</th>
+                      <th className="px-4 py-3 text-center">Actions</th>
                     </tr>
                   </thead>
 
-                  <tbody className='text-center'>
-                    {/* duplicate table content */}
-                    <tr>
-                      <td className='p-2 border border-gray-300'>1</td>
-                      <td className='p-2 border border-gray-300'>Raifa</td>
-                      <td className='p-2 border border-gray-300'>Plumber</td>
-                      <td className='p-2 border border-gray-300'>3 yrs</td>
-                      <td className='p-2 border border-gray-300'>Kochi</td>
-                      <td className='p-2 border border-gray-300'>Pending</td>
-                      <td className='p-2 border border-gray-300'>
-                        <div className='flex space-x-4 items-center justify-center'>
-                          <p className='underline text-blue-500 cursor-pointer hover:text-blue-600'>View</p>
-                          <Tooltip title='Approve'> <p className='text-green-500 text-xl hover:text-green-600 cursor-pointer'><FontAwesomeIcon icon={faCircleCheck} /></p></Tooltip>
-                          <Tooltip title='Reject'><p className='text-red-500 text-xl hover:text-red-600 cursor-pointer'><FontAwesomeIcon icon={faCircleXmark} /></p></Tooltip>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className='p-2 border border-gray-300'>1</td>
-                      <td className='p-2 border border-gray-300'>Raifa</td>
-                      <td className='p-2 border border-gray-300'>Plumber</td>
-                      <td className='p-2 border border-gray-300'>3 yrs</td>
-                      <td className='p-2 border border-gray-300'>Kochi</td>
-                      <td className='p-2 border border-gray-300'>Approved</td>
-                      <td className='p-2 border border-gray-300'>
-                        <div className='flex space-x-4 items-center justify-center'>
-                          <p className='underline text-blue-500 cursor-pointer hover:text-blue-600'>View</p>
-                          <p className='text-red-500 text-xl hover:text-red-600 cursor-pointer'><FontAwesomeIcon icon={faCircleXmark} /></p>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
+                  <tbody className="  text-sm">
 
+                    {
+                      jobApplications?.length > 0 ?
+                        jobApplications?.map((item, index) => (
+                          <tr key={item?._id} className="hover:bg-green-50 transition-colors duration-200">
+                            <td className="px-4 py-3 font-medium text-gray-700">{index + 1}</td>
+                            <td className="px-4 py-3 font-semibold text-gray-900">{item?.fullname}</td>
+                            <td className="px-4 py-3 text-gray-700">{item?.jobTitle}</td>
+                            <td className="px-4 py-3 text-gray-700">{item?.experience}</td>
+                            <td className="px-4 py-3 text-gray-700">{item?.qualification}</td>
+
+                            {/* Status badge */}
+
+                            <td className="px-4 py-3">
+                              <span
+                                className={`px-3 py-1 text-xs font-semibold rounded-full ${item?.status === "Pending"
+                                  ? "bg-yellow-100 text-yellow-700"
+                                  : item?.status === "Approved"
+                                    ? "bg-green-100 text-green-700"
+                                    : "bg-red-100 text-red-700"
+                                  }`}
+                              >
+                                {item?.status}
+                              </span>
+                            </td>
+
+
+                            {/* Actions */}
+                            <td className="px-4 py-3 text-center">
+                              <div className="flex items-center justify-center space-x-4">
+                                <p className="underline text-blue-500 cursor-pointer hover:text-blue-600 transition-colors">
+                                  View
+                                </p>
+
+                                {
+                                  item?.status != "Approved" &&
+                                  (<Tooltip title="Approve">
+                                    <p className="text-green-500 text-lg hover:scale-110 transform cursor-pointer transition-transform">
+                                      <FontAwesomeIcon icon={faCircleCheck} />
+                                    </p>
+                                  </Tooltip>)
+
+                                }
+
+
+                               {
+                                item?.status != "Rejected" &&
+                               ( <Tooltip title="Reject">
+                                  <p className="text-red-500 text-lg hover:scale-110 transform cursor-pointer transition-transform">
+                                    <FontAwesomeIcon icon={faCircleXmark} />
+                                  </p>
+                                </Tooltip>
+                                )}
+
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+
+                        :
+                        <td colSpan="7" className="text-center py-10 text-gray-500 font-medium">
+                          No Applications yet!!!
+                        </td>
+                    }
+                  </tbody>
                 </table>
+
               </div>
             </div>
           }
