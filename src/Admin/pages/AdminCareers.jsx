@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import dayjs from "dayjs";
 import AddJob from '../components/AddJob';
 import { adminAddJobContext } from '../../contextAPI/ContextShares';
+import ViewApplication from '../components/ViewApplication';
 
 function AdminCareers() {
   const [jobPost, setJobPost] = useState(true)
@@ -99,23 +100,24 @@ function AdminCareers() {
   }
 
   //handle status update
-  // const updateApplicationStatus=async(id,status)=>{
-  //   if(sessionStorage.getItem("token"))
-  //   {
-  //     const adminToken = sessionStorage.getItem("token")
-  //     const reqHeader = {
-  //       'Authorization': `Bearer ${adminToken}`
-  //     }
-  //     try{
-  //       const result=await updateApplicationStatusAPI(id,status,reqHeader)
-        
-  //     }catch(err)
-  //     {
-  //       console.log(err);
-        
-  //     }
-  //   }
-  // }
+  const updateApplicationStatus = async (id, status) => {
+    if (sessionStorage.getItem("token")) {
+      const adminToken = sessionStorage.getItem("token")
+      const reqHeader = {
+        'Authorization': `Bearer ${adminToken}`
+      }
+      try {
+        const result = await updateApplicationStatusAPI(id, { status }, reqHeader)
+        if (result.status == 200) {
+          getAllApplications()
+        }
+
+      } catch (err) {
+        console.log(err);
+
+      }
+    }
+  }
 
   //close job
   const closeJob = async (id) => {
@@ -342,32 +344,39 @@ function AdminCareers() {
                             {/* Actions */}
                             <td className="px-4 py-3 text-center">
                               <div className="flex items-center justify-center space-x-4">
-                                <p className="underline text-blue-500 cursor-pointer hover:text-blue-600 transition-colors">
-                                  View
+                             
+                                <p>
+                                  <ViewApplication applicant={item}/>
                                 </p>
 
-                                {
-                                  item?.status != "Approved" &&
-                                  (<Tooltip title="Approve">
-                                    <p className="text-green-500 text-lg hover:scale-110 transform cursor-pointer transition-transform">
-                                      <FontAwesomeIcon icon={faCircleCheck} />
-                                    </p>
-                                  </Tooltip>)
+                                {item?.status !== "Rejected" && (
+                                  <>
+                                  
+                                    {item?.status !== "Approved" && (
+                                      <Tooltip title="Approve">
+                                        <p className="text-green-500 text-lg hover:scale-110 transform cursor-pointer transition-transform">
+                                          <FontAwesomeIcon
+                                            onClick={() => updateApplicationStatus(item?._id, "Approved")}
+                                            icon={faCircleCheck}
+                                          />
+                                        </p>
+                                      </Tooltip>
+                                    )}
 
-                                }
-
-
-                               {
-                                item?.status != "Rejected" &&
-                               ( <Tooltip title="Reject">
-                                  <p className="text-red-500 text-lg hover:scale-110 transform cursor-pointer transition-transform">
-                                    <FontAwesomeIcon icon={faCircleXmark} />
-                                  </p>
-                                </Tooltip>
+                                 
+                                    <Tooltip title="Reject">
+                                      <p className="text-red-500 text-lg hover:scale-110 transform cursor-pointer transition-transform">
+                                        <FontAwesomeIcon
+                                          onClick={() => updateApplicationStatus(item?._id, "Rejected")}
+                                          icon={faCircleXmark}
+                                        />
+                                      </p>
+                                    </Tooltip>
+                                  </>
                                 )}
-
                               </div>
                             </td>
+
                           </tr>
                         ))
 
