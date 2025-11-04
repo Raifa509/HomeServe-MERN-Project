@@ -101,7 +101,7 @@ function AdminSettings() {
             <div className='flex items-center justify-center mt-10 flex-col w-full'>
               <h2 className='headingFont text-2xl font-medium text-green-900'>Settings</h2>
               <div className=' mt-12 w-full flex justify-center items-center'>
-                <div className='bg-green-50 p-4 flex items-center justify-center shadow-md md:w-2/4 rounded-2xl'>
+                <div className='bg-gray-300 p-4 flex items-center justify-center shadow-md md:w-2/4 rounded-2xl'>
                   <div className='rounded flex justify-center items-center flex-col px-10 py-2 md:mt-0 my-10 w-full'>
 
                     {/* admic pic change */}

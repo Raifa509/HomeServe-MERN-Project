@@ -5,12 +5,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import { adminUpdateContext } from '../../contextAPI/ContextShares'
 import SERVERURL from '../../Services/server';
 
-function AdminHeader({ insideHeader ,placeholder,onSearch}) {
+function AdminHeader({ insideHeader, placeholder, onSearch }) {
   const [listStatus, setListStatus] = useState(false)
-    const {adminEditResponse}=useContext(adminUpdateContext)
-      const [token,setToken]=useState("")
-  const [userDp,setUserDp]=useState("")
-  const navigate=useNavigate()
+  const { adminEditResponse } = useContext(adminUpdateContext)
+  const [token, setToken] = useState("")
+  const [userDp, setUserDp] = useState("")
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (sessionStorage.getItem("token")) {
@@ -20,9 +20,9 @@ function AdminHeader({ insideHeader ,placeholder,onSearch}) {
       setUserDp(user.profile)
     }
 
-  }, [token,adminEditResponse])
+  }, [token, adminEditResponse])
 
-    const handleLogout = () => {
+  const handleLogout = () => {
     sessionStorage.clear()
     setToken("")
     setUserDp("")
@@ -48,8 +48,8 @@ function AdminHeader({ insideHeader ,placeholder,onSearch}) {
           </button>
 
           {/* User profile */}
-     <Link to={'/admin-settings'}>    
-     <img src={userDp == "" ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSLU5_eUUGBfxfxRd4IquPiEwLbt4E_6RYMw&s" : userDp.startsWith("https://lh3.googleusercontent.com") ? userDp : `${SERVERURL}/uploads/${userDp}`} alt="admin profile" style={{width:'40px', height:'40px',borderRadius:'50%'}} className='object-fit' /></Link>
+          <Link to={'/admin-settings'}>
+            <img src={userDp == "" ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSLU5_eUUGBfxfxRd4IquPiEwLbt4E_6RYMw&s" : userDp.startsWith("https://lh3.googleusercontent.com") ? userDp : `${SERVERURL}/uploads/${userDp}`} alt="admin profile" style={{ width: '40px', height: '40px', borderRadius: '50%' }} className='object-fit' /></Link>
 
           {/* Dropdown menu inside header */}
           {listStatus && (
@@ -80,7 +80,7 @@ function AdminHeader({ insideHeader ,placeholder,onSearch}) {
                   Service Providers
                 </Link>
               </div>
-                 <div className="py-2 border-b border-green-600">
+              <div className="py-2 border-b border-green-600">
                 <Link to="/admin-careers" className="text-white flex items-center">
                   <FontAwesomeIcon icon={faBriefcase} className="me-2" />
                   Careers
@@ -113,7 +113,7 @@ function AdminHeader({ insideHeader ,placeholder,onSearch}) {
                 type="text"
                 className="bg-white md:ms-8 ms-3 rounded px-9 py-1 md:w-xs w-40 placeholder-gray-500 shadow placeholder:text-sm"
                 placeholder={placeholder}
-                onChange={e=>onSearch?.(e.target.value)}
+                onChange={e => onSearch?.(e.target.value)}
               />
             </div>
           )}
@@ -121,8 +121,8 @@ function AdminHeader({ insideHeader ,placeholder,onSearch}) {
           {/* User profile */}
           <div className="flex items-center md:me-5 me-2">
             {/* <FontAwesomeIcon icon={faUserCircle} className="text-white text-3xl" /> */}
-          <Link to={'/admin-settings'}>        
-          <img src={userDp == "" ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSLU5_eUUGBfxfxRd4IquPiEwLbt4E_6RYMw&s" : userDp.startsWith("https://lh3.googleusercontent.com") ? userDp : `${SERVERURL}/uploads/${userDp}`} alt="admin profile" style={{width:'50px', height:'50px',borderRadius:'50%'}} className='object-fit' /></Link>
+            <Link to={'/admin-settings'}>
+              <img src={userDp == "" ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSLU5_eUUGBfxfxRd4IquPiEwLbt4E_6RYMw&s" : userDp.startsWith("https://lh3.googleusercontent.com") ? userDp : `${SERVERURL}/uploads/${userDp}`} alt="admin profile" style={{ width: '50px', height: '50px', borderRadius: '50%' }} className='object-fit' /></Link>
 
             <button onClick={handleLogout} className="bg-white text-green-600 shadow cursor-pointer rounded md:px-3 px-1 py-1 text-sm font-semibold hover:bg-green-800 hover:text-white border border-transparent hover:border-white md:ms-3 ms-1">
               <FontAwesomeIcon icon={faSignOutAlt} size="lg" className="me-1" />

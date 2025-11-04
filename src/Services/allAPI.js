@@ -94,8 +94,8 @@ export const updateAdminProfileAPI = async (reqBody, reqHeader) => {
 }
 
 //view users
-export const getAllUsersAdminAPI = async (reqHeader) => {
-    return await commonAPI("GET", `${SERVERURL}/admin/all-users`, {}, reqHeader)
+export const getAllUsersAdminAPI = async (searchKey,reqHeader) => {
+    return await commonAPI("GET", `${SERVERURL}/admin/all-users?search=${searchKey}`, {}, reqHeader)
 }
 
 //approve bookings
