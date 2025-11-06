@@ -98,5 +98,20 @@ export const getAllUsersAdminAPI = async (searchKey,reqHeader) => {
     return await commonAPI("GET", `${SERVERURL}/admin/all-users?search=${searchKey}`, {}, reqHeader)
 }
 
+//add service provider
+export const addProviderAPI = async (reqBody, reqHeader) => {
+    return await commonAPI("POST", `${SERVERURL}/add-provider`, reqBody, reqHeader)
+}
+
+//get service provider
+export const getAllProviderAPI = async (searchKey,reqHeader) => {
+    return await commonAPI("GET", `${SERVERURL}/all-provider?search=${searchKey}`, {}, reqHeader)
+}
+
+//remove service provider
+export const deleteProviderAPI = async (providerId, reqHeader) => {
+    return await commonAPI("DELETE", `${SERVERURL}/remove/provider/${providerId}`, {}, reqHeader)
+}
+
 //approve bookings
 

@@ -37,6 +37,7 @@ function AdminService() {
       fetchServices("", adminToken)
     }
   }, [])
+  
   useEffect(() => {
     if (servicesTab) {
       const adminToken = sessionStorage.getItem("token")
