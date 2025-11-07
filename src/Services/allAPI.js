@@ -113,5 +113,10 @@ export const deleteProviderAPI = async (providerId, reqHeader) => {
     return await commonAPI("DELETE", `${SERVERURL}/remove/provider/${providerId}`, {}, reqHeader)
 }
 
+//update service provider
+export const updateProviderAPI=async(providerId,reqBody,reqHeader)=>{
+    return await commonAPI("PUT",`${SERVERURL}/update/provider/${providerId}`,reqBody,reqHeader)
+}
+
 //approve bookings
 

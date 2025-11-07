@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera, faChevronUp, faClose, faPen, faPlus, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from '@mui/material/Tooltip';
 import { toast, ToastContainer } from 'react-toastify'
-import { addProviderAPI, deleteProviderAPI, getAllProviderAPI } from '../../Services/allAPI';
+import { addProviderAPI, deleteProviderAPI, getAllProviderAPI, updateProviderAPI } from '../../Services/allAPI';
 import SERVERURL from '../../Services/server';
 import dayjs from "dayjs";
 
@@ -28,6 +28,7 @@ function AdminServiceProvider() {
   const [allProviders, setAllProviders] = useState([])
   const [searchKey, setSearchKey] = useState("")
   const [deleteProviderStatus, setDeleteProviderStatus] = useState(false)
+  const [addProviderStatus,setAddProviderStatus]=useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
   const [editProvider, setEditProvider] = useState({
     name: "",
@@ -44,7 +45,7 @@ function AdminServiceProvider() {
       setToken(adminToken)
       getAllServiceProviders(adminToken)
     }
-  }, [searchKey, deleteProviderStatus])
+  }, [searchKey, deleteProviderStatus,addProviderStatus])
 
   // console.log(allProviders);
 
@@ -97,6 +98,7 @@ function AdminServiceProvider() {
         const result = await addProviderAPI(reqBody, reqHeader)
         if (result.status == 200) {
           toast.success("New Provider Added!!!")
+          setAddProviderStatus(true)
           handleReset()
         } else if (result.status == 409) {
           toast.warning(result.response.data)
@@ -124,12 +126,46 @@ function AdminServiceProvider() {
     setShowForm(false)
   }
 
-  const handleUpdateChanges=async()=>{
-    const {name,email,phone,role,status,profile}=editProvider
-    if(!name || !email || !phone || !role || !status || !profile){
+  const handleUpdateChanges = async (id) => {
+    const { name, email, phone, role, status, profile } = editProvider
+    if (!name || !email || !phone || !role || !status || !profile) {
       toast.info("Please fill the form")
-    }else{
-      
+    } else {
+      const reqHeader = {
+        'Authorization': `Bearer ${token}`
+      }
+
+      try {
+        const reqBody = new FormData()
+        if (preview) {
+          for (let key in editProvider) {
+            if (key == "profile") {
+              reqBody.append("profile", editProvider.profile)
+            } else {
+              reqBody.append(key, editProvider[key])
+            }
+          }
+
+        } else {
+          for (let key in editProvider) {
+            reqBody.append(key, editProvider[key])
+          }
+        }
+
+        const result = await updateProviderAPI(id, reqBody, reqHeader)
+
+        if (result.status === 200) {
+          toast.success("Provider updated successfullly!")
+          setShowEditModal(false)
+          setPreview("")
+          getAllServiceProviders(token)
+        } else {
+          toast.error("Failed to update Provider!")
+        }
+      } catch (err) {
+        console.log(err);
+
+      }
     }
   }
 
@@ -457,7 +493,7 @@ function AdminServiceProvider() {
                   >
                     Cancel
                   </button>
-                  <button onClick={handleUpdateChanges}
+                  <button onClick={() => handleUpdateChanges(editProvider._id)}
                     className="px-5 py-2 rounded-lg bg-green-700 text-white font-semibold hover:bg-green-800 shadow-md transition"
                   >
                     Save Changes
