@@ -25,7 +25,6 @@ function AdminService() {
   const [token, setToken] = useState("")
   const [searchKey, setSearchKey] = useState("")
   const [allServices, setAllServices] = useState([])
-  const [deleteServiceStatus, setDeleteServiceStatus] = useState(false)
   const [selectedEditService, setSelectedEditService] = useState({})
   const [EditModal, setEditModal] = useState(false)
 
@@ -196,7 +195,7 @@ function AdminService() {
       const result = await deleteAdminServiceAPI(serviceId, reqHeader)
       if (result.status == 200) {
         toast.success(result.data)
-        setDeleteServiceStatus(!deleteServiceStatus)
+        setDeleteServiceStatus(true)
       } else {
         console.log(result);
 
@@ -263,7 +262,7 @@ function AdminService() {
 
           {
             EditModal &&
-            (<EditService service={selectedEditService} onClose={() => setEditModal(false)} />)
+            (<EditService service={selectedEditService} onClose={() => setEditModal(false)}  />)
           }
 
 

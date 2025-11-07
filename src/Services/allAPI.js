@@ -54,6 +54,11 @@ export const getAllAdminServicesAPI = async (search, reqHeader) => {
     return await commonAPI("GET", `${SERVERURL}/admin/services?search=${search}`, {}, reqHeader)
 }
 
+//update services
+export const updateServiceAPI = async (serviceId,reqBody, reqHeader) => {
+    return await commonAPI("PUT", `${SERVERURL}/update-service/${serviceId}`, reqBody, reqHeader)
+}
+
 //delete service
 export const deleteAdminServiceAPI = async (serviceId, reqHeader) => {
     return await commonAPI("DELETE", `${SERVERURL}/admin/service/${serviceId}/delete`, {}, reqHeader)
