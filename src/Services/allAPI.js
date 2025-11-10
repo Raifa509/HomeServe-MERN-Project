@@ -22,6 +22,7 @@ export const getAllJobsUserAPI=async()=>{
     return await commonAPI("GET",`${SERVERURL}/all-jobs/openings`)
 }
 
+
 //--------------------------------authorised user-------------------------
 
 
@@ -141,6 +142,21 @@ export const deleteProviderAPI = async (providerId, reqHeader) => {
 //update service provider
 export const updateProviderAPI=async(providerId,reqBody,reqHeader)=>{
     return await commonAPI("PUT",`${SERVERURL}/update/provider/${providerId}`,reqBody,reqHeader)
+}
+
+//get all bookings
+export const getAllBookingsAPI = async (searchKey,reqHeader) => {
+    return await commonAPI("GET", `${SERVERURL}/all-bookings?search=${searchKey}`, {}, reqHeader)
+}
+
+//get providers -booking
+export const getProviderBookingAPI = async (reqHeader) => {
+    return await commonAPI("GET", `${SERVERURL}/booking-provider`, {}, reqHeader)
+}
+
+//assign provider -booking
+export const assignProviderAPI=async(id,reqBody,reqHeader)=>{
+    return await commonAPI("PUT",`${SERVERURL}/${id}/assign-provider`,reqBody,reqHeader)
 }
 
 //approve bookings
