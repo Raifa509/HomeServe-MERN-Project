@@ -233,7 +233,7 @@ function AdminService() {
 
           {/* All Services Section */}
           {servicesTab && (
-            <div className="md:grid grid-cols-5 mt-15 gap-10 px-10 py-5 ">
+            <div className="md:grid grid-cols-5 mt-15 gap-10 px-10 py-5 mb-15">
               {
                 allServices?.length > 0 ?
                   allServices.map((item, index) => (

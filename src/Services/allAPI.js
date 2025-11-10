@@ -30,14 +30,25 @@ export const addApplicationAPI = async (reqBody, reqHeader) => {
     return await commonAPI("POST", `${SERVERURL}/apply-job`, reqBody, reqHeader)
 }
 
-//service-api
+//view-service-api
+export const getAllUserServicesAPI = async (searchKey, reqHeader) => {
+    return await commonAPI("GET", `${SERVERURL}/all-services?search=${searchKey}`, {}, reqHeader)
+}
+
+//view-details-api
+
+export const getServiceDetailsAPI = async (serviceId, reqHeader) => {
+    return await commonAPI("GET", `${SERVERURL}/service/${serviceId}/details`, {}, reqHeader)
+}
+
+
 //emergency-service-api
 
 
 //authorised users- user
 
 //-booking-api
-//view-details-api
+
 //profile update
 //view all bookings
 
