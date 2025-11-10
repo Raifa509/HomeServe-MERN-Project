@@ -31,8 +31,8 @@ export const addApplicationAPI = async (reqBody, reqHeader) => {
 }
 
 //view-service-api
-export const getAllUserServicesAPI = async (searchKey, reqHeader) => {
-    return await commonAPI("GET", `${SERVERURL}/all-services?search=${searchKey}`, {}, reqHeader)
+export const getAllUserServicesAPI = async (searchKey) => {
+    return await commonAPI("GET", `${SERVERURL}/all-services?search=${searchKey}`)
 }
 
 //view-details-api

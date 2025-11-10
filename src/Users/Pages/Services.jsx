@@ -17,22 +17,15 @@ function Services() {
   const [searchKey, setSearchKey] = useState("")
 
   useEffect(() => {
-    if (sessionStorage.getItem("token")) {
-      const token = sessionStorage.getItem("token")
-      getAllServices("", token)
-    }
-
+     getAllServices()
   }, [searchKey])
 
   console.log(services);
 
-  const getAllServices = async (value, userToken) => {
+  const getAllServices = async () => {
 
-    const reqHeader = {
-      'Authorization': `Bearer ${userToken}`
-    }
     try {
-      const result = await getAllUserServicesAPI(searchKey, reqHeader)
+      const result = await getAllUserServicesAPI(searchKey)
       if (result.status == 200) {
         setServices(result.data)
 
