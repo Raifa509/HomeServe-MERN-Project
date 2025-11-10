@@ -15,12 +15,14 @@ function Services() {
   const [filterView, setFilterView] = useState(false)
   const [services, setServices] = useState([])
   const [searchKey, setSearchKey] = useState("")
+  const [tempServices, setTempServices] = useState([])
+  const [allCategories, setAllCategories] = useState([])
 
   useEffect(() => {
-     getAllServices()
+    getAllServices()
   }, [searchKey])
 
-  console.log(services);
+  // console.log(services);
 
   const getAllServices = async () => {
 
@@ -28,6 +30,12 @@ function Services() {
       const result = await getAllUserServicesAPI(searchKey)
       if (result.status == 200) {
         setServices(result.data)
+        setTempServices(result.data)
+        const tempCategory = result.data.filter(item => item.category !== 'Emergency').map(item => item.category)
+        // console.log(tempCategory);
+        const tempArray = [...new Set(tempCategory)]
+        // console.log(tempArray);
+        setAllCategories(tempArray)
 
       } else {
         console.log(result);
@@ -39,6 +47,17 @@ function Services() {
     }
   }
 
+  const filterServices = async (category) => {
+    if (category == "All") {
+      setServices(tempServices.filter(item => item.category !== "Emergency"))
+    } else {
+      setServices(
+        tempServices.filter(
+          item => item.category === category && item.category !== "Emergency"
+        )
+      )
+    }
+  }
   return (
     <>
       <Header insideHeader={true} />
@@ -64,35 +83,19 @@ function Services() {
           {/* list status */}
           <div className={filterView ? 'block' : 'md:block hidden'}>
             <div className='mt-3'>
-              <input type="radio" id='all' name='filter' />
-              <label className='ms-2' htmlFor="Literary">All</label>
-            </div>
-            <div className='mt-3'>
-              <input type="radio" id='cleaning' name='filter' />
-              <label className='ms-2' htmlFor="Literary">Cleaning</label>
-            </div>
-            <div className='mt-3'>
-              <input type="radio" id='repairs' name='filter' />
-              <label className='ms-2' htmlFor="Literary">Repairs</label>
-            </div>
-            <div className='mt-3'>
-              <input type="radio" id='installation' name='filter' />
-              <label className='ms-2' htmlFor="Literary">Installation</label>
-            </div>
-            <div className='mt-3'>
-              <input type="radio" id='outdoor' name='filter' />
-              <label className='ms-2' htmlFor="Literary">Outdoor & Gardening</label>
+              <input type="radio" id='all' name='filter' onClick={() => filterServices("All")} />
+              <label className='ms-2' htmlFor="all">All</label>
             </div>
 
-            <div className='mt-3'>
-              <input type="radio" id='moving' name='filter' />
-              <label className='ms-2' htmlFor="Literary">Moving</label>
-            </div>
+            {
+              allCategories?.map((item, index) => (
+                <div key={index} className='mt-3'>
+                  <input type="radio" id={item} name='filter' onClick={() => filterServices(item)} />
+                  <label className='ms-2' htmlFor={item}>{item}</label>
+                </div>
+              ))
+            }
 
-            <div className='mt-3'>
-              <input type="radio" id='painting' name='filter' />
-              <label className='ms-2' htmlFor="Literary">Painting</label>
-            </div>
           </div>
 
         </div>

@@ -167,12 +167,7 @@ function ServiceDetails() {
           </div>
 
           :
-          // <div className='flex flex-col my-4 justify-center items-center min-h-52'>
-          //   <img src="https://assets-v2.lottiefiles.com/a/790b2fc0-1171-11ee-afd8-87913996c05d/JCzKThXsSJ.gif" alt="lock" className='w-72' />
-          //   <h1 className='font-semibold text-lg'>Please <Link to={'/login'} className='text-blue-500 underline'>Login</Link> to explore more...</h1>
-          // </div>
-
-          <div className="flex flex-col items-center justify-center py-16 text-center">
+         <div className="flex flex-col items-center justify-center py-16 text-center">
             <img
               src="https://assets-v2.lottiefiles.com/a/790b2fc0-1171-11ee-afd8-87913996c05d/JCzKThXsSJ.gif"
               alt="lock"
