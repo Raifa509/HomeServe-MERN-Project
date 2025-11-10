@@ -62,13 +62,7 @@ function AdminCustomer() {
                     {/* Profile Image */}
                     <div>
                       <img
-                        src={
-                          !item.profile || item.profile === ""
-                            ? "https://t3.ftcdn.net/jpg/06/19/26/46/360_F_619264680_x2PBdGLF54sFe7kTBtAvZnPyXgvaRw0Y.jpg"
-                            : item.profile.startsWith("https://lh3.googleusercontent.com")
-                              ? item.profile
-                              : `${SERVERURL}/uploads/${item.profile}`
-                        }
+                        src="https://t3.ftcdn.net/jpg/06/19/26/46/360_F_619264680_x2PBdGLF54sFe7kTBtAvZnPyXgvaRw0Y.jpg"
                         alt="user profile"
                         className="w-16 h-16 rounded-full object-cover border-2 border-green-300"
                       />

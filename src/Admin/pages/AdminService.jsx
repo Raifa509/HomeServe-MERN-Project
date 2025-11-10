@@ -140,7 +140,7 @@ function AdminService() {
         fetchServices("", token);
       } else {
         toast.error("Something went wrong!!!")
-        handleReset()
+        // handleReset()
       }
 
 

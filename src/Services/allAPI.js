@@ -36,9 +36,18 @@ export const getAllUserServicesAPI = async (searchKey) => {
 }
 
 //view-details-api
-
 export const getServiceDetailsAPI = async (serviceId, reqHeader) => {
     return await commonAPI("GET", `${SERVERURL}/service/${serviceId}/details`, {}, reqHeader)
+}
+
+//get services for booking 
+export const getServicesBookingAPI = async () => {
+    return await commonAPI("GET", `${SERVERURL}/services`)
+}
+
+//-booking-api
+export const addBookingAPI = async (reqBody, reqHeader) => {
+    return await commonAPI("POST", `${SERVERURL}/make-bookings`, reqBody, reqHeader)
 }
 
 
@@ -47,7 +56,7 @@ export const getServiceDetailsAPI = async (serviceId, reqHeader) => {
 
 //authorised users- user
 
-//-booking-api
+
 
 //profile update
 //view all bookings

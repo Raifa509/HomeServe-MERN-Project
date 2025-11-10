@@ -47,7 +47,7 @@ function Home() {
       </div>
 
       {/* Emergency Service Section */}
-      <section className="bg-gray-50 py-16 px-6 md:px-20 text-center">
+      {/* <section className="bg-gray-50 py-16 px-6 md:px-20 text-center">
         <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
           🚨 Premium 24/7 Emergency Home Service
         </h3>
@@ -85,8 +85,10 @@ function Home() {
         <button className="mt-10 bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-8 py-4 rounded-full shadow-lg transition">
           Request Emergency Help Now
         </button>
-      </section>
+      </section> */}
+    <div className='min-h-screen'>
 
+    </div>
       
       <Footer />
     </>
