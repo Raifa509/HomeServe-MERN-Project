@@ -65,6 +65,13 @@ export const addBookingAPI = async (reqBody, reqHeader) => {
 
 //------------------------------------authorised users- admin-------------------------
 
+//dashboard stats
+export const getDashboardStatsAPI = async (reqHeader) => {
+    return await commonAPI("GET", `${SERVERURL}/dashboard`,{},reqHeader)
+}
+export const getBookingsPerServiceAPI = async (reqHeader) => {
+    return await commonAPI("GET", `${SERVERURL}/bookings-per-service`,{},reqHeader)
+}
 
 //add service-api - called by admin-service component
 export const addServiceAPI = async (reqBody, reqHeader) => {
