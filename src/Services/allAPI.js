@@ -159,5 +159,12 @@ export const assignProviderAPI=async(id,reqBody,reqHeader)=>{
     return await commonAPI("PUT",`${SERVERURL}/${id}/assign-provider`,reqBody,reqHeader)
 }
 
-//approve bookings
+//remove-booking -api
+export const deleteBookingAPI = async (bookingId, reqHeader) => {
+    return await commonAPI("DELETE", `${SERVERURL}/remove/booking/${bookingId}`, {}, reqHeader)
+}
 
+//booking status update
+export const updateBookingStatusAPI = async (bookingId,reqBody, reqHeader) => {
+    return await commonAPI("PUT", `${SERVERURL}/booking/status/${bookingId}`, reqBody, reqHeader)
+}

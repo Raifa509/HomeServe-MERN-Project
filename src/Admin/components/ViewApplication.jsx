@@ -17,9 +17,9 @@ function ViewApplication({ applicant }) {
                 <>
                     <div className='fixed w-full h-full bg-gray-500/20 inset-0 backdrop-blur-xs  flex items-center justify-center'>
                         <div className=' flex items-center justify-center'>
-                            <div className=' w-90 h-90 rounded-2xl shadow-2xl bg-green-50'>
+                            <div className=' w-120 h-90 rounded-2xl shadow-2xl bg-green-50'>
                                 <div className='flex justify-end p-6'>
-                                    <h2 className='text-lg text-green-900 font-semibold text-center me-15'>Applicant Details</h2>
+                                    <h2 className='text-lg text-green-900 font-semibold text-center me-30'>Applicant Details</h2>
 
                                     <FontAwesomeIcon icon={faClose} className='text-lg text-green-900 cursor-pointer' onClick={() => setViewModal(false)} />
                                 </div>
@@ -32,7 +32,7 @@ function ViewApplication({ applicant }) {
                                     <p className='ms-2'><FontAwesomeIcon icon={faBriefcase} className='me-2'/>Experience : {applicant?.experience}</p>
                                 </div>
                                 <div className='mt-7'>
-                                    <Link className='text-white text-xs bg-green-700 hover:bg-green-600 px-2 py-0.5 rounded-lg shadow-2xl' to={`${SERVERURL}/pdf/${applicant?.resume}`} target='_blank'>Click to view Resume</Link>
+                                    <Link className='text-white text-xs bg-green-700 hover:bg-green-600 p-2 mt-4 rounded-lg shadow-2xl' to={`${SERVERURL}/pdf/${applicant?.resume}`} target='_blank'>Click to view Resume</Link>
 
                                 </div>
                             </div>
