@@ -148,7 +148,7 @@ function Header() {
               {dropDownStatus && (
                 <div className="absolute right-0 z-50 mt-2 w-40 origin-top-right rounded-md bg-green-50 shadow-lg">
                   <div className="py-1">
-                    <Link to="/" className="block px-4 py-2 font-medium text-md text-green-950 cursor-pointer">
+                    <Link to="/profile" className="block px-4 py-2 font-medium text-md text-green-950 cursor-pointer">
                       <FontAwesomeIcon icon={faAddressCard} className="me-2" /> Profile
                     </Link>
                     <button

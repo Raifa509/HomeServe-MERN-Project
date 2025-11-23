@@ -51,16 +51,10 @@ export const addBookingAPI = async (reqBody, reqHeader) => {
     return await commonAPI("POST", `${SERVERURL}/make-bookings`, reqBody, reqHeader)
 }
 
-
-//emergency-service-api
-
-
-//authorised users- user
-
-
-
-//profile update
-//view all bookings
+//view all bookings-profile
+export const getBookingsProfileAPI = async (username) => {
+    return await commonAPI("GET", `${SERVERURL}/bookings/${username}/details`)
+}
 
 
 //------------------------------------authorised users- admin-------------------------
@@ -69,6 +63,7 @@ export const addBookingAPI = async (reqBody, reqHeader) => {
 export const getDashboardStatsAPI = async (reqHeader) => {
     return await commonAPI("GET", `${SERVERURL}/dashboard`,{},reqHeader)
 }
+//bookingservice 
 export const getBookingsPerServiceAPI = async (reqHeader) => {
     return await commonAPI("GET", `${SERVERURL}/bookings-per-service`,{},reqHeader)
 }

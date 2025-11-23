@@ -258,7 +258,7 @@ function AdminCareers() {
                                 <div className='absolute  bg-orange-400 w-38 right-0 top-10 text-white text-left text-xs rounded '>
 
                                   <div className='border-b border-b-white p-2 cursor-pointer flex hover:bg-amber-500' onClick={() => closeJob(item?._id)}><FontAwesomeIcon icon={faClose} className='me-1 ms-2' /><p>Close Application</p></div>
-                                  <div className='border-b border-b-white p-2 hover:bg-amber-500 cursor-pointer '><p><FontAwesomeIcon icon={faUsers} className='me-1 ms-2' />Applicants(6)</p></div>
+                                 
 
                                 </div>
                               }
