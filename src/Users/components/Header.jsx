@@ -107,9 +107,9 @@ function Header() {
           {/* Menu List with Hover Underline */}
           <ul className={listStatus ? 'flex flex-col' : 'md:flex justify-center items-center hidden'}>
             {[
-              { name: "Home", link: "/" },
+              { name: "Home", link: "/home" },
               { name: "Services", link: "/services" },
-              { name: "About us", link: "/" },
+              { name: "About us", link: "#about" },
               { name: "Careers", link: "/careers" },
               { name: "Contact", link: "/" },
             ].map((item) => (
