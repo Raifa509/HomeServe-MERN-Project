@@ -158,7 +158,7 @@ const fetchStats = async () => {
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={bookingsPerService} margin={{ top: 10, right: 20, left: 0, bottom: 10 }}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="serviceName" />
+                  <XAxis dataKey="serviceName" tick={false} />
                   <YAxis />
                   <Tooltip
                     contentStyle={{
@@ -171,7 +171,7 @@ const fetchStats = async () => {
                     }}
                   />
                   <Legend />
-                  <Bar dataKey="totalBookings" fill={BAR_COLORS} radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="totalBookings" fill={BAR_COLORS} radius={[8, 8, 0, 0]} barSize={40} />
                 </BarChart>
               </ResponsiveContainer>
             </div>

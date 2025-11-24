@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import Home from "./Users/Pages/Home";
@@ -19,13 +19,14 @@ import AdminCustomer from "./Admin/pages/AdminCustomer";
 import AdminServiceProvider from "./Admin/pages/AdminServiceProvider";
 import AdminService from "./Admin/pages/AdminService";
 import AdminSettings from "./Admin/pages/AdminSettings";
+import { userAuthContext } from './contextAPI/AuthContext';
 
 
 
 
 function App() {
   const [loading, setLoading] = useState(true)
-
+  const { role, authorisedUser, setAuthorisedUser } = useContext(userAuthContext)
   useEffect(() => {
     setTimeout(() => {
       setLoading(false)
@@ -36,22 +37,36 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={loading ? <Preloader /> : <Home />} />
-        <Route path='/profile' element={<Profile />} />
+
         <Route path='/services' element={<Services />} />
         <Route path='/login' element={<Auth />} />
         <Route path='/register' element={<Auth register />} />
         <Route path='/careers' element={<Careers />} />
-        <Route path='/service/:id/details' element={<ServiceDetails />} />
-        <Route path='/booking' element={<BookingPage />} />
         <Route path='/emergency' element={<EmergencyServices />} />
 
-        <Route path='/admin-dashboard' element={<AdminDashboard />} />
-        <Route path='/admin-careers' element={<AdminCareers />} />
-        <Route path='/admin-bookings' element={<AdminBookings />} />
-        <Route path='/admin-customer' element={<AdminCustomer />} />
-        <Route path='/admin-serviceProvider' element={<AdminServiceProvider />} />
-        <Route path='/admin-service' element={<AdminService />} />
-        <Route path='/admin-settings' element={<AdminSettings />} />
+        { role=="user" &&
+
+        <>
+          <Route path='/booking' element={<BookingPage />} />
+          <Route path='/service/:id/details' element={<ServiceDetails />} />
+          <Route path='/profile' element={<Profile />} />
+        </>
+
+        }
+
+
+     {
+     role =="admin" &&  
+      <>
+          <Route path='/admin-dashboard' element={loading ? <Preloader /> : <AdminDashboard />} />
+          <Route path='/admin-careers' element={<AdminCareers />} />
+          <Route path='/admin-bookings' element={<AdminBookings />} />
+          <Route path='/admin-customer' element={<AdminCustomer />} />
+          <Route path='/admin-serviceProvider' element={<AdminServiceProvider />} />
+          <Route path='/admin-service' element={<AdminService />} />
+          <Route path='/admin-settings' element={<AdminSettings />} />
+       </>}
+
 
         <Route path='/*' element={<Pnf />} />
       </Routes>

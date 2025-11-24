@@ -77,7 +77,7 @@ function Home() {
         </video>
 
         {/* Overlay */}
-        <div className="absolute inset-0 bg-black/65"></div>
+        <div className="absolute inset-0 bg-black/55"></div>
 
         <div className='min-h-screen relative z-10 flex flex-col'>
           {/* Centered Hero Text */}

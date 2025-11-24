@@ -110,7 +110,7 @@ function AdminSettings() {
                         existingProfile == "" ?
                           <img src={preview ? preview :
                             "https://t3.ftcdn.net/jpg/06/19/26/46/360_F_619264680_x2PBdGLF54sFe7kTBtAvZnPyXgvaRw0Y.jpg"
-                          } alt="" style={{ width: '90px', height: '90px', borderRadius: '50%' }} className='mt-5' />
+                          } alt="" style={{ width: '90px', height: '90px', borderRadius: '50%' }} className='mt-5 object-cover' />
                           :
                           existingProfile.startsWith("https://lh3.googleusercontent.com") ?
                             <img src={preview ? preview : existingProfile} alt="" style={{ width: '90px', height: '90px', borderRadius: '50%' }} className='mt-5' />
