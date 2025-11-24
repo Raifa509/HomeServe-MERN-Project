@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Masonry from '../components/Masonry';
 
 
+
 function Home() {
   const items = [
     {
@@ -154,8 +155,55 @@ function Home() {
         </section>
       </div>
 
+      {/* Emergency Services Section */}
+      <div className="min-h-screen py-20 bg-green-50">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          {/* Section Header */}
+          <h2 className="text-4xl md:text-4xl font-bold text-gray-800 mb-4">
+            Emergency Help <span className="text-green-600">When You Need It Most</span>
+          </h2>
+          <p className="text-gray-700 text-lg md:text-md mb-16">
+            Life at home is unpredictable. From sudden leaks to electrical faults, our emergency services ensure fast, reliable, and professional assistance—so your home stays safe and comfortable.
+          </p>
+
+          {/* Natural Layout */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 items-start text-left">
+            <div className="flex flex-col justify-start">
+              <h3 className="text-2xl font-semibold text-gray-800 mb-3">Rapid Plumbing Solutions</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Burst pipe or leak? Our expert plumbers respond immediately, repair efficiently, and prevent further damage to your home.
+              </p>
+            </div>
+
+            <div className="flex flex-col justify-start">
+              <h3 className="text-2xl font-semibold text-gray-800 mb-3">Emergency Electrical Services</h3>
+              <p className="text-gray-600 leading-relaxed">
+                From power outages to sparking wires, our certified electricians restore your home safely and quickly, minimizing downtime.
+              </p>
+            </div>
+
+            <div className="flex flex-col justify-start">
+              <h3 className="text-2xl font-semibold text-gray-800 mb-3">Urgent Repairs & Maintenance</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Broken doors, sudden appliance failure, or structural issues? Our skilled team handles emergency repairs to secure your home immediately.
+              </p>
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div className="mt-16 flex justify-center">
+            <Link to="/emergency">
+              <button className="bg-green-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-green-700 transition text-lg shadow-md">
+                Request Emergency Service
+              </button>
+            </Link>
+          </div>
+        </div>
+      </div>
+
+
       {/* gallery */}
-      <div className="min-h-screen py-10 mx-40">
+      <div className="min-h-screen py-20 mx-40 ">
         {/* Intro Text */}
         <div className="text-center mb-10">
           <h2 className="text-4xl font-bold text-gray-800 mb-4">
@@ -181,8 +229,9 @@ function Home() {
         />
       </div>
 
+
       {/* steps  */}
-      <div className="min-h-screen mt-50 py-10">
+      <div className="min-h-screen  py-20  mt-30">
         <section className="mx-20 bg-green-50 p-16 rounded-3xl shadow-xl">
           {/* Section Header */}
           <div className="text-center mb-16">
@@ -235,7 +284,7 @@ function Home() {
         </section>
       </div>
 
-      <div className="min-h-screen py-20">
+      <div className="min-h-screen">
         <section className="mx-40 p-16 rounded-3xl ">
           {/* Section Header */}
           <div className="text-center mb-16">
@@ -292,6 +341,80 @@ function Home() {
             </div>
           </div>
         </section>
+      </div>
+
+      {/* Contact Section */}
+      <div id="contact" className="min-h-screen -mt-30 mb-30">
+        <div className="w-3xl mx-auto px-6">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-extrabold text-gray-800 mb-4">
+              Get in <span className="text-green-600">Touch</span>
+            </h2>
+            <p className="text-gray-700 text-lg">
+              Have a question or need a service? Send us a message and we'll get back to you quickly.
+            </p>
+          </div>
+
+          {/* Form */}
+          <div className="bg-white rounded-3xl shadow-xl p-10 md:p-16">
+            <form className="grid md:grid-cols-2 gap-6">
+              {/* Name */}
+              <div className="flex flex-col">
+                <label htmlFor="name" className="text-gray-700 font-semibold mb-2">Your Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  className="border border-gray-300 rounded-xl p-3 focus:outline-none focus:border-green-600"
+                  placeholder="John Doe"
+                />
+              </div>
+
+              {/* Email */}
+              <div className="flex flex-col">
+                <label htmlFor="email" className="text-gray-700 font-semibold mb-2">Your Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  className="border border-gray-300 rounded-xl p-3 focus:outline-none focus:border-green-600"
+                  placeholder="john@example.com"
+                />
+              </div>
+
+              {/* Subject */}
+              <div className="flex flex-col md:col-span-2">
+                <label htmlFor="subject" className="text-gray-700 font-semibold mb-2">Subject</label>
+                <input
+                  type="text"
+                  id="subject"
+                  className="border border-gray-300 rounded-xl p-3 focus:outline-none focus:border-green-600"
+                  placeholder="Service Inquiry"
+                />
+              </div>
+
+              {/* Message */}
+              <div className="flex flex-col md:col-span-2">
+                <label htmlFor="message" className="text-gray-700 font-semibold mb-2">Message</label>
+                <textarea
+                  id="message"
+                  rows="5"
+                  className="border border-gray-300 rounded-xl p-3 focus:outline-none focus:border-green-600"
+                  placeholder="Write your message here..."
+                ></textarea>
+              </div>
+
+              {/* Submit Button */}
+              <div className="md:col-span-2 flex justify-center">
+                <button
+                  type="submit"
+                  className="bg-green-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-green-700 transition shadow-md"
+                >
+                  Send Message
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
 
       <Footer />

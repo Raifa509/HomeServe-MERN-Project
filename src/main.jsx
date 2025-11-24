@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import ContextShare from "./contextAPI/ContextShares.jsx";
 
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
    <BrowserRouter> 

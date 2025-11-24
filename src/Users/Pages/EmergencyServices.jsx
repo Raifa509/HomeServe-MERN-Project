@@ -62,7 +62,7 @@ function EmergencyServices() {
 
       {/* services grid */}
       <div className="flex justify-center p-5">
-        <div className="my-10 grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-10 justify-items-center">
+        <div className="my-10 grid md:grid-cols-5 sm:grid-cols-2 grid-cols-1 gap-10 justify-items-center">
           {services.length > 0 ? (
             services.map(service => (
               <div

@@ -120,19 +120,22 @@ function AdminBookings() {
 
   const today = new Date();
 
-  const filteredBookings = bookings.filter(b => {
-    const bookingDate = new Date(b.date);
-    switch (activeTab) {
-      case "all": return true;
-      case "upcoming": return bookingDate >= today;
-      case "emergency": return b.isEmergency;
-      case "pending":
-      case "confirmed":
-      case "completed":
-        return b.status.toLowerCase() === activeTab;
-      default: return true;
-    }
-  });
+  // Filter and sort bookings (newest first)
+  const filteredBookings = bookings
+    .filter(b => {
+      const bookingDate = new Date(b.date);
+      switch (activeTab) {
+        case "all": return true;
+        case "upcoming": return bookingDate >= today;
+        case "emergency": return b.isEmergency;
+        case "pending":
+        case "confirmed":
+        case "completed":
+          return b.status.toLowerCase() === activeTab;
+        default: return true;
+      }
+    })
+    .sort((a, b) => new Date(b.date) - new Date(a.date)); // newest bookings on top
 
   return (
     <>
@@ -178,7 +181,6 @@ function AdminBookings() {
                 <tbody>
                   {filteredBookings.map((booking, index) => (
                     <tr key={booking._id} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-
                       <td className="px-6 py-4 text-gray-700">{index + 1}</td>
                       <td className="px-6 py-4 text-gray-700">{booking.fullName}</td>
                       <td className="px-6 py-4 text-gray-700">{booking.serviceName}</td>
@@ -218,14 +220,13 @@ function AdminBookings() {
 
                       {/* ACTIONS */}
                       <td className="px-6 py-4 flex space-x-3">
-
                         {/* VIEW BUTTON */}
                         <Tooltip title="View Details">
                           <button
                             onClick={() => { setSelectedBooking(booking); setShowModal(true); }}
                             className="underline text-blue-500 cursor-pointer hover:text-blue-600 transition-color"
                           >
-                          View
+                            View
                           </button>
                         </Tooltip>
 
@@ -283,7 +284,6 @@ function AdminBookings() {
         </div>
       </div>
 
-
       {showModal && selectedBooking && (
         <div className="fixed w-full h-full bg-gray-500/20 inset-0 backdrop-blur-xs flex items-center justify-center z-50">
 
@@ -301,28 +301,19 @@ function AdminBookings() {
 
             {/* Content */}
             <div className="mt-5 flex flex-col space-y-4 text-md font-semibold text-gray-700">
-
-
               <p><FontAwesomeIcon icon={faUser} className="me-2" />Full Name: {selectedBooking.fullName}</p>
-
               <p><FontAwesomeIcon icon={faBriefcase} className="me-2" />Service: {selectedBooking.serviceName}</p>
-
               <p><FontAwesomeIcon icon={faPhone} className="me-2" />Phone: {selectedBooking.phone}</p>
-
               <p>
                 <FontAwesomeIcon icon={faBolt} className="me-2" />
                 Emergency: {selectedBooking.isEmergency ? "Yes" : "No"}
               </p>
-
               <p>
                 <FontAwesomeIcon icon={faCalendar} className="me-2" />
                 Date: {selectedBooking.date ? dayjs(selectedBooking.date).format("DD-MM-YYYY") : "Not selected"}
               </p>
-
               <p><FontAwesomeIcon icon={faLocationDot} className="me-2" />Address: {selectedBooking.address}</p>
-
               <p><FontAwesomeIcon icon={faNoteSticky} className="me-2" />Notes: {selectedBooking.additionalNotes || "None"}</p>
-
               <p><FontAwesomeIcon icon={faCircle} className="me-2" />Status: {selectedBooking.status}</p>
             </div>
 
