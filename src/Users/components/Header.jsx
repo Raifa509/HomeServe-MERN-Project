@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 
+
 function Header() {
   const [listStatus, setListStatus] = useState(false);
   const [token, setToken] = useState("");
@@ -32,9 +33,9 @@ function Header() {
   const menuItems = [
     { name: "Home", link: "/" },
     { name: "Services", link: "/services" },
-    { name: "About us", link: "/#about" },   // <--- Add slash before #
+    { name: "About us", link: "/#about" },   
     { name: "Careers", link: "/careers" },
-    { name: "Contact", link: "/#contact" }, // <--- Add slash before #
+    { name: "Contact", link: "/#contact" }, 
   ];
 
   return (
@@ -101,22 +102,24 @@ function Header() {
           </div>
 
           {/* Menu List */}
-          <ul className={listStatus ? 'flex flex-col' : 'md:flex justify-center items-center hidden'}>
-            {menuItems.map((item) => (
-              <li key={item.name} className="relative group md:mx-2 mx-4 my-0.5">
-                {item.link.startsWith("/#") ? (
-                  <HashLink smooth to={item.link} className="hover:text-orange-300">
-                    {item.name}
-                  </HashLink>
-                ) : (
-                  <Link to={item.link} className="hover:text-orange-300">
-                    {item.name}
-                  </Link>
-                )}
-                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-orange-300 transition-all duration-300 group-hover:w-8"></span>
-              </li>
-            ))}
-          </ul>
+         <p>
+            <ul className={listStatus ? 'flex flex-col' : 'md:flex justify-center items-center hidden'}>
+              {menuItems.map((item) => (
+                <li key={item.name} className="relative group md:mx-2 mx-4 my-0.5">
+                  {item.link.startsWith("/#") ? (
+                    <HashLink smooth to={item.link} className="hover:text-orange-300">
+                      {item.name}
+                    </HashLink>
+                  ) : (
+                    <Link to={item.link} className="hover:text-orange-300">
+                      {item.name}
+                    </Link>
+                  )}
+                  <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-orange-300 transition-all duration-300 group-hover:w-8"></span>
+                </li>
+              ))}
+            </ul>
+         </p>
         </nav>
 
         {/* Desktop buttons */}

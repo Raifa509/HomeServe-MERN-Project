@@ -58,7 +58,7 @@ function App() {
      {
      role =="admin" &&  
       <>
-          <Route path='/admin-dashboard' element={loading ? <Preloader /> : <AdminDashboard />} />
+          <Route path='/admin-dashboard' element={<AdminDashboard />} />
           <Route path='/admin-careers' element={<AdminCareers />} />
           <Route path='/admin-bookings' element={<AdminBookings />} />
           <Route path='/admin-customer' element={<AdminCustomer />} />
