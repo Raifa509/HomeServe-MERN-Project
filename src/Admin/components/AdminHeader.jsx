@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { adminUpdateContext } from '../../contextAPI/ContextShares'
 import SERVERURL from '../../Services/server';
+import { userAuthContext } from '../../contextAPI/AuthContext'
 
 function AdminHeader({ insideHeader, placeholder, onSearch }) {
   const [listStatus, setListStatus] = useState(false)
@@ -11,7 +12,7 @@ function AdminHeader({ insideHeader, placeholder, onSearch }) {
   const [token, setToken] = useState("")
   const [userDp, setUserDp] = useState("")
   const navigate = useNavigate()
-
+const {role,authorisedUser,setAuthorisedUser}=useContext(userAuthContext)
   useEffect(() => {
     if (sessionStorage.getItem("token")) {
       const token = sessionStorage.getItem("token")
@@ -26,6 +27,7 @@ function AdminHeader({ insideHeader, placeholder, onSearch }) {
     sessionStorage.clear()
     setToken("")
     setUserDp("")
+    setAuthorisedUser(false)
     navigate("/")
   }
 
