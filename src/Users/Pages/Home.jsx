@@ -248,8 +248,8 @@ function Home() {
 
 
       {/* steps  */}
-      <FadeIn delay={0.2}>
-        <div className="min-h-screen py-20 md:mt-30 mt-180">
+      <FadeIn delay={0.5}>
+        <div className="min-h-screen py-20 md:mt-30 mt-180 ">
           <section className="md:mx-20 mx-5 px-5 py-10 bg-green-50 md:p-16 rounded-3xl shadow-xl">
 
             {/* Section Header */}
