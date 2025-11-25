@@ -77,7 +77,7 @@ const fetchStats = async () => {
           <AdminHeader />
 
           {/* Statistic Cards */}
-          <div className="grid gap-5 p-5 grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+          <div className="grid md:gap-5 gap-2 md:p-5 px-2 grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
             {[
               { title: 'Total Bookings', value: stats.totalBookings, icon: faClipboardList, bg: 'bg-yellow-400' },
               { title: 'Pending Bookings', value: stats.pendingBookings, icon: faHourglassHalf, bg: 'bg-blue-400' },

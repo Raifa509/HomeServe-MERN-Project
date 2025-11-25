@@ -200,7 +200,7 @@ function AdminCareers() {
                 {
                   allJobs?.length > 0 ?
                     allJobs.map(item => (
-                      <div key={item?._id} className="shadow-md rounded py-5 md:px-7 px-4 w-full md:mb-10 mb-5">
+                      <div key={item?._id} className="shadow-md rounded py-5 md:px-7 px-5 w-full md:mb-10 mb-5 ">
                         <div className='flex justify-between '>
                           <div>
                             <h2 className="font-semibold text-green-900 md:text-xl text-sm">

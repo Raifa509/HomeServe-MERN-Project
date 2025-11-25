@@ -3,7 +3,7 @@ import AdminSideBar from "../components/AdminSideBar";
 import AdminHeader from "../components/AdminHeader";
 import Footer from "../../components/Footer";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen, faTrash, faCircleCheck, faUser, faBriefcase, faPhone, faEnvelope, faGraduationCap, faClose, faLocationDot, faNoteSticky, faCircle, faCalendar, faBolt } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faCircleCheck, faUser, faBriefcase, faPhone, faClose, faLocationDot, faNoteSticky, faCircle, faCalendar, faBolt } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from '@mui/material/Tooltip';
 import { assignProviderAPI, deleteBookingAPI, getAllBookingsAPI, getProviderBookingAPI, updateBookingStatusAPI } from '../../Services/allAPI';
 import dayjs from 'dayjs';
@@ -16,7 +16,6 @@ function AdminBookings() {
   const [providers, setProviders] = useState([]);
   const [deleteStatus, setDeleteStatus] = useState(false);
 
-  // View Modal states
   const [showModal, setShowModal] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState(null);
 
@@ -47,22 +46,16 @@ function AdminBookings() {
     } catch (err) { console.log(err); }
   };
 
-  // Delete booking
   const removeBooking = async (id) => {
-    if (sessionStorage.getItem("token")) {
-      const adminToken = sessionStorage.getItem("token");
-      const reqHeader = { 'Authorization': `Bearer ${adminToken}` };
+    const adminToken = sessionStorage.getItem("token");
+    const reqHeader = { 'Authorization': `Bearer ${adminToken}` };
 
-      try {
-        const result = await deleteBookingAPI(id, reqHeader);
-        if (result.status === 200) {
-          setDeleteStatus(result.data);
-        }
-      } catch (err) { console.log(err); }
-    }
+    try {
+      const result = await deleteBookingAPI(id, reqHeader);
+      if (result.status === 200) setDeleteStatus(result.data);
+    } catch (err) { console.log(err); }
   };
 
-  // Assign Provider
   const assignProvider = async (bookingId, providerName) => {
     if (!providerName) return;
 
@@ -92,19 +85,14 @@ function AdminBookings() {
     }
   };
 
-  // Update booking status
   const updateBookingStatus = async (id, status) => {
     const token = sessionStorage.getItem("token");
     const reqHeader = { 'Authorization': `Bearer ${token}` };
 
     try {
       const result = await updateBookingStatusAPI(id, { status }, reqHeader);
-      if (result.status === 200) {
-        fetchBookings(token);
-      }
-    } catch (err) {
-      console.log(err);
-    }
+      if (result.status === 200) fetchBookings(token);
+    } catch (err) { console.log(err); }
   };
 
   const tabs = ["all", "upcoming", "emergency", "pending", "confirmed", "completed"];
@@ -120,7 +108,6 @@ function AdminBookings() {
 
   const today = new Date();
 
-  // Filter and sort bookings (newest first)
   const filteredBookings = bookings
     .filter(b => {
       const bookingDate = new Date(b.date);
@@ -135,12 +122,14 @@ function AdminBookings() {
         default: return true;
       }
     })
-    .sort((a, b) => new Date(b.date) - new Date(a.date)); // newest bookings on top
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
 
   return (
     <>
       <div className="md:grid grid-cols-7 min-h-screen bg-gray-50">
-        <div className='md:col-span-1 md:block hidden'><AdminSideBar /></div>
+        <div className='md:col-span-1 md:block hidden'>
+          <AdminSideBar />
+        </div>
 
         <div className='col-span-6 flex flex-col'>
           <AdminHeader insideHeader={true} placeholder={'Search by service or customer'} onSearch={setSearchKey} />
@@ -149,23 +138,24 @@ function AdminBookings() {
             <h2 className='text-3xl font-bold text-green-900 mb-6'>Bookings</h2>
 
             {/* Tabs */}
-            <div className="flex space-x-2 mb-6">
+            <div className="flex space-x-2 mb-6 overflow-x-auto">
               {tabs.map(tab => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`py-2 px-4 rounded-t-lg font-semibold transition-all ${activeTab === tab
+                  className={`py-2 px-4 rounded-t-lg font-semibold transition-all whitespace-nowrap ${activeTab === tab
                     ? "bg-gradient-to-r from-green-400 to-green-600 text-white shadow-md"
-                    : "bg-gray-100 text-gray-600 hover:text-green-700"}`}
+                    : "bg-gray-100 text-gray-600 hover:text-green-700"
+                    }`}
                 >
                   {tabLabels[tab]}
                 </button>
               ))}
             </div>
 
-            {/* Table */}
-            <div className="overflow-x-auto shadow rounded-lg bg-white">
-              <table className="min-w-full border-collapse table-auto">
+            {/* table */}
+            <div className="w-full overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 rounded-lg shadow bg-white mb-10">
+              <table className="min-w-[980px] md:min-w-full border-collapse table-auto">
                 <thead className="bg-green-100 sticky top-0">
                   <tr>
                     <th className="px-6 py-3 text-left text-sm font-semibold">SL</th>
@@ -182,10 +172,17 @@ function AdminBookings() {
                   {filteredBookings.map((booking, index) => (
                     <tr key={booking._id} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
                       <td className="px-6 py-4 text-gray-700">{index + 1}</td>
-                      <td className="px-6 py-4 text-gray-700">{booking.fullName}</td>
-                      <td className="px-6 py-4 text-gray-700">{booking.serviceName}</td>
+
                       <td className="px-6 py-4 text-gray-700">
-                        {booking.date ? dayjs(booking.date).format('DD-MM-YYYY') : '-'}
+                        <div className="truncate max-w-[200px]">{booking.fullName}</div>
+                      </td>
+
+                      <td className="px-6 py-4 text-gray-700">
+                        <div className="truncate max-w-[260px]">{booking.serviceName}</div>
+                      </td>
+
+                      <td className="px-6 py-4 text-gray-700">
+                        {booking.date ? dayjs(booking.date).format("DD-MM-YYYY") : "-"}
                       </td>
 
                       {/* Assign Provider */}
@@ -196,7 +193,7 @@ function AdminBookings() {
                           </span>
                         ) : (
                           <select
-                            className="border border-gray-300 rounded px-2 py-1"
+                            className="border border-gray-300 rounded px-2 py-1 text-sm"
                             onChange={(e) => assignProvider(booking._id, e.target.value)}
                           >
                             <option value="">Assign</option>
@@ -219,16 +216,15 @@ function AdminBookings() {
                       </td>
 
                       {/* ACTIONS */}
-                      <td className="px-6 py-4 flex space-x-3">
+                      <td className="px-6 py-4 flex items-center space-x-3">
+
                         {/* VIEW BUTTON */}
-                        <Tooltip title="View Details">
-                          <button
-                            onClick={() => { setSelectedBooking(booking); setShowModal(true); }}
-                            className="underline text-blue-500 cursor-pointer hover:text-blue-600 transition-color"
-                          >
-                            View
-                          </button>
-                        </Tooltip>
+                        <button
+                          onClick={() => { setSelectedBooking(booking); setShowModal(true); }}
+                          className="text-blue-600 underline text-sm hover:text-blue-800"
+                        >
+                          View
+                        </button>
 
                         {/* APPROVE */}
                         {booking.status === "Pending" && (
@@ -263,7 +259,6 @@ function AdminBookings() {
                             <FontAwesomeIcon icon={faTrash} />
                           </button>
                         </Tooltip>
-
                       </td>
                     </tr>
                   ))}
@@ -275,7 +270,6 @@ function AdminBookings() {
                       </td>
                     </tr>
                   )}
-
                 </tbody>
               </table>
             </div>
@@ -284,12 +278,12 @@ function AdminBookings() {
         </div>
       </div>
 
+      {/* MODAL (unchanged) */}
       {showModal && selectedBooking && (
         <div className="fixed w-full h-full bg-gray-500/20 inset-0 backdrop-blur-xs flex items-center justify-center z-50">
 
           <div className="w-120 bg-green-50 rounded-2xl shadow-2xl p-6">
 
-            {/* Header */}
             <div className="flex justify-between items-center border-b pb-3">
               <h2 className="text-xl font-semibold text-green-900">Booking Details</h2>
               <FontAwesomeIcon
@@ -299,25 +293,17 @@ function AdminBookings() {
               />
             </div>
 
-            {/* Content */}
             <div className="mt-5 flex flex-col space-y-4 text-md font-semibold text-gray-700">
               <p><FontAwesomeIcon icon={faUser} className="me-2" />Full Name: {selectedBooking.fullName}</p>
               <p><FontAwesomeIcon icon={faBriefcase} className="me-2" />Service: {selectedBooking.serviceName}</p>
               <p><FontAwesomeIcon icon={faPhone} className="me-2" />Phone: {selectedBooking.phone}</p>
-              <p>
-                <FontAwesomeIcon icon={faBolt} className="me-2" />
-                Emergency: {selectedBooking.isEmergency ? "Yes" : "No"}
-              </p>
-              <p>
-                <FontAwesomeIcon icon={faCalendar} className="me-2" />
-                Date: {selectedBooking.date ? dayjs(selectedBooking.date).format("DD-MM-YYYY") : "Not selected"}
-              </p>
+              <p><FontAwesomeIcon icon={faBolt} className="me-2" />Emergency: {selectedBooking.isEmergency ? "Yes" : "No"}</p>
+              <p><FontAwesomeIcon icon={faCalendar} className="me-2" />Date: {selectedBooking.date ? dayjs(selectedBooking.date).format("DD-MM-YYYY") : "Not selected"}</p>
               <p><FontAwesomeIcon icon={faLocationDot} className="me-2" />Address: {selectedBooking.address}</p>
               <p><FontAwesomeIcon icon={faNoteSticky} className="me-2" />Notes: {selectedBooking.additionalNotes || "None"}</p>
               <p><FontAwesomeIcon icon={faCircle} className="me-2" />Status: {selectedBooking.status}</p>
             </div>
 
-            {/* Footer */}
             <div className="mt-6 flex justify-end">
               <button
                 onClick={() => setShowModal(false)}

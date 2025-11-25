@@ -97,7 +97,7 @@ function AdminSettings() {
           <AdminHeader />
 
           {/* settings content */}
-          <div className='md:px-40'>
+          <div className='md:px-40 mb-10'>
             <div className='flex items-center justify-center mt-10 flex-col w-full'>
               <h2 className='headingFont text-2xl font-medium text-green-900'>Settings</h2>
               <div className=' mt-12 w-full flex justify-center items-center'>

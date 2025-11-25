@@ -54,11 +54,24 @@ function AdminCustomer() {
 
           {/* duplicate card */}
 
-          <div className='md:grid grid-cols-3 mt-15 gap-8 px-20'>
+          <div className="
+  grid 
+  grid-cols-1              
+  md:grid-cols-3         
+  mt-15 
+  gap-8 
+  px-4 sm:px-10 md:px-20  mb-10
+">
+
             {
               allUsers?.length > 0 ?
                 allUsers?.map((item, index) => (
-                  <div key={index} className='shadow-lg rounded-xl p-6 bg-gray-100 flex items-center space-x-4 hover:shadow-2xl transition-shadow duration-300'>
+                  <div
+                    key={index}
+                    className="shadow-lg rounded-xl p-6 bg-gray-100 
+                     flex items-center space-x-4 
+                     hover:shadow-2xl transition-shadow duration-300"
+                  >
                     {/* Profile Image */}
                     <div>
                       <img
@@ -66,24 +79,20 @@ function AdminCustomer() {
                         alt="user profile"
                         className="w-16 h-16 rounded-full object-cover border-2 border-green-300"
                       />
-
-
                     </div>
 
                     {/* User Info */}
-                    <div className='text-left'>
-                      <h2 className='text-lg font-bold text-green-900'>{item?.username}</h2>
-                      <h3 className='text-sm font-semibold text-gray-700 mt-1'>{item?.email}</h3>
-                      <p className='text-sm text-gray-500 mt-1'>{ }</p>
+                    <div className="text-left">
+                      <h2 className="text-lg font-bold text-green-900">{item?.username}</h2>
+                      <h3 className="text-sm font-semibold text-gray-700 mt-1">{item?.email}</h3>
                     </div>
                   </div>
-
-
                 ))
                 :
                 <div>No Users yet!!!</div>
             }
           </div>
+
 
         </div>
       </div>

@@ -13,7 +13,7 @@ function AdminSideBar() {
           <h2 className='headingFont text-xl font-semibold text-yellow-400' style={{ marginLeft: '-7px', letterSpacing: '-1.5px' }}><Link to={'/'}>HomeServe</Link></h2>
         </div>
 
-         <div className='flex flex-col ms-1 mt-30'>
+         <div className='flex flex-col ms-1 mt-30 z-50'>
 
           <div className='text-semibold text-lg'>
             <FontAwesomeIcon icon={faHouse} className='me-1' />
