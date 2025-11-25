@@ -29,12 +29,13 @@ function Footer() {
                     </div>
 
                     {/* contact us */}
-                    <div className='flex flex-col mt-4 text-gray-200 items-center md:items-start'>
+                    <div className='flex flex-col mt-4 text-gray-200 items-center text-center md:items-start md:text-left'>
                         <h3 className='mb-3'>Contact us</h3>
                         <p className='my-1 text-sm'><FontAwesomeIcon icon={faPhone} className='me-2' />9898304958</p>
                         <p className='my-1 text-sm'><FontAwesomeIcon icon={faEnvelope} className='me-2' />homeserve@gmail.com</p>
-                        <p className='my-1 text-sm'><FontAwesomeIcon icon={faLocationDot} className='me-2' />2nd Floor,Amana Complex,Kakkanad,Kochi</p>
+                        <p className='my-1 text-sm max-w-[200px]'><FontAwesomeIcon icon={faLocationDot} className='me-2' />2nd Floor, Amana Complex, Kakkanad, Kochi</p>
                     </div>
+
                     {/* follow us */}
 
                     <div className='flex flex-col mt-4 text-gray-200 md:ms-20 items-center'>

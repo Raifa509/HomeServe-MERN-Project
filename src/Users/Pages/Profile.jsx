@@ -37,7 +37,7 @@ function Profile() {
     <>
       <Header insideHeader={true} />
 
-      <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-100 py-12">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-100 py-12 px-5 md:px-0">
         <div className="container mx-auto max-w-5xl">
 
           {/* Profile Card */}

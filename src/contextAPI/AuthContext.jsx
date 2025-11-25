@@ -14,7 +14,7 @@ function AuthContext({children}) {
             setRole(user?.role)
             setAuthorisedUser(true)
         }
-    },[role,authorisedUser])
+    },[])
     return (
         <>
     <userAuthContext.Provider value={{role,authorisedUser,setAuthorisedUser}}>{children}</userAuthContext.Provider>

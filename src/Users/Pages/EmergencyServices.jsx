@@ -95,7 +95,7 @@ function EmergencyServices() {
                 }}
                 transition={{ duration: 0.6 }}
                 whileHover={{ scale: 1.05 }}
-                className="shadow-lg bg-white flex items-center justify-center p-4 flex-col rounded-xl relative w-52"
+                className="shadow-lg bg-white flex items-center justify-center p-4 flex-col rounded-xl relative md:w-52"
               >
                 <h2 className="text-green-700 font-semibold text-center">{service.name}</h2>
 

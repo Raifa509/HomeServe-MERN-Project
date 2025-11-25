@@ -37,35 +37,28 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={loading ? <Preloader /> : <Home />} />
-
         <Route path='/services' element={<Services />} />
         <Route path='/login' element={<Auth />} />
         <Route path='/register' element={<Auth register />} />
         <Route path='/careers' element={<Careers />} />
         <Route path='/emergency' element={<EmergencyServices />} />
-
-        { role=="user" &&
-
-        <>
-          <Route path='/booking' element={<BookingPage />} />
-          <Route path='/service/:id/details' element={<ServiceDetails />} />
-          <Route path='/profile' element={<Profile />} />
-        </>
-
-        }
+        <Route path='/booking' element={<BookingPage />} />
+        <Route path='/profile' element={<Profile />} />
+        <Route path='/service/:id/details' element={<ServiceDetails />} />
 
 
-     {
-     role =="admin" &&  
-      <>
-          <Route path='/admin-dashboard' element={<AdminDashboard />} />
-          <Route path='/admin-careers' element={<AdminCareers />} />
-          <Route path='/admin-bookings' element={<AdminBookings />} />
-          <Route path='/admin-customer' element={<AdminCustomer />} />
-          <Route path='/admin-serviceProvider' element={<AdminServiceProvider />} />
-          <Route path='/admin-service' element={<AdminService />} />
-          <Route path='/admin-settings' element={<AdminSettings />} />
-       </>}
+
+        {
+          role == "admin" &&
+          <>
+            <Route path='/admin-dashboard' element={loading ? <Preloader /> : <AdminDashboard />} />
+            <Route path='/admin-careers' element={<AdminCareers />} />
+            <Route path='/admin-bookings' element={<AdminBookings />} />
+            <Route path='/admin-customer' element={<AdminCustomer />} />
+            <Route path='/admin-serviceProvider' element={<AdminServiceProvider />} />
+            <Route path='/admin-service' element={<AdminService />} />
+            <Route path='/admin-settings' element={<AdminSettings />} />
+          </>}
 
 
         <Route path='/*' element={<Pnf />} />

@@ -168,10 +168,10 @@ function Home() {
       {/* Emergency Services Section */}
       <FadeIn delay={0.2}>
         <div id='more' className="min-h-screen py-20 bg-green-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-7xl mx-auto md:px-4 px-6 lg:px-8 text-center">
 
             {/* Section Header */}
-            <h2 className="text-3xl sm:text-4xl md:text-4xl font-bold text-gray-800 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
               Emergency Help <span className="text-green-600">When You Need It Most</span>
             </h2>
             <p className="text-gray-600 text-sm sm:text-base md:text-lg mb-12 sm:mb-16">
@@ -206,7 +206,7 @@ function Home() {
             {/* CTA */}
             <div className="mt-12 sm:mt-16 flex justify-center">
               <Link to="/emergency">
-                <button className="bg-green-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-green-700 transition text-lg shadow-md">
+                <button className="bg-green-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-green-700 transition text-sm md:text-lg shadow-md">
                   Request Emergency Service
                 </button>
               </Link>
@@ -218,7 +218,7 @@ function Home() {
 
       {/* gallery */}
       <FadeIn delay={0.2}>
-        <div className="min-h-screen py-20 px-4 sm:px-6 lg:px-16 max-w-7xl mx-auto">
+        <div className="min-h-screen hidden md:block py-20 px-4 sm:px-6 lg:px-16 max-w-7xl mx-auto">
           {/* Intro Text */}
           <div className="text-center mb-10">
             <h2 className="text-3xl sm:text-4xl md:text-4xl font-bold text-gray-800 mb-4">
@@ -248,8 +248,8 @@ function Home() {
 
 
       {/* steps  */}
-      <FadeIn delay={0.5}>
-        <div className="min-h-screen py-20 md:mt-30 mt-180 ">
+      <FadeIn delay={0.2}>
+        <div className="min-h-screen py-20 md:mt-30  ">
           <section className="md:mx-20 mx-5 px-5 py-10 bg-green-50 md:p-16 rounded-3xl shadow-xl">
 
             {/* Section Header */}
@@ -375,7 +375,7 @@ function Home() {
 
       {/* Contact Section */}
       <FadeIn delay={0.2}>
-        <div id="contact" className="min-h-screen md:-mt-30 mt-10 md:mb-30">
+        <div id="contact" className="min-h-screen md:-mt-30 mt-10 md:mb-30 mb-10">
           <div className="w-full sm:w-4/5 md:w-3xl mx-auto px-4 sm:px-6 md:px-6">
 
             {/* Section Header */}

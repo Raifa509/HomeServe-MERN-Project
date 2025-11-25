@@ -96,7 +96,7 @@ const {role,authorisedUser,setAuthorisedUser}=useContext(userAuthContext)
                 </Link>
               </div>
               <div className="py-2">
-                <button className="text-white flex items-center">
+                <button onClick={handleLogout} className="text-white flex items-center">
                   <FontAwesomeIcon icon={faSignOutAlt} className="me-2" />
                   Logout
                 </button>
