@@ -40,3 +40,17 @@ html {
   box-shadow: 0px 10px 50px -10px rgba(0, 0, 0, 0.2);
 }
 
+/* Button with popping animation */
+.chat-button {
+animation: bounce 2s ease-in-out infinite;
+}
+
+/* Pop animation */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.05);
+  }
+}

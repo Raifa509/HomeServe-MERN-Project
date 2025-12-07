@@ -170,3 +170,4 @@ export const deleteBookingAPI = async (bookingId, reqHeader) => {
 export const updateBookingStatusAPI = async (bookingId,reqBody, reqHeader) => {
     return await commonAPI("PUT", `${SERVERURL}/booking/status/${bookingId}`, reqBody, reqHeader)
 }
+

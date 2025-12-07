@@ -74,13 +74,12 @@ function Profile() {
                     <div className="flex items-center justify-between">
                       <h3 className="text-xl font-semibold text-green-800">{booking.serviceName}</h3>
                       <span
-                        className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                          booking.status === "Completed"
+                        className={`px-3 py-1 text-xs font-semibold rounded-full ${booking.status === "Completed"
                             ? "bg-green-100 text-green-700"
                             : booking.status === "Pending"
                               ? "bg-yellow-100 text-yellow-700"
                               : "bg-blue-100 text-blue-700"
-                        }`}
+                          }`}
                       >
                         {booking.status}
                       </span>
@@ -118,14 +117,15 @@ function Profile() {
                     {/* Call Button */}
                     {booking.status === "Pending" || booking.status === "Confirmed" ? (
                       <a
-                        href={`tel:${booking.phone}`}
-                        className="mt-4 inline-flex items-center justify-center gap-2 bg-green-600 text-white rounded-xl py-2 font-semibold hover:bg-green-700 transition shadow-md"
+                        href="mailto:contact@homeserve.gmail.com"
+                        className="mt-4 inline-flex items-center justify-center gap-2 bg-green-600 text-white rounded-xl text-sm py-2 font-semibold hover:bg-green-700 transition shadow-md"
                       >
-                        <FontAwesomeIcon icon={faPhone} /> {booking.phone}
+                        <FontAwesomeIcon icon={faEnvelope} /> contact@homeserve.gmail.com
                       </a>
                     ) : (
                       <div className="mt-4 h-[44px]"></div>
                     )}
+
 
                   </div>
                 ))

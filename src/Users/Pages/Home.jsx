@@ -4,6 +4,7 @@ import Footer from '../../components/Footer';
 import { Link } from 'react-router-dom';
 import Masonry from '../components/Masonry';
 import FadeIn from '../../components/animations/FadeIn';
+import ChatAssistant from '../components/ChatAssistant';
 
 
 
@@ -110,7 +111,9 @@ function Home() {
           </div>
         </FadeIn>
       </div>
-
+ <div className="fixed bottom-6 right-6 z-50">
+      <ChatAssistant />
+    </div>
 
       {/* about */}
       <FadeIn delay={0.2}>
