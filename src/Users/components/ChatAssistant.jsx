@@ -58,7 +58,7 @@ function ChatAssistant() {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-20 right-5 md:w-90 h-[500px] bg-white rounded-xl shadow-xl flex flex-col overflow-hidden">
+        <div className="fixed bottom-20 right-5 w-70 md:w-90 h-[500px] bg-white rounded-xl shadow-xl flex flex-col overflow-hidden">
           
           {/* Header */}
           <div className="bg-green-600 text-white p-4 font-semibold flex justify-between items-center">
