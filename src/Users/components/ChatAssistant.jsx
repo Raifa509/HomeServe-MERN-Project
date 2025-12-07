@@ -55,8 +55,6 @@ function ChatAssistant() {
                 🤖
             </button>
 
-
-            {/* Chat Window */}
             {/* Chat Window */}
             {isOpen && (
                 <div className="fixed bottom-20 right-5 w-[90vw] sm:w-80 md:w-96 h-[500px] bg-white rounded-xl shadow-xl flex flex-col overflow-hidden">
@@ -82,8 +80,8 @@ function ChatAssistant() {
 
                                 <div
                                     className={`max-w-[70%] p-3 rounded-xl ${msg.sender === "bot"
-                                            ? "bg-green-100 text-gray-800 rounded-tl-none"
-                                            : "bg-blue-100 text-gray-800 rounded-tr-none"
+                                        ? "bg-green-100 text-gray-800 rounded-tl-none"
+                                        : "bg-blue-100 text-gray-800 rounded-tr-none"
                                         }`}
                                 >
                                     {msg.text}
@@ -113,22 +111,23 @@ function ChatAssistant() {
                     </div>
 
                     {/* Input Box */}
-                    <div className="flex p-3 border-t border-gray-200 gap-2">
+                    <div className="flex flex-col sm:flex-row p-3 border-t border-gray-200 gap-2">
                         <input
                             type="text"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             placeholder="Type a message..."
-                            className="flex-1 border border-gray-300 rounded-xl p-2 focus:outline-none focus:border-green-600"
+                            className="flex-1 border border-gray-300 rounded-xl p-2 focus:outline-none focus:border-green-600 w-full"
                             onKeyDown={(e) => e.key === "Enter" && sendMessage()}
                         />
                         <button
                             onClick={sendMessage}
-                            className="bg-green-600 text-white px-4 py-2 rounded-xl hover:bg-green-700 transition"
+                            className="bg-green-600 text-white px-4 py-2 rounded-xl hover:bg-green-700 transition w-full sm:w-auto"
                         >
                             Send
                         </button>
                     </div>
+
                 </div>
             )}
 
