@@ -4,7 +4,7 @@ function Preloader() {
   return (
     <>
     <div className='flex items-center justify-center h-screen'>
-        <img src="/preloader.gif" alt="preloader" width={'70px'} height={'70px'} />
+        <img src="/preloader-new.gif" alt="preloader" width={'70px'} height={'70px'} />
     </div>
     </>
   )
