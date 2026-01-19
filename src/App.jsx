@@ -1,6 +1,6 @@
-import { useContext, useEffect, useState } from 'react'
-import './App.css'
-import { Route, Routes } from 'react-router-dom'
+import { useContext, useEffect, useState } from 'react';
+import './App.css';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import Home from "./Users/Pages/Home";
 import Profile from "./Users/Pages/Profile";
 import Services from "./Users/Pages/Services";
@@ -21,21 +21,30 @@ import AdminService from "./Admin/pages/AdminService";
 import AdminSettings from "./Admin/pages/AdminSettings";
 import { userAuthContext } from './contextAPI/AuthContext';
 
-
-
+// Admin Route wrapper
+const AdminRoute = ({ children, loading, role }) => {
+  if (loading) return <Preloader />;
+  if (role !== "admin") return <Navigate to="/login" />;
+  return children;
+};
 
 function App() {
-  const [loading, setLoading] = useState(true)
-  const { role, authorisedUser, setAuthorisedUser } = useContext(userAuthContext)
+  const [loading, setLoading] = useState(true);
+  const { role } = useContext(userAuthContext);
+
+  // Simulate Preloader delay
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false)
+    const timer = setTimeout(() => {
+      setLoading(false);
     }, 3000);
-  })
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <>
       <Routes>
+        {/* Public Routes */}
         <Route path='/' element={loading ? <Preloader /> : <Home />} />
         <Route path='/services' element={<Services />} />
         <Route path='/login' element={<Auth />} />
@@ -46,25 +55,69 @@ function App() {
         <Route path='/profile' element={<Profile />} />
         <Route path='/service/:id/details' element={<ServiceDetails />} />
 
+        {/* Admin Routes */}
+        <Route
+          path='/admin-dashboard'
+          element={
+            <AdminRoute loading={loading} role={role}>
+              <AdminDashboard />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path='/admin-careers'
+          element={
+            <AdminRoute loading={loading} role={role}>
+              <AdminCareers />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path='/admin-bookings'
+          element={
+            <AdminRoute loading={loading} role={role}>
+              <AdminBookings />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path='/admin-customer'
+          element={
+            <AdminRoute loading={loading} role={role}>
+              <AdminCustomer />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path='/admin-serviceProvider'
+          element={
+            <AdminRoute loading={loading} role={role}>
+              <AdminServiceProvider />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path='/admin-service'
+          element={
+            <AdminRoute loading={loading} role={role}>
+              <AdminService />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path='/admin-settings'
+          element={
+            <AdminRoute loading={loading} role={role}>
+              <AdminSettings />
+            </AdminRoute>
+          }
+        />
 
-
-        {
-          role == "admin" &&
-          <>
-            <Route path='/admin-dashboard' element={loading ? <Preloader /> : <AdminDashboard />} />
-            <Route path='/admin-careers' element={<AdminCareers />} />
-            <Route path='/admin-bookings' element={<AdminBookings />} />
-            <Route path='/admin-customer' element={<AdminCustomer />} />
-            <Route path='/admin-serviceProvider' element={<AdminServiceProvider />} />
-            <Route path='/admin-service' element={<AdminService />} />
-            <Route path='/admin-settings' element={<AdminSettings />} />
-          </>}
-
-
+        {/* 404 Page */}
         <Route path='/*' element={<Pnf />} />
       </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
