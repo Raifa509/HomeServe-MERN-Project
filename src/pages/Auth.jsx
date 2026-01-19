@@ -17,7 +17,9 @@ function Auth({ register }) {
   })
   // console.log(userDetails);
   const [showPassword, setShowpassword] = useState(false)
- const {role,authorisedUser,setAuthorisedUser}=useContext(userAuthContext)
+  //  const {role,authorisedUser,setAuthorisedUser}=useContext(userAuthContext)
+  const { setRole, setAuthorisedUser } = useContext(userAuthContext);
+
   const navigate = useNavigate()
 
   //register button handle
@@ -69,16 +71,28 @@ function Auth({ register }) {
         console.log(result);
         if (result.status == 200) {
           toast.success("Login Successful")
-          sessionStorage.setItem("user", JSON.stringify(result.data.user))
-          sessionStorage.setItem("token", result.data.token)
-          setAuthorisedUser(true)
-          setTimeout(() => {
-            if (result.data.user.role == "admin") {
-              navigate('/admin-dashboard')
-            } else {
-              navigate('/')
-            }
-          }, 2500);
+          // sessionStorage.setItem("user", JSON.stringify(result.data.user))
+          // sessionStorage.setItem("token", result.data.token)
+          // setAuthorisedUser(true)
+          // setTimeout(() => {
+          //   if (result.data.user.role == "admin") {
+          //     navigate('/admin-dashboard')
+          //   } else {
+          //     navigate('/')
+          //   }
+          // }, 2500);
+          sessionStorage.setItem("user", JSON.stringify(result.data.user));
+          sessionStorage.setItem("token", result.data.token);
+
+          setRole(result.data.user.role);      // ⭐ THIS LINE IS THE FIX
+          setAuthorisedUser(true);
+
+          if (result.data.user.role === "admin") {
+            navigate("/admin-dashboard", { replace: true });
+          } else {
+            navigate("/", { replace: true });
+          }
+
         }
         else if (result.status == 401) {
           toast.warning(result.response.data)
@@ -116,16 +130,28 @@ function Auth({ register }) {
       console.log(result);
       if (result.status == 200) {
         toast.success("Login Success!!")
-        sessionStorage.setItem("user", JSON.stringify(result.data.user))
-        sessionStorage.setItem("token", result.data.token)
-        setTimeout(() => {
-          if (result.data.user.role == 'admin') {
-            navigate('/admin-dashboard')
-          } else {
-            navigate("/")
-          }
-        }, 2500);
-      }else{
+        // sessionStorage.setItem("user", JSON.stringify(result.data.user))
+        // sessionStorage.setItem("token", result.data.token)
+        // setTimeout(() => {
+        //   if (result.data.user.role == 'admin') {
+        //     navigate('/admin-dashboard')
+        //   } else {
+        //     navigate("/")
+        //   }
+        // }, 2500);
+        sessionStorage.setItem("user", JSON.stringify(result.data.user));
+sessionStorage.setItem("token", result.data.token);
+
+setRole(result.data.user.role);
+setAuthorisedUser(true);
+
+if (result.data.user.role === "admin") {
+  navigate("/admin-dashboard", { replace: true });
+} else {
+  navigate("/", { replace: true });
+}
+
+      } else {
         toast.error("Something went wrong")
       }
 
